@@ -16,12 +16,12 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-rootProject.name = "smart-bdd"
+rootProject.name = "flowbdd"
 include(
-    "wordify",
-    "report",
+    "flowbdd-wordify",
+    "flowbdd",
     "ft",
-    "test-utils",
+    "flowbdd-test-utils",
     "examples:bookstore",
     "examples:cucumbers",
     //TODO "examples:server",

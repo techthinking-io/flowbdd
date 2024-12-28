@@ -104,7 +104,7 @@ Please see `example:bookstore` and `example:cucumbers`. Run `GetBookTest` and or
 console there is a link to the generated html and json files.
 
 1. Import the `report` project `testImplementation("io.bit-smart.bdd:report:0.2-SNAPSHOT")`
-   or locally withing this repo `testImplementation(project(":report"))`
+   or locally withing this repo `testImplementation(project(":flowbdd"))`
 2. Add `@ExtendWith(SmartReport.class)` to any class that you want to generate a report from.
 
 ### Example to from `example:bookstore`

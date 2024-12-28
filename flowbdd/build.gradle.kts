@@ -17,15 +17,15 @@
  */
 
 plugins {
-    id("smart-bdd.java-lib")
+    id("flowbdd.java-lib")
     `maven-publish`
     `java-library`
     signing
 }
 
-group = "io.bit-smart.bdd"
+group = "com.flowbdd"
 version = "0.1.1-SNAPSHOT"
-description = "Wordify Java source code"
+description = "Generate the report and feature file / documentation"
 
 java {
     withJavadocJar()
@@ -37,16 +37,22 @@ repositories {
 }
 
 dependencies {
-    implementation("com.thoughtworks.qdox:qdox:2.0.0")
+    api(project(":flowbdd-wordify"))
+    api(project(":flowbdd-test-utils"))
+
+    implementation("com.fasterxml.jackson.core:jackson-databind:2.12.1")
+    implementation("com.fasterxml.jackson.core:jackson-annotations:2.12.1")
+
+    implementation("org.thymeleaf:thymeleaf:3.0.12.RELEASE")
 
     testImplementation("org.mockito:mockito-all:1.10.19")
-    testImplementation(project(":test-utils"))
+    testImplementation("com.google.jimfs:jimfs:1.1")
 }
 
 publishing {
     publications {
         create<MavenPublication>("mavenJava") {
-            artifactId = "wordify"
+            artifactId = "flowbdd"
             from(components["java"])
             //artifact(tasks["jar"])
             versionMapping {
@@ -58,8 +64,8 @@ publishing {
                 }
             }
             pom {
-                name.set("Wordify")
-                description.set("Wordify Java source code")
+                name.set("flowbdd")
+                description.set("Generate the report and feature file / documentation")
                 url.set("https://github.com/bit-smart-io/smart-bdd")
 
                 licenses {

@@ -17,15 +17,15 @@
  */
 
 plugins {
-    id("smart-bdd.java-lib")
+    id("flowbdd.java-lib")
     `maven-publish`
     `java-library`
     signing
 }
 
-group = "io.bit-smart.bdd"
+group = "com.flowbdd"
 version = "0.1.1-SNAPSHOT"
-description = "Generate the report and feature file / documentation"
+description = "Test Utils"
 
 java {
     withJavadocJar()
@@ -37,22 +37,13 @@ repositories {
 }
 
 dependencies {
-    api(project(":wordify"))
-    api(project(":test-utils"))
-
-    implementation("com.fasterxml.jackson.core:jackson-databind:2.12.1")
-    implementation("com.fasterxml.jackson.core:jackson-annotations:2.12.1")
-
-    implementation("org.thymeleaf:thymeleaf:3.0.12.RELEASE")
-
     testImplementation("org.mockito:mockito-all:1.10.19")
-    testImplementation("com.google.jimfs:jimfs:1.1")
 }
 
 publishing {
     publications {
         create<MavenPublication>("mavenJava") {
-            artifactId = "report"
+            artifactId = "flowbdd-test-utils"
             from(components["java"])
             //artifact(tasks["jar"])
             versionMapping {
@@ -64,8 +55,8 @@ publishing {
                 }
             }
             pom {
-                name.set("Report")
-                description.set("Generate the report and feature file / documentation")
+                name.set("Test Utils")
+                description.set("Test Utils")
                 url.set("https://github.com/bit-smart-io/smart-bdd")
 
                 licenses {
@@ -100,9 +91,9 @@ publishing {
                 username = System.getenv("SONATYPE_TOKEN_USERNAME")
                 password = System.getenv("SONATYPE_TOKEN_PASSWORD")
             }
+            }
         }
     }
-}
 
 signing {
     sign(publishing.publications["mavenJava"])

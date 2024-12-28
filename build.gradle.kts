@@ -20,7 +20,7 @@ plugins {
     java
 }
 
-group = "io.bit-smart.bdd"
+group = "com.flowbdd"
 version "0.1-SNAPSHOT"
 
 repositories {

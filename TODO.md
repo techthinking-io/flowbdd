@@ -15,6 +15,8 @@
 
 ## Post MVP:
 
+- [ ] Name change maybe; FlowBDD, CaffeineFlow or something else
+- [ ] New project for mermaid wrapper
 - [ ] Try scala files
 - [ ] Add timestamp, hostname, time (maybe setup, execute and after times)
 - [ ] Add error 

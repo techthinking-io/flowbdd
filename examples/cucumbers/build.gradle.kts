@@ -22,7 +22,7 @@ plugins {
 }
 
 
-group = "io.bitsmart.bdd.example"
+group = "com.flowbdd.example"
 version = "0.1.1-SNAPSHOT"
 description = "Eating cucumbers example"
 
@@ -37,8 +37,8 @@ dependencies {
 
     testImplementation("org.assertj:assertj-core:3.11.1")
     testImplementation("org.mockito:mockito-all:1.10.19")
-    testImplementation(project(":report"))
-    testImplementation(project(":test-utils")) // should this be an additional dependency or report api?
+    testImplementation(project(":flowbdd"))
+    testImplementation(project(":flowbdd-test-utils")) // should this be an additional dependency or report api?
 }
 
 tasks.test {

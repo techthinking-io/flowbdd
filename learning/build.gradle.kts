@@ -17,10 +17,10 @@
  */
 
 plugins {
-    id("smart-bdd.java-lib")
+    id("flowbdd.java-lib")
 }
 
-group = "io.bitsmart.bdd.learning"
+group = "com.flowbdd.learning"
 version = "0.1.1-SNAPSHOT"
 description = "Project for learning"
 
