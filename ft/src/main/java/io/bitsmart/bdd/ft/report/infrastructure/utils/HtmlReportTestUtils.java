@@ -39,6 +39,6 @@ public class HtmlReportTestUtils {
     }
 
     public static Path outputDirectory() {
-        return TestConfig.getBasePath().resolve("io.bitsmart.bdd.report/report/");
+        return TestConfig.getBasePath().resolve("flowbdd/report/");
     }
 }

@@ -24,8 +24,8 @@ import java.util.Optional;
 import static java.lang.System.getProperty;
 
 public class SmartBddConfig  {
-    private static final String dataFolder = "io.bitsmart.bdd.report/data/";
-    private static final String reportFolder = "io.bitsmart.bdd.report/report/";
+    private static final String dataFolder = "flowbdd/data/";
+    private static final String reportFolder = "flowbdd/report/";
     private static String defaultBaseFolder = getProperty("java.io.tmpdir");
     private static Path overriddenBasePath = null;
 
