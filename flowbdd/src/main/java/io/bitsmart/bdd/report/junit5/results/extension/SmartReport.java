@@ -21,7 +21,7 @@ package io.bitsmart.bdd.report.junit5.results.extension;
 import io.bitsmart.bdd.report.junit5.results.model.TestCaseNameFactory;
 import io.bitsmart.bdd.report.junit5.results.model.TestResults;
 import io.bitsmart.bdd.report.report.writers.ReportWriter;
-import io.bitsmart.wordify.WordifyExtensionContext;
+import com.flowbdd.wordify.WordifyExtensionContext;
 import org.junit.jupiter.api.extension.AfterAllCallback;
 import org.junit.jupiter.api.extension.AfterEachCallback;
 import org.junit.jupiter.api.extension.BeforeAllCallback;

@@ -25,7 +25,7 @@ import io.bitsmart.bdd.report.junit5.results.model.TestSuiteResult;
 import io.bitsmart.bdd.report.report.model.Report;
 import io.bitsmart.bdd.report.report.model.VersionInfo;
 import io.bitsmart.bdd.report.report.writers.ReportWriter;
-import io.bitsmart.wordify.WordifyExtensionContext;
+import com.flowbdd.wordify.WordifyExtensionContext;
 import org.junit.jupiter.api.extension.AfterAllCallback;
 import org.junit.jupiter.api.extension.AfterEachCallback;
 import org.junit.jupiter.api.extension.BeforeAllCallback;
@@ -44,8 +44,8 @@ import static io.bitsmart.bdd.report.junit5.results.model.TestCaseResultStatus.A
 import static io.bitsmart.bdd.report.junit5.results.model.TestCaseResultStatus.DISABLED;
 import static io.bitsmart.bdd.report.junit5.results.model.TestCaseResultStatus.FAILED;
 import static io.bitsmart.bdd.report.junit5.results.model.TestCaseResultStatus.PASSED;
-import static io.bitsmart.wordify.tokenize.WordifyStringUtil.upperCaseFirstChar;
-import static io.bitsmart.wordify.tokenize.WordifyStringUtil.wordifyMethodOrFieldName;
+import static com.flowbdd.wordify.tokenize.WordifyStringUtil.upperCaseFirstChar;
+import static com.flowbdd.wordify.tokenize.WordifyStringUtil.wordifyMethodOrFieldName;
 
 /**
  *

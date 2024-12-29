@@ -19,7 +19,7 @@
 package io.bitsmart.bdd.report.junit5.results.model;
 
 import io.bitsmart.bdd.report.junit5.results.model.notes.Notes;
-import io.bitsmart.wordify.legacy.WordifyString;
+import com.flowbdd.wordify.legacy.WordifyString;
 import org.junit.jupiter.api.extension.ExtensionContext;
 
 import java.util.Collection;
