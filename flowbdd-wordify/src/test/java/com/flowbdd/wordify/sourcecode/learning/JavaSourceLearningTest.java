@@ -42,7 +42,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class JavaSourceLearningTest {
     private static final String CLASS_NAME = "JavaSourceLearningTest";
-    private static final String QUALIFIED_CLASS_NAME = "io.bitsmart.wordify.sourcecode.learning.JavaSourceLearningTest";
+    private static final String QUALIFIED_CLASS_NAME = "com.flowbdd.wordify.sourcecode.learning.JavaSourceLearningTest";
     private static final String QUALIFIED_CLASS_PATH = "com/flowbdd/wordify/sourcecode/learning/JavaSourceLearningTest.java";
 
     /**
