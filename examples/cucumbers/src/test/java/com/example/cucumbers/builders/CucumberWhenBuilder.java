@@ -19,7 +19,7 @@
 package com.example.cucumbers.builders;
 
 import com.example.cucumbers.model.CucumberWhen;
-import io.bitsmart.bdd.report.utils.WhenBuilder;
+import io.flowbdd.bdd.report.utils.WhenBuilder;
 
 public class CucumberWhenBuilder implements WhenBuilder<CucumberWhen> {
     private String colour;

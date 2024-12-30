@@ -18,11 +18,11 @@
 
 package component.results;
 
-import io.bitsmart.bdd.report.junit5.launcher.TestLauncher;
-import io.bitsmart.bdd.report.junit5.results.extension.SmartReport;
-import io.bitsmart.bdd.report.junit5.results.model.TestCaseResult;
-import io.bitsmart.bdd.report.junit5.results.model.TestSuiteClass;
-import io.bitsmart.bdd.report.junit5.results.model.TestSuiteResult;
+import com.flowbdd.report.junit5.launcher.TestLauncher;
+import com.flowbdd.report.junit5.results.extension.SmartReport;
+import com.flowbdd.report.junit5.results.model.TestCaseResult;
+import com.flowbdd.report.junit5.results.model.TestSuiteClass;
+import com.flowbdd.report.junit5.results.model.TestSuiteResult;
 import org.junit.jupiter.api.BeforeEach;
 
 import java.util.List;

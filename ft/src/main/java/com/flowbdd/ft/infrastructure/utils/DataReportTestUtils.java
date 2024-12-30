@@ -19,8 +19,8 @@
 package com.flowbdd.ft.infrastructure.utils;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.bitsmart.bdd.report.report.model.DataReportIndex;
-import io.bitsmart.bdd.report.report.model.TestSuite;
+import com.flowbdd.report.report.model.DataReportIndex;
+import com.flowbdd.report.report.model.TestSuite;
 
 import java.io.IOException;
 import java.nio.file.Path;

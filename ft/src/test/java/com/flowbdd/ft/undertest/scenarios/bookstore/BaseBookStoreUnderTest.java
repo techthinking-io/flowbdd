@@ -18,11 +18,11 @@
 
 package com.flowbdd.ft.undertest.scenarios.bookstore;
 
-import io.bitsmart.bdd.report.junit5.test.BaseTest;
+import com.flowbdd.report.junit5.test.BaseTest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.condition.EnabledIf;
 
-import static io.bitsmart.bdd.report.mermaid.MessageBuilder.aMessage;
+import static com.flowbdd.report.mermaid.MessageBuilder.aMessage;
 
 @EnabledIf("isEnabled")
 public class BaseBookStoreUnderTest extends BaseTest {

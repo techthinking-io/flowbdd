@@ -18,17 +18,18 @@
 
 package com.flowbdd.ft.report.results;
 import com.flowbdd.ft.undertest.basic.ClassUnderTest;
-import io.bitsmart.bdd.report.report.model.TestCase;
-import io.bitsmart.bdd.report.report.model.builders.ArgumentBuilder;
-import io.bitsmart.bdd.report.report.model.builders.ClazzBuilder;
+import com.flowbdd.report.report.model.Status;
+import com.flowbdd.report.report.model.TestCase;
+import com.flowbdd.report.report.model.builders.ArgumentBuilder;
+import com.flowbdd.report.report.model.builders.ClazzBuilder;
 import org.junit.jupiter.api.Test;
 
-import static io.bitsmart.bdd.report.report.model.builders.ArgumentBuilder.anArgument;
-import static io.bitsmart.bdd.report.report.model.builders.ClazzBuilder.aClazz;
-import static io.bitsmart.bdd.report.report.model.builders.MethodBuilder.aMethod;
-import static io.bitsmart.bdd.report.report.model.builders.TestCaseBuilder.aTestCase;
-import static io.bitsmart.bdd.report.report.model.builders.TestSuiteNameToFileBuilder.aTestSuiteNameToFile;
-import static io.bitsmart.bdd.report.report.model.builders.TestSuiteSummaryBuilder.aTestSuiteSummary;
+import static com.flowbdd.report.report.model.builders.ArgumentBuilder.anArgument;
+import static com.flowbdd.report.report.model.builders.ClazzBuilder.aClazz;
+import static com.flowbdd.report.report.model.builders.MethodBuilder.aMethod;
+import static com.flowbdd.report.report.model.builders.TestCaseBuilder.aTestCase;
+import static com.flowbdd.report.report.model.builders.TestSuiteNameToFileBuilder.aTestSuiteNameToFile;
+import static com.flowbdd.report.report.model.builders.TestSuiteSummaryBuilder.aTestSuiteSummary;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
@@ -92,7 +93,7 @@ public class PassingResultsTest extends AbstractResultsForData {
     public static TestCase passingTestCase() {
         return aTestCase()
             .withWordify("Passing assertion")
-            .withStatus(io.bitsmart.bdd.report.report.model.Status.PASSED)
+            .withStatus(Status.PASSED)
             .withMethod(aMethod().withName("testMethod").withWordify("Test method"))
             .withClazz(aDefaultClazz())
             .build();
@@ -101,7 +102,7 @@ public class PassingResultsTest extends AbstractResultsForData {
     public static TestCase passingParamTestCase(String number) {
         return aTestCase()
             .withWordify("Passing assertion with one param value " + number)
-            .withStatus(io.bitsmart.bdd.report.report.model.Status.PASSED)
+            .withStatus(Status.PASSED)
             .withMethod(aMethod().withName("paramTest").withWordify("Param test value " + number).withArgument(aStringArgument("value " + number)))
             .withClazz(aDefaultClazz())
             .build();

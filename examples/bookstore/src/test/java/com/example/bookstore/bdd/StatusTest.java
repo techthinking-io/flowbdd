@@ -18,7 +18,7 @@
 
 package com.example.bookstore.bdd;
 
-import io.bitsmart.bdd.report.junit5.results.extension.SmartReport;
+import com.flowbdd.report.junit5.results.extension.SmartReport;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;

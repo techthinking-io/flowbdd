@@ -18,15 +18,15 @@
 
 package com.flowbdd.ft.report.results;
 import com.flowbdd.ft.undertest.basic.FailedDueToExceptionTestCasesUnderTest;
-import io.bitsmart.bdd.report.report.model.Status;
-import io.bitsmart.bdd.report.report.model.TestCase;
-import io.bitsmart.bdd.report.report.model.builders.ClazzBuilder;
+import com.flowbdd.report.report.model.Status;
+import com.flowbdd.report.report.model.TestCase;
+import com.flowbdd.report.report.model.builders.ClazzBuilder;
 import org.junit.jupiter.api.Test;
 
-import static io.bitsmart.bdd.report.report.model.builders.ClazzBuilder.aClazz;
-import static io.bitsmart.bdd.report.report.model.builders.MethodBuilder.aMethod;
-import static io.bitsmart.bdd.report.report.model.builders.TestSuiteNameToFileBuilder.aTestSuiteNameToFile;
-import static io.bitsmart.bdd.report.report.model.builders.TestSuiteSummaryBuilder.aTestSuiteSummary;
+import static com.flowbdd.report.report.model.builders.ClazzBuilder.aClazz;
+import static com.flowbdd.report.report.model.builders.MethodBuilder.aMethod;
+import static com.flowbdd.report.report.model.builders.TestSuiteNameToFileBuilder.aTestSuiteNameToFile;
+import static com.flowbdd.report.report.model.builders.TestSuiteSummaryBuilder.aTestSuiteSummary;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**

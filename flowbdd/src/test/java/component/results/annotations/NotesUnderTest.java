@@ -18,10 +18,10 @@
 
 package component.results.annotations;
 
-import io.bitsmart.bdd.report.junit5.annotations.InjectNotes;
-import io.bitsmart.bdd.report.junit5.results.extension.SmartReport;
-import io.bitsmart.bdd.report.junit5.results.extension.TestCaseNotesParameterResolver;
-import io.bitsmart.bdd.report.junit5.results.model.notes.Notes;
+import com.flowbdd.report.junit5.annotations.InjectNotes;
+import com.flowbdd.report.junit5.results.extension.SmartReport;
+import com.flowbdd.report.junit5.results.extension.TestCaseNotesParameterResolver;
+import com.flowbdd.report.junit5.results.model.notes.Notes;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.Order;

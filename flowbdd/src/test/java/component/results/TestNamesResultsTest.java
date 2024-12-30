@@ -18,8 +18,7 @@
 
 package component.results;
 
-import io.bitsmart.bdd.report.junit5.results.model.TestCaseResult;
-import org.junit.jupiter.api.Disabled;
+import com.flowbdd.report.junit5.results.model.TestCaseResult;
 import org.junit.jupiter.api.Test;
 import shared.undertest.basic.TestNamesTest;
 

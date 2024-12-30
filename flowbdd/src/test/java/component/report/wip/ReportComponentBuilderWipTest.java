@@ -18,17 +18,17 @@
 
 package component.report.wip;
 
-import io.bitsmart.bdd.report.junit5.launcher.TestLauncher;
-import io.bitsmart.bdd.report.junit5.results.extension.SmartReport;
-import io.bitsmart.bdd.report.report.adapter.ReportFactory;
-import io.bitsmart.bdd.report.report.model.Clazz;
-import io.bitsmart.bdd.report.report.model.Method;
-import io.bitsmart.bdd.report.report.model.Report;
-import io.bitsmart.bdd.report.report.model.Status;
-import io.bitsmart.bdd.report.report.model.TestCase;
-import io.bitsmart.bdd.report.report.model.TestSuite;
-import io.bitsmart.bdd.report.report.model.VersionInfo;
-import io.bitsmart.bdd.report.report.model.builders.ClazzBuilder;
+import com.flowbdd.report.junit5.launcher.TestLauncher;
+import com.flowbdd.report.junit5.results.extension.SmartReport;
+import com.flowbdd.report.report.adapter.ReportFactory;
+import com.flowbdd.report.report.model.Clazz;
+import com.flowbdd.report.report.model.Method;
+import com.flowbdd.report.report.model.Report;
+import com.flowbdd.report.report.model.Status;
+import com.flowbdd.report.report.model.TestCase;
+import com.flowbdd.report.report.model.TestSuite;
+import com.flowbdd.report.report.model.VersionInfo;
+import com.flowbdd.report.report.model.builders.ClazzBuilder;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import shared.undertest.basic.ClassUnderTest;
@@ -39,9 +39,9 @@ import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
 import static component.report.wip.ReportComponentBuilderWipTest.AssertTestCase.assertTestCase;
-import static io.bitsmart.bdd.report.report.model.builders.ClazzBuilder.aClazz;
-import static io.bitsmart.bdd.report.report.model.builders.MethodBuilder.aMethod;
-import static io.bitsmart.bdd.report.report.model.builders.TestCaseBuilder.aTestCase;
+import static com.flowbdd.report.report.model.builders.ClazzBuilder.aClazz;
+import static com.flowbdd.report.report.model.builders.MethodBuilder.aMethod;
+import static com.flowbdd.report.report.model.builders.TestCaseBuilder.aTestCase;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
@@ -173,7 +173,7 @@ public class ReportComponentBuilderWipTest {
     private TestCase firstTestCase() {
         return aTestCase()
             .withWordify("Passing assertion")
-            .withStatus(io.bitsmart.bdd.report.report.model.Status.PASSED)
+            .withStatus(Status.PASSED)
             .withMethod(aMethod().withName("testMethod").withWordify("Test method"))
             .withClazz(aDefaultClazz())
             .build();

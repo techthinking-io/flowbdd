@@ -20,7 +20,7 @@ package com.flowbdd.ft.infrastructure.utils;
 
 import com.google.common.jimfs.Configuration;
 import com.google.common.jimfs.Jimfs;
-import io.bitsmart.bdd.report.config.SmartBddConfig;
+import com.flowbdd.report.config.SmartBddConfig;
 
 import java.nio.file.FileSystem;
 import java.nio.file.Path;

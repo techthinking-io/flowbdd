@@ -18,7 +18,7 @@
 
 package shared.undertest.basic;
 
-import io.bitsmart.bdd.report.junit5.results.extension.SmartReport;
+import com.flowbdd.report.junit5.results.extension.SmartReport;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;

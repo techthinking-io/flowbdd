@@ -19,8 +19,8 @@
 package com.example.cucumbers.builders;
 
 import com.example.cucumbers.model.Cucumber;
-import io.bitsmart.bdd.report.utils.Builder;
-import io.bitsmart.bdd.report.utils.BuilderUtils;
+import io.flowbdd.bdd.report.utils.Builder;
+import io.flowbdd.bdd.report.utils.BuilderUtils;
 
 import java.util.ArrayList;
 import java.util.List;

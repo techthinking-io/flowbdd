@@ -19,7 +19,7 @@
 package component.results.annotations;
 
 import component.results.AbstractResultsForTestSuite;
-import io.bitsmart.bdd.report.junit5.results.model.notes.Notes;
+import com.flowbdd.report.junit5.results.model.notes.Notes;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;

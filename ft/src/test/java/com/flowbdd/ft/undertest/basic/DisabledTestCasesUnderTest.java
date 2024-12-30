@@ -18,7 +18,7 @@
 
 package com.flowbdd.ft.undertest.basic;
 
-import io.bitsmart.bdd.report.junit5.results.extension.SmartReport;
+import com.flowbdd.report.junit5.results.extension.SmartReport;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledIf;

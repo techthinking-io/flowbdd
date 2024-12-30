@@ -19,7 +19,7 @@
 package com.example.cucumbers.builders;
 
 import com.example.cucumbers.model.Cucumber;
-import io.bitsmart.bdd.report.utils.Builder;
+import io.flowbdd.bdd.report.utils.Builder;
 
 public final class CucumberBuilder implements Builder<Cucumber> {
     private String colour;

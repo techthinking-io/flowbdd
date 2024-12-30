@@ -18,7 +18,7 @@
 
 package com.example.bookstore.bdd.builder_example.model.bdd;
 
-import io.bitsmart.bdd.report.utils.Builder;
+import io.flowbdd.bdd.report.utils.Builder;
 import org.springframework.http.HttpStatus;
 
 public final class ThenGetBookByIsbnErrorBuilder implements Builder<ThenGetBookByIsbnError> {

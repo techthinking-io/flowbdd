@@ -18,10 +18,10 @@
 
 package component.report;
 
-import io.bitsmart.bdd.report.junit5.results.extension.SmartReport;
-import io.bitsmart.bdd.report.report.model.Report;
-import io.bitsmart.bdd.report.report.model.TestSuiteNameToFile;
-import io.bitsmart.bdd.report.report.model.VersionInfo;
+import com.flowbdd.report.junit5.results.extension.SmartReport;
+import com.flowbdd.report.report.model.Report;
+import com.flowbdd.report.report.model.TestSuiteNameToFile;
+import com.flowbdd.report.report.model.VersionInfo;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;

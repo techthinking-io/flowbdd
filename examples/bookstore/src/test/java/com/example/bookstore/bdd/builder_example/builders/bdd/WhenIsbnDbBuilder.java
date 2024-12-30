@@ -20,7 +20,7 @@ package com.example.bookstore.bdd.builder_example.builders.bdd;
 
 import com.example.bookstore.bdd.builder_example.defaults.DefaultIsbnBook;
 import com.example.bookstore.bdd.builder_example.model.bdd.WhenGetBookByIsbn;
-import io.bitsmart.bdd.report.utils.Builder;
+import io.flowbdd.bdd.report.utils.Builder;
 
 public final class WhenIsbnDbBuilder implements Builder<WhenGetBookByIsbn> {
     private String isbn = DefaultIsbnBook.ISBN;

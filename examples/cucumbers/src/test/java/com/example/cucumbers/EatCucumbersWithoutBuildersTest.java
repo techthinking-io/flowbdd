@@ -20,7 +20,7 @@ package com.example.cucumbers;
 
 import com.example.cucumbers.model.Cucumber;
 import com.example.cucumbers.builders.CucumberBuilder;
-import io.bitsmart.bdd.report.junit5.results.extension.SmartReport;
+import com.flowbdd.report.junit5.results.extension.SmartReport;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
