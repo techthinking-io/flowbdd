@@ -19,7 +19,7 @@
 package com.example.bookstore.bdd.builder_example.model.bdd;
 
 import com.example.bookstore.bdd.builder_example.builders.IsbnBookBuilder;
-import io.flowbdd.bdd.report.utils.Builder;
+import com.flowbdd.bdd.report.utils.Builder;
 
 public final class ThenGetBookByIsbnBuilder implements Builder<ThenGetBookByIsbn> {
     private IsbnBookBuilder book;

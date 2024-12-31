@@ -19,7 +19,7 @@
 package com.example.bookstore.bdd.builder_example.builders;
 
 import com.example.bookstore.model.IsbnBook;
-import io.flowbdd.bdd.report.utils.Builder;
+import com.flowbdd.bdd.report.utils.Builder;
 
 import java.util.Arrays;
 import java.util.List;

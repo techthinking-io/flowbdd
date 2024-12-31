@@ -19,7 +19,7 @@
 package com.flowbdd.report.report.model.builders;
 
 import com.flowbdd.report.report.model.Argument;
-import io.flowbdd.bdd.report.utils.Builder;
+import com.flowbdd.bdd.report.utils.Builder;
 
 public final class ArgumentBuilder implements Builder<Argument> {
     private ClazzBuilder clazz;

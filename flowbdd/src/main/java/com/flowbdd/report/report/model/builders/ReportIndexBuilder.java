@@ -19,7 +19,7 @@
 package com.flowbdd.report.report.model.builders;
 
 import com.flowbdd.report.report.model.DataReportIndex;
-import io.flowbdd.bdd.report.utils.Builder;
+import com.flowbdd.bdd.report.utils.Builder;
 
 import static com.flowbdd.report.report.model.builders.TestSuiteLinksBuilder.aTestSuiteLinks;
 import static com.flowbdd.report.report.model.builders.TestSuiteSummaryBuilder.aTestSuiteSummary;

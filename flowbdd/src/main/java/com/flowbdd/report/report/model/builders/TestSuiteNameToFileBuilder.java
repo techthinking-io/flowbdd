@@ -19,7 +19,7 @@
 package com.flowbdd.report.report.model.builders;
 
 import com.flowbdd.report.report.model.TestSuiteNameToFile;
-import io.flowbdd.bdd.report.utils.Builder;
+import com.flowbdd.bdd.report.utils.Builder;
 
 public final class TestSuiteNameToFileBuilder implements Builder<TestSuiteNameToFile>  {
     private String name;

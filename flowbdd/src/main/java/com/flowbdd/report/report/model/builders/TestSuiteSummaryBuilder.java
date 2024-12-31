@@ -19,7 +19,7 @@
 package com.flowbdd.report.report.model.builders;
 
 import com.flowbdd.report.report.model.TestSuiteSummary;
-import io.flowbdd.bdd.report.utils.Builder;
+import com.flowbdd.bdd.report.utils.Builder;
 
 public final class TestSuiteSummaryBuilder implements Builder<TestSuiteSummary> {
     private int testCase;

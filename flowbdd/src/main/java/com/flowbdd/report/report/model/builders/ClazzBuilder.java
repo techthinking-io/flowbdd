@@ -19,7 +19,7 @@
 package com.flowbdd.report.report.model.builders;
 
 import com.flowbdd.report.report.model.Clazz;
-import io.flowbdd.bdd.report.utils.Builder;
+import com.flowbdd.bdd.report.utils.Builder;
 
 public final class ClazzBuilder  implements Builder<Clazz> {
     private String fullyQualifiedName;

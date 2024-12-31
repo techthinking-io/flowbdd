@@ -22,7 +22,7 @@ import com.flowbdd.report.report.model.Status;
 import com.flowbdd.report.report.model.TestCaseTimings;
 import com.flowbdd.report.report.model.TestCase;
 import com.flowbdd.report.report.model.notes.Notes;
-import io.flowbdd.bdd.report.utils.Builder;
+import com.flowbdd.bdd.report.utils.Builder;
 
 public final class TestCaseBuilder implements Builder<TestCase> {
     private String wordify;

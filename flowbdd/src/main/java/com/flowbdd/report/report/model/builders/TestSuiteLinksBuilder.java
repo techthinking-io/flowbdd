@@ -19,8 +19,8 @@
 package com.flowbdd.report.report.model.builders;
 
 import com.flowbdd.report.report.model.TestSuiteLinks;
-import io.flowbdd.bdd.report.utils.Builder;
-import io.flowbdd.bdd.report.utils.BuilderUtils;
+import com.flowbdd.bdd.report.utils.Builder;
+import com.flowbdd.bdd.report.utils.BuilderUtils;
 
 import java.util.List;
 

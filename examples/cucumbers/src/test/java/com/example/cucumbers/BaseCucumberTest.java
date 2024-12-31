@@ -27,8 +27,8 @@ import com.example.cucumbers.model.CucumberThen;
 import com.example.cucumbers.model.CucumberWhen;
 import com.example.cucumbers.model.UserGiven;
 import com.flowbdd.report.junit5.test.BaseTest;
-import io.flowbdd.bdd.report.utils.ThenBuilder;
-import io.flowbdd.bdd.report.utils.WhenBuilder;
+import com.flowbdd.bdd.report.utils.ThenBuilder;
+import com.flowbdd.bdd.report.utils.WhenBuilder;
 import org.junit.jupiter.api.BeforeEach;
 
 import java.util.List;
