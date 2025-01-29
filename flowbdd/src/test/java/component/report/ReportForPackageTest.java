@@ -19,7 +19,7 @@
 package component.report;
 
 import com.flowbdd.report.junit5.launcher.TestLauncher;
-import com.flowbdd.report.junit5.results.extension.SmartReport;
+import com.flowbdd.report.junit5.results.extension.FlowBDD;
 import com.flowbdd.report.report.adapter.ReportFactory;
 import com.flowbdd.report.report.model.TestSuite;
 import com.flowbdd.report.report.model.TestSuiteNameToFile;
@@ -40,7 +40,7 @@ public class ReportForPackageTest extends AbstractReportTest {
     @Test
     void reportForOnePackageGeneratedCorrectly() {
         TestLauncher.launch(selectPackage(PACKAGE_NAME));
-        report = ReportFactory.create(SmartReport.getTestContext().getTestResults(), testVersionInfo());
+        report = ReportFactory.create(FlowBDD.getTestContext().getTestResults(), testVersionInfo());
 
         assertSuiteLinks();
         assertThat(report.getIndex().getSummary()).isEqualTo(new TestSuiteSummary(28, 14, 4, 8, 4));

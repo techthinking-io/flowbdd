@@ -19,7 +19,7 @@
 package component.results.annotations;
 
 import com.flowbdd.report.junit5.annotations.InjectNotes;
-import com.flowbdd.report.junit5.results.extension.SmartReport;
+import com.flowbdd.report.junit5.results.extension.FlowBDD;
 import com.flowbdd.report.junit5.results.extension.TestCaseNotesParameterResolver;
 import com.flowbdd.report.junit5.results.model.notes.Notes;
 import org.junit.jupiter.api.BeforeEach;
@@ -32,7 +32,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @TestMethodOrder(OrderAnnotation.class)
-@ExtendWith({SmartReport.class, TestCaseNotesParameterResolver.class})
+@ExtendWith({FlowBDD.class, TestCaseNotesParameterResolver.class})
 public class NotesUnderTest {
 
     private Notes notes;

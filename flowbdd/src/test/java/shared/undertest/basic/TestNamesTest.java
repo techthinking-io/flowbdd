@@ -18,7 +18,7 @@
 
 package shared.undertest.basic;
 
-import com.flowbdd.report.junit5.results.extension.SmartReport;
+import com.flowbdd.report.junit5.results.extension.FlowBDD;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -30,7 +30,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @TestMethodOrder(OrderAnnotation.class)
-@ExtendWith(SmartReport.class)
+@ExtendWith(FlowBDD.class)
 public class TestNamesTest {
 
     @Order(0)

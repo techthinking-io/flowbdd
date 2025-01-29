@@ -20,7 +20,7 @@ package com.flowbdd.report.junit5.test;
 
 import com.flowbdd.report.junit5.annotations.InjectTestCaseResult;
 import com.flowbdd.report.junit5.annotations.InjectTestSuiteResult;
-import com.flowbdd.report.junit5.results.extension.SmartReport;
+import com.flowbdd.report.junit5.results.extension.FlowBDD;
 import com.flowbdd.report.junit5.results.extension.TestSuiteResultParameterResolver;
 import com.flowbdd.report.junit5.results.model.TestCaseResult;
 import com.flowbdd.report.junit5.results.model.TestSuiteResult;
@@ -31,7 +31,7 @@ import org.junit.jupiter.api.TestInfo;
 import org.junit.jupiter.api.TestReporter;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-@ExtendWith({SmartReport.class, TestSuiteResultParameterResolver.class})
+@ExtendWith({FlowBDD.class, TestSuiteResultParameterResolver.class})
 public abstract class BaseTest {
 
     private Context context;

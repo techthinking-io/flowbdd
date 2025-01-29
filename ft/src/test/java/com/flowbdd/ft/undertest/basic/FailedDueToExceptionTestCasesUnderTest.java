@@ -18,7 +18,7 @@
 
 package com.flowbdd.ft.undertest.basic;
 
-import com.flowbdd.report.junit5.results.extension.SmartReport;
+import com.flowbdd.report.junit5.results.extension.FlowBDD;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledIf;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -47,7 +47,7 @@ import org.junit.jupiter.params.provider.ValueSource;
  *   <system-err><![CDATA[]]></system-err>
  * </testsuite>
  */
-@ExtendWith(SmartReport.class)
+@ExtendWith(FlowBDD.class)
 @EnabledIf("isEnabled")
 public class FailedDueToExceptionTestCasesUnderTest {
     private static Boolean enabled = false;

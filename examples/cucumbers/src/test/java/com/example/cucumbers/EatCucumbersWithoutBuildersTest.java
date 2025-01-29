@@ -20,7 +20,7 @@ package com.example.cucumbers;
 
 import com.example.cucumbers.model.Cucumber;
 import com.example.cucumbers.builders.CucumberBuilder;
-import com.flowbdd.report.junit5.results.extension.SmartReport;
+import com.flowbdd.report.junit5.results.extension.FlowBDD;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
@@ -40,7 +40,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * Tutorial and example usage of without builders. You don't want to do this, but it's possible.
  */
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-@ExtendWith(SmartReport.class)
+@ExtendWith(FlowBDD.class)
 public class EatCucumbersWithoutBuildersTest {
     private CucumberService cucumberService;
 

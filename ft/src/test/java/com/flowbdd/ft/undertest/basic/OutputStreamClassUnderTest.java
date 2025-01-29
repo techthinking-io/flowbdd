@@ -18,7 +18,7 @@
 
 package com.flowbdd.ft.undertest.basic;
 
-import com.flowbdd.report.junit5.results.extension.SmartReport;
+import com.flowbdd.report.junit5.results.extension.FlowBDD;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -28,7 +28,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@ExtendWith(SmartReport.class)
+@ExtendWith(FlowBDD.class)
 @EnabledIf("isEnabled")
 @TestMethodOrder(OrderAnnotation.class)
 public class OutputStreamClassUnderTest {

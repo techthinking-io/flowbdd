@@ -18,7 +18,7 @@
 
 package component.report;
 
-import com.flowbdd.report.junit5.results.extension.SmartReport;
+import com.flowbdd.report.junit5.results.extension.FlowBDD;
 import com.flowbdd.report.report.model.Report;
 import com.flowbdd.report.report.model.TestSuiteNameToFile;
 import com.flowbdd.report.report.model.VersionInfo;
@@ -56,7 +56,7 @@ public abstract class AbstractReportTest {
 
     @BeforeEach
     void setUp() {
-        SmartReport.getTestContext().reset();
+        FlowBDD.getTestContext().reset();
     }
 
     void assertSuiteLinks(List<TestSuiteNameToFile> suiteNameToFiles) {

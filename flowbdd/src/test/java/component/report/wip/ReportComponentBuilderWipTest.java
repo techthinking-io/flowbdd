@@ -19,7 +19,7 @@
 package component.report.wip;
 
 import com.flowbdd.report.junit5.launcher.TestLauncher;
-import com.flowbdd.report.junit5.results.extension.SmartReport;
+import com.flowbdd.report.junit5.results.extension.FlowBDD;
 import com.flowbdd.report.report.adapter.ReportFactory;
 import com.flowbdd.report.report.model.Clazz;
 import com.flowbdd.report.report.model.Method;
@@ -58,14 +58,14 @@ public class ReportComponentBuilderWipTest {
 
     @BeforeEach
     void setUp() {
-        SmartReport.getTestContext().reset();
+        FlowBDD.getTestContext().reset();
     }
 
     @Test
     void createReport() {
         TestLauncher.launch(CLASS_UNDER_TEST);
 
-        Report report = ReportFactory.create(SmartReport.getTestContext().getTestResults(), testVersionInfo());
+        Report report = ReportFactory.create(FlowBDD.getTestContext().getTestResults(), testVersionInfo());
         assertThat(report).isNotNull();
         assertThat(report.getTestCases()).hasSize(6);
 

@@ -19,7 +19,7 @@
 package component.results;
 
 import com.flowbdd.report.junit5.launcher.TestLauncher;
-import com.flowbdd.report.junit5.results.extension.SmartReport;
+import com.flowbdd.report.junit5.results.extension.FlowBDD;
 import com.flowbdd.report.junit5.results.model.TestCaseResult;
 import com.flowbdd.report.junit5.results.model.TestSuiteClass;
 import com.flowbdd.report.junit5.results.model.TestSuiteResult;
@@ -35,7 +35,7 @@ public abstract class AbstractResultsForTestSuite {
 
     @BeforeEach
     void setupEachTest() {
-        SmartReport.getTestContext().reset();
+        FlowBDD.getTestContext().reset();
         TestLauncher.launch(classUnderTest());
         testSuiteResult = testSuiteResult(classUnderTest());
     }
@@ -80,7 +80,7 @@ public abstract class AbstractResultsForTestSuite {
     }
 
     private TestSuiteResult testSuiteResult(Class<?> clazz) {
-        return SmartReport.getTestContext().getTestResults().getTestSuiteResults(TestSuiteClass.testSuiteClass(clazz));
+        return FlowBDD.getTestContext().getTestResults().getTestSuiteResults(TestSuiteClass.testSuiteClass(clazz));
     }
 
     protected void assertTestSuitClass(TestSuiteResult testSuiteResult, Class<?> clazz) {

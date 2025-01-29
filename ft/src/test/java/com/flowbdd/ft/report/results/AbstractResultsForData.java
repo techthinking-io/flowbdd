@@ -24,7 +24,7 @@ import com.flowbdd.ft.report.launcher.TestLauncher;
 import com.flowbdd.ft.common.AbstractReportTest;
 import com.flowbdd.report.config.ResolvedSmartBddConfig;
 import com.flowbdd.report.config.SmartBddConfig;
-import com.flowbdd.report.junit5.results.extension.SmartReport;
+import com.flowbdd.report.junit5.results.extension.FlowBDD;
 import com.flowbdd.report.report.model.DataReportIndex;
 import com.flowbdd.report.report.model.TestCase;
 import com.flowbdd.report.report.model.TestSuite;
@@ -69,7 +69,7 @@ public abstract class AbstractResultsForData extends AbstractReportTest {
 
     @BeforeEach
     void beforeEach() throws IOException {
-        SmartReport.getTestContext().reset();
+        FlowBDD.getTestContext().reset();
         startTime = LocalDateTime.now();
         TestExecutionListener testListener = new TestExecutionListener();
         TestLauncher.launch(classUnderTest(), testListener);

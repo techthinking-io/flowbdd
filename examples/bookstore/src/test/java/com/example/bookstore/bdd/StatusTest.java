@@ -18,7 +18,7 @@
 
 package com.example.bookstore.bdd;
 
-import com.flowbdd.report.junit5.results.extension.SmartReport;
+import com.flowbdd.report.junit5.results.extension.FlowBDD;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,7 +42,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  *    Then status running is return
  * </pre>
  */
-@ExtendWith(SmartReport.class)
+@ExtendWith(FlowBDD.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class StatusTest {
 

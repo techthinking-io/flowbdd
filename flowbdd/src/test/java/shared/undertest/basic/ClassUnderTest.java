@@ -18,7 +18,7 @@
 
 package shared.undertest.basic;
 
-import com.flowbdd.report.junit5.results.extension.SmartReport;
+import com.flowbdd.report.junit5.results.extension.FlowBDD;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -49,7 +49,7 @@ import static org.junit.jupiter.params.provider.Arguments.arguments;
  * </testsuite>
  */
 @TestMethodOrder(OrderAnnotation.class)
-@ExtendWith(SmartReport.class)
+@ExtendWith(FlowBDD.class)
 public class ClassUnderTest {
 
     @Order(0)

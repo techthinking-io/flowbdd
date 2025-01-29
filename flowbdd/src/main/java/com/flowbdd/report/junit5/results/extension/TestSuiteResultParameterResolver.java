@@ -33,7 +33,7 @@ public class TestSuiteResultParameterResolver implements ParameterResolver {
 
     @Override
     public Object resolveParameter(ParameterContext parameterContext, ExtensionContext extensionContext) {
-        TestResults testResults = SmartReport.getTestContext().getTestResults();
+        TestResults testResults = FlowBDD.getTestContext().getTestResults();
         return testResults.getTestResultsForClass(extensionContext);
     }
 }
