@@ -18,10 +18,10 @@
 
 package component.report;
 
-import com.flowbdd.report.junit5.results.extension.FlowBDD;
-import com.flowbdd.report.report.model.Report;
-import com.flowbdd.report.report.model.TestSuiteNameToFile;
-import com.flowbdd.report.report.model.VersionInfo;
+import io.techthinking.flowbdd.report.junit5.results.extension.FlowBDD;
+import io.techthinking.flowbdd.report.report.model.Report;
+import io.techthinking.flowbdd.report.report.model.TestSuiteNameToFile;
+import io.techthinking.flowbdd.report.report.model.VersionInfo;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;

@@ -22,7 +22,7 @@ import component.results.AbstractResultsForTestSuite;
 import org.junit.jupiter.api.Test;
 import shared.undertest.basic.DisabledTestCasesUnderTest;
 
-import static com.flowbdd.report.junit5.results.model.TestSuiteTotalsBuilder.aTestSuiteResultsMetadata;
+import static io.techthinking.flowbdd.report.junit5.results.model.TestSuiteTotalsBuilder.aTestSuiteResultsMetadata;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class DisabledResultsTest extends AbstractResultsForTestSuite {

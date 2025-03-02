@@ -19,17 +19,17 @@
 package component.results.scenarios;
 
 import component.results.AbstractResultsForTestSuite;
-import com.flowbdd.report.junit5.results.model.notes.Notes;
-import com.flowbdd.report.junit5.results.model.TestCaseResult;
-import com.flowbdd.report.junit5.results.model.TestCaseResultBuilder;
+import io.techthinking.flowbdd.report.junit5.results.model.notes.Notes;
+import io.techthinking.flowbdd.report.junit5.results.model.TestCaseResult;
+import io.techthinking.flowbdd.report.junit5.results.model.TestCaseResultBuilder;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import shared.undertest.basic.FailedDueToExceptionTestCasesUnderTest;
 
-import static com.flowbdd.report.junit5.results.model.TestCaseResultBuilder.aTestCaseResult;
-import static com.flowbdd.report.junit5.results.model.TestCaseResultStatus.FAILED;
-import static com.flowbdd.report.junit5.results.model.TestSuiteTotalsBuilder.aTestSuiteResultsMetadata;
+import static io.techthinking.flowbdd.report.junit5.results.model.TestCaseResultBuilder.aTestCaseResult;
+import static io.techthinking.flowbdd.report.junit5.results.model.TestCaseResultStatus.FAILED;
+import static io.techthinking.flowbdd.report.junit5.results.model.TestSuiteTotalsBuilder.aTestSuiteResultsMetadata;
 import static java.util.Collections.singletonList;
 import static org.assertj.core.api.Assertions.assertThat;
 

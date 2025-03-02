@@ -18,7 +18,7 @@
 
 package component.results;
 
-import com.flowbdd.report.junit5.results.model.TestCaseResult;
+import io.techthinking.flowbdd.report.junit5.results.model.TestCaseResult;
 import org.junit.jupiter.api.Test;
 import shared.undertest.basic.TestNamesTest;
 

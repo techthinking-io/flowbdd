@@ -18,11 +18,11 @@
 
 package component.report;
 
-import com.flowbdd.report.junit5.launcher.TestLauncher;
-import com.flowbdd.report.junit5.results.extension.FlowBDD;
-import com.flowbdd.report.report.adapter.ReportFactory;
-import com.flowbdd.report.report.model.TestSuiteNameToFile;
-import com.flowbdd.report.report.model.TestSuiteSummary;
+import io.techthinking.flowbdd.report.junit5.launcher.TestLauncher;
+import io.techthinking.flowbdd.report.junit5.results.extension.FlowBDD;
+import io.techthinking.flowbdd.report.report.adapter.ReportFactory;
+import io.techthinking.flowbdd.report.report.model.TestSuiteNameToFile;
+import io.techthinking.flowbdd.report.report.model.TestSuiteSummary;
 import org.junit.jupiter.api.Test;
 import shared.undertest.basic.ClassUnderTest;
 

@@ -19,9 +19,9 @@
 package component.report.utils;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.flowbdd.report.report.filehandling.FileRepository;
-import com.flowbdd.report.report.model.DataReportIndex;
-import com.flowbdd.report.report.model.TestSuite;
+import io.techthinking.flowbdd.report.report.filehandling.FileRepository;
+import io.techthinking.flowbdd.report.report.model.DataReportIndex;
+import io.techthinking.flowbdd.report.report.model.TestSuite;
 
 import java.io.IOException;
 import java.nio.file.Path;

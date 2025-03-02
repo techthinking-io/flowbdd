@@ -18,11 +18,11 @@
 
 package component.results;
 
-import com.flowbdd.report.junit5.launcher.TestLauncher;
-import com.flowbdd.report.junit5.results.extension.FlowBDD;
-import com.flowbdd.report.junit5.results.model.TestCaseResult;
-import com.flowbdd.report.junit5.results.model.TestSuiteClass;
-import com.flowbdd.report.junit5.results.model.TestSuiteResult;
+import io.techthinking.flowbdd.report.junit5.launcher.TestLauncher;
+import io.techthinking.flowbdd.report.junit5.results.extension.FlowBDD;
+import io.techthinking.flowbdd.report.junit5.results.model.TestCaseResult;
+import io.techthinking.flowbdd.report.junit5.results.model.TestSuiteClass;
+import io.techthinking.flowbdd.report.junit5.results.model.TestSuiteResult;
 import org.junit.jupiter.api.BeforeEach;
 
 import java.util.List;

@@ -18,17 +18,17 @@
 
 package component.report.wip;
 
-import com.flowbdd.report.junit5.launcher.TestLauncher;
-import com.flowbdd.report.junit5.results.extension.FlowBDD;
-import com.flowbdd.report.report.adapter.ReportFactory;
-import com.flowbdd.report.report.model.Clazz;
-import com.flowbdd.report.report.model.Method;
-import com.flowbdd.report.report.model.Report;
-import com.flowbdd.report.report.model.Status;
-import com.flowbdd.report.report.model.TestCase;
-import com.flowbdd.report.report.model.TestSuite;
-import com.flowbdd.report.report.model.VersionInfo;
-import com.flowbdd.report.report.model.builders.ClazzBuilder;
+import io.techthinking.flowbdd.report.junit5.launcher.TestLauncher;
+import io.techthinking.flowbdd.report.junit5.results.extension.FlowBDD;
+import io.techthinking.flowbdd.report.report.adapter.ReportFactory;
+import io.techthinking.flowbdd.report.report.model.Clazz;
+import io.techthinking.flowbdd.report.report.model.Method;
+import io.techthinking.flowbdd.report.report.model.Report;
+import io.techthinking.flowbdd.report.report.model.Status;
+import io.techthinking.flowbdd.report.report.model.TestCase;
+import io.techthinking.flowbdd.report.report.model.TestSuite;
+import io.techthinking.flowbdd.report.report.model.VersionInfo;
+import io.techthinking.flowbdd.report.report.model.builders.ClazzBuilder;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import shared.undertest.basic.ClassUnderTest;
@@ -39,9 +39,9 @@ import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
 import static component.report.wip.ReportComponentBuilderWipTest.AssertTestCase.assertTestCase;
-import static com.flowbdd.report.report.model.builders.ClazzBuilder.aClazz;
-import static com.flowbdd.report.report.model.builders.MethodBuilder.aMethod;
-import static com.flowbdd.report.report.model.builders.TestCaseBuilder.aTestCase;
+import static io.techthinking.flowbdd.report.report.model.builders.ClazzBuilder.aClazz;
+import static io.techthinking.flowbdd.report.report.model.builders.MethodBuilder.aMethod;
+import static io.techthinking.flowbdd.report.report.model.builders.TestCaseBuilder.aTestCase;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**

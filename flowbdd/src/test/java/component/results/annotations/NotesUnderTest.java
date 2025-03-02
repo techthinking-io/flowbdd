@@ -18,10 +18,10 @@
 
 package component.results.annotations;
 
-import com.flowbdd.report.junit5.annotations.InjectNotes;
-import com.flowbdd.report.junit5.results.extension.FlowBDD;
-import com.flowbdd.report.junit5.results.extension.TestCaseNotesParameterResolver;
-import com.flowbdd.report.junit5.results.model.notes.Notes;
+import io.techthinking.flowbdd.report.junit5.annotations.InjectNotes;
+import io.techthinking.flowbdd.report.junit5.results.extension.FlowBDD;
+import io.techthinking.flowbdd.report.junit5.results.extension.TestCaseNotesParameterResolver;
+import io.techthinking.flowbdd.report.junit5.results.model.notes.Notes;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.Order;

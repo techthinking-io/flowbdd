@@ -18,17 +18,17 @@
 
 package component.report;
 
-import com.flowbdd.report.report.model.builders.ArgumentBuilder;
-import com.flowbdd.report.report.model.builders.ClazzBuilder;
-import com.flowbdd.report.report.model.Status;
-import com.flowbdd.report.report.model.TestCase;
-import com.flowbdd.report.report.model.TestSuite;
+import io.techthinking.flowbdd.report.report.model.builders.ArgumentBuilder;
+import io.techthinking.flowbdd.report.report.model.builders.ClazzBuilder;
+import io.techthinking.flowbdd.report.report.model.Status;
+import io.techthinking.flowbdd.report.report.model.TestCase;
+import io.techthinking.flowbdd.report.report.model.TestSuite;
 
-import static com.flowbdd.report.report.model.builders.ArgumentBuilder.anArgument;
-import static com.flowbdd.report.report.model.builders.ClazzBuilder.aClazz;
-import static com.flowbdd.report.report.model.builders.MethodBuilder.aMethod;
-import static com.flowbdd.report.report.model.builders.TestCaseBuilder.aTestCase;
-import static com.flowbdd.report.report.model.builders.TestSuiteSummaryBuilder.aTestSuiteSummary;
+import static io.techthinking.flowbdd.report.report.model.builders.ArgumentBuilder.anArgument;
+import static io.techthinking.flowbdd.report.report.model.builders.ClazzBuilder.aClazz;
+import static io.techthinking.flowbdd.report.report.model.builders.MethodBuilder.aMethod;
+import static io.techthinking.flowbdd.report.report.model.builders.TestCaseBuilder.aTestCase;
+import static io.techthinking.flowbdd.report.report.model.builders.TestSuiteSummaryBuilder.aTestSuiteSummary;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class ReportAssertions {

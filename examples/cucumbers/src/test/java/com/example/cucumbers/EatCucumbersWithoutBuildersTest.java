@@ -20,7 +20,7 @@ package com.example.cucumbers;
 
 import com.example.cucumbers.model.Cucumber;
 import com.example.cucumbers.builders.CucumberBuilder;
-import com.flowbdd.report.junit5.results.extension.FlowBDD;
+import io.techthinking.flowbdd.report.junit5.results.extension.FlowBDD;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;

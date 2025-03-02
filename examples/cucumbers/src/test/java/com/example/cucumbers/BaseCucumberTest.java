@@ -26,7 +26,7 @@ import com.example.cucumbers.model.CucumberGiven;
 import com.example.cucumbers.model.CucumberThen;
 import com.example.cucumbers.model.CucumberWhen;
 import com.example.cucumbers.model.UserGiven;
-import com.flowbdd.report.junit5.test.BaseTest;
+import io.techthinking.flowbdd.report.junit5.test.BaseTest;
 import com.flowbdd.bdd.report.utils.ThenBuilder;
 import com.flowbdd.bdd.report.utils.WhenBuilder;
 import org.junit.jupiter.api.BeforeEach;
@@ -34,7 +34,7 @@ import org.junit.jupiter.api.BeforeEach;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.flowbdd.report.mermaid.MessageBuilder.aMessage;
+import static io.techthinking.flowbdd.report.mermaid.MessageBuilder.aMessage;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class BaseCucumberTest extends BaseTest {
