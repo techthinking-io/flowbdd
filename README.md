@@ -1,13 +1,13 @@
-# Smart BDD
+# Flow BDD
 
 ![example workflow](https://github.com/bit-smart-io/smart-bdd/actions/workflows/build.yml/badge.svg)
 
 ## Overview
 
-Smart BDD is the most productive way to implement Behaviour Driven Development. Traditional frameworks have you write
+Flow BDD is the most productive way to implement Behaviour Driven Development. Traditional frameworks have you write
 the static feature files first, then implement code.
 
-With Smart BDD you write the code first using best practices and this generates:
+With Flow BDD you write the code first using best practices and this generates:
 
 * **Interactive** feature files that serve as documentation
 * UML diagrams to better document the product
@@ -23,7 +23,7 @@ public class GetBookTest extends BaseBookStoreTest {
 
     @Override
     public void doc() {
-        featureNotes("Working progress for example of usage Smart BDD");
+        featureNotes("Working progress for example of usage Flow BDD");
     }
 
     @Test
@@ -69,7 +69,7 @@ code that is corrupted by the feature file. This is additional complexity and wi
 * Which too often results rewriting the testing framework
 
 Yes a small and simple Cucumber, Concordion, JBehave etc... project is simple, the same can be said about most
-frameworks and projects. So the argument for Smart BDD is best made with real world projects.
+frameworks and projects. So the argument for Flow BDD is best made with real world projects.
 
 ## Implemented Features
 
@@ -146,7 +146,7 @@ When I request to eat cucumbers with colour "red"
 Then I should have cucumbers with quantity 1 with colour "blue"
 ```
 
-## Smart BDD projects:
+## Flow BDD projects:
 
 | project name  | package  | description  | notes  |
 |------------|-------------|--------------|--------|
@@ -155,7 +155,7 @@ Then I should have cucumbers with quantity 1 with colour "blue"
 | wordify    | io.bitsmart.bdd.wordify | wordify java code | |
 | ft         | io.bitsmart.bdd.ft | FT for the report generation | | 
 | test-utils | io.bitsmart.bdd.report.utils | testing utils such as builder | only the builders at the moment | 
-| examples   | n/a| examples of using Smart BDD |  | 
+| examples   | n/a| examples of using Flow BDD |  | 
 
 Notes on naming:
 
@@ -216,7 +216,7 @@ These 3 forces can unfortunately can compound each other. Complexity and couplin
 of the solution. Layers 1-3 exist so that we can have feature files, these serve as static documentation for the system.
 There are no guaranties that the documentation is consistent, in fact there isn't anything enforcing it.
 
-The alternative to this is generating dynamic, consistent documentation. With Smart BDD you leg up on developing the
+The alternative to this is generating dynamic, consistent documentation. With Flow BDD you leg up on developing the
 actual FT framework, so you can focus on testing your application. You add `@SmartReport` annotation to your class, this
 will generate a report. There is a `wordify` process that takes the Java code and converts it in English sentences. For
 example `givenSomething()` would produce `given something`. There is a strong emphasis on using builders therefore

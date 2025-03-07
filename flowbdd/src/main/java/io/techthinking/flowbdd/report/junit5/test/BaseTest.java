@@ -1,5 +1,5 @@
 /*
- * Smart BDD - The smart way to do behavior-driven development.
+ * Flow BDD - The productive way to test.
  * Copyright (C)  2021  James Bayliss
  *
  * This program is free software: you can redistribute it and/or modify
@@ -41,7 +41,7 @@ public abstract class BaseTest {
      *
      * @param testCaseResult update the results with data such as request/response http headers and body.
      * @param testInfo basic test info
-     * @param testReporter not hooked up to smart bdd yet
+     * @param testReporter not hooked up to Flow BDD yet
      */
     @BeforeEach
     void setUp(
