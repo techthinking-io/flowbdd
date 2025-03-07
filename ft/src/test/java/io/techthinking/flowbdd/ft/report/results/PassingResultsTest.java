@@ -53,8 +53,8 @@ public class PassingResultsTest extends AbstractResultsForData {
      * {
      *   "links" : {
      *     "testSuites" : [ {
-     *       "name" : "com.flowbdd.ft.ClassUnderTest",
-     *       "file" : "TEST-com.flowbdd.ft.ClassUnderTest.json"
+     *       "name" : "io.techthinking.flowbdd.ft.ClassUnderTest",
+     *       "file" : "TEST-io.techthinking.flowbdd.ft.ClassUnderTest.json"
      *     } ]
      *   },
      *   "summary" : {
@@ -70,8 +70,8 @@ public class PassingResultsTest extends AbstractResultsForData {
     @Test
     void generatesIndexJson() {
         assertIndexLinks(aTestSuiteNameToFile()
-            .withName("com.flowbdd.ft.undertest.basic.ClassUnderTest")
-            .withFile("TEST-com.flowbdd.ft.undertest.basic.ClassUnderTest.json"));
+            .withName("io.techthinking.flowbdd.ft.undertest.basic.ClassUnderTest")
+            .withFile("TEST-io.techthinking.flowbdd.ft.undertest.basic.ClassUnderTest.json"));
         assertIndexSummary(aTestSuiteSummary()
             .withTestCase(6)
             .withPassed(6)
@@ -117,6 +117,6 @@ public class PassingResultsTest extends AbstractResultsForData {
     }
 
     private static ClazzBuilder aDefaultClazz() {
-        return aClazz().withClassName("ClassUnderTest").withPackageName("com.flowbdd.ft.undertest.basic").withFullyQualifiedName("com.flowbdd.ft.undertest.basic.ClassUnderTest");
+        return aClazz().withClassName("ClassUnderTest").withPackageName("io.techthinking.flowbdd.ft.undertest.basic").withFullyQualifiedName("io.techthinking.flowbdd.ft.undertest.basic.ClassUnderTest");
     }
 }

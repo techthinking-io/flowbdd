@@ -50,8 +50,8 @@ public class FailingDueToExceptionResultsTest extends AbstractResultsForData {
      * {
      *   "links" : {
      *     "testSuites" : [ {
-     *       "name" : "com.flowbdd.ft.undertest.basic.FailedDueToExceptionTestCasesUnderTest",
-     *       "file" : "TEST-com.flowbdd.ft.undertest.basic.FailedDueToExceptionTestCasesUnderTest.json"
+     *       "name" : "io.techthinking.flowbdd.ft.undertest.basic.FailedDueToExceptionTestCasesUnderTest",
+     *       "file" : "TEST-io.techthinking.flowbdd.ft.undertest.basic.FailedDueToExceptionTestCasesUnderTest.json"
      *     } ]
      *   },
      *   "summary" : {
@@ -68,8 +68,8 @@ public class FailingDueToExceptionResultsTest extends AbstractResultsForData {
     @Test
     void generatesIndexJson() {
         assertIndexLinks(aTestSuiteNameToFile()
-            .withName("com.flowbdd.ft.undertest.basic.FailedDueToExceptionTestCasesUnderTest")
-            .withFile("TEST-com.flowbdd.ft.undertest.basic.FailedDueToExceptionTestCasesUnderTest.json"));
+            .withName("io.techthinking.flowbdd.ft.undertest.basic.FailedDueToExceptionTestCasesUnderTest")
+            .withFile("TEST-io.techthinking.flowbdd.ft.undertest.basic.FailedDueToExceptionTestCasesUnderTest.json"));
         assertIndexSummary(aTestSuiteSummary()
             .withTestCase(4)
             .withPassed(0)
@@ -95,7 +95,7 @@ public class FailingDueToExceptionResultsTest extends AbstractResultsForData {
      * status=FAILED,
      * cause=Throwable{clazz=Clazz{fullyQualifiedName='java.lang.NullPointerException', className='NullPointerException', packageName='java.lang'}, message='null', cause=Throwable{clazz=Clazz{fullyQualifiedName='java.lang.NullPointerException', className='NullPointerException', packageName='java.lang'}, message='null', cause=null, stackTrace=[TODO stacktrace]}, stackTrace=[TODO stacktrace]},
      * method=Method{name='testMethod', wordify='Test method', arguments=[]},
-     * clazz=Clazz{fullyQualifiedName='com.flowbdd.ft.undertest.basic.FailedDueToExceptionTestCasesUnderTest', className='FailedDueToExceptionTestCasesUnderTest', packageName='com.flowbdd.ft.undertest.basic'},
+     * clazz=Clazz{fullyQualifiedName='io.techthinking.flowbdd.ft.undertest.basic.FailedDueToExceptionTestCasesUnderTest', className='FailedDueToExceptionTestCasesUnderTest', packageName='io.techthinking.flowbdd.ft.undertest.basic'},
      * notes=null,
      * timings=TestCaseTimings{beforeEach=0, afterEach=0, underTest=0, total=0}
      * }
@@ -110,6 +110,6 @@ public class FailingDueToExceptionResultsTest extends AbstractResultsForData {
 
 
     private static ClazzBuilder aDefaultClazz() {
-        return aClazz().withClassName("FailedDueToExceptionTestCasesUnderTest").withPackageName("com.flowbdd.ft.undertest.basic").withFullyQualifiedName("com.flowbdd.ft.undertest.basic.FailedDueToExceptionTestCasesUnderTest");
+        return aClazz().withClassName("FailedDueToExceptionTestCasesUnderTest").withPackageName("io.techthinking.flowbdd.ft.undertest.basic").withFullyQualifiedName("io.techthinking.flowbdd.ft.undertest.basic.FailedDueToExceptionTestCasesUnderTest");
     }
 }

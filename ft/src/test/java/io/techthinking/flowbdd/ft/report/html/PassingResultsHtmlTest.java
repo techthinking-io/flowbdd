@@ -37,7 +37,7 @@ public class PassingResultsHtmlTest extends AbstractResultsForHtml {
      * Summary of all Tests
      * Summary: passed: 6, skipped: 0, failed: 0, aborted: 0, tests: 6
      *
-     * com.flowbdd.ft.undertest.basic.ClassUnderTest
+     * io.techthinking.flowbdd.ft.undertest.basic.ClassUnderTest
      */
     @Test
     void generatesIndexJson()  {
@@ -45,7 +45,7 @@ public class PassingResultsHtmlTest extends AbstractResultsForHtml {
         assertThat(reportIndex())
             .contains("Summary of all Tests")
             .contains("Summary: passed: 6, skipped: 0, failed: 0, aborted: 0, tests: 6")
-            .contains("<a href=\"TEST-com.flowbdd.ft.undertest.basic.ClassUnderTest.html\">com.flowbdd.ft.undertest.basic.ClassUnderTest</a>");
+            .contains("<a href=\"TEST-io.techthinking.flowbdd.ft.undertest.basic.ClassUnderTest.html\">io.techthinking.flowbdd.ft.undertest.basic.ClassUnderTest</a>");
     }
 
     /**
@@ -76,7 +76,7 @@ public class PassingResultsHtmlTest extends AbstractResultsForHtml {
         assertThat(testSuite()).isNotNull();
         assertThat(testSuite())
             .contains("<a href=\"./index.html\">index</a>")
-            .contains("com.flowbdd.ft.undertest.basic.ClassUnderTest")
+            .contains("io.techthinking.flowbdd.ft.undertest.basic.ClassUnderTest")
             .contains("Feature:")
             .contains("Class under test")
             .contains("Scenario:")

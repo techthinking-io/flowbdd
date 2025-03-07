@@ -40,7 +40,7 @@ public class BookStoreHtmlTest extends AbstractResultsForHtml {
         assertThat(reportIndex())
             .contains("Summary of all Tests")
             .contains("Summary: passed: 1, skipped: 0, failed: 0, aborted: 0, tests: 1")
-            .contains("<a href=\"TEST-com.flowbdd.ft.undertest.scenarios.bookstore.BookStoreUnderTest.html\">com.flowbdd.ft.undertest.scenarios.bookstore.BookStoreUnderTest</a>");
+            .contains("<a href=\"TEST-io.techthinking.flowbdd.ft.undertest.scenarios.bookstore.BookStoreUnderTest.html\">io.techthinking.flowbdd.ft.undertest.scenarios.bookstore.BookStoreUnderTest</a>");
     }
 
     @Test
@@ -57,7 +57,7 @@ public class BookStoreHtmlTest extends AbstractResultsForHtml {
         assertThat(testSuite()).isNotNull();
         assertThat(testSuite())
             .contains("<a href=\"./index.html\">index</a>")
-            .contains("com.flowbdd.ft.undertest.scenarios.bookstore.BookStoreUnderTest");
+            .contains("io.techthinking.flowbdd.ft.undertest.scenarios.bookstore.BookStoreUnderTest");
     }
 
     @Test
