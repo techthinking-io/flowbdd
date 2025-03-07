@@ -1,5 +1,5 @@
 /*
- * Smart BDD - The smart way to do behavior-driven development.
+ * Flow BDD - The productive way to test.
  * Copyright (C)  2021  James Bayliss
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,7 +18,7 @@
 
 package com.example.bookstore.bdd;
 
-import io.bitsmart.bdd.report.junit5.results.extension.SmartReport;
+import io.techthinking.flowbdd.report.junit5.results.extension.FlowBDD;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,7 +42,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  *    Then status running is return
  * </pre>
  */
-@ExtendWith(SmartReport.class)
+@ExtendWith(FlowBDD.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class StatusTest {
 

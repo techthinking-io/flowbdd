@@ -1,5 +1,5 @@
 /*
- * Smart BDD - The smart way to do behavior-driven development.
+ * Flow BDD - The productive way to test.
  * Copyright (C)  2021  James Bayliss
  *
  * This program is free software: you can redistribute it and/or modify
@@ -23,8 +23,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.tomakehurst.wiremock.junit5.WireMockExtension;
 import com.github.tomakehurst.wiremock.stubbing.ServeEvent;
-import io.bitsmart.bdd.report.junit5.results.extension.SmartReport;
-import io.bitsmart.bdd.report.junit5.test.BaseTest;
+import io.techthinking.flowbdd.report.junit5.results.extension.FlowBDD;
+import io.techthinking.flowbdd.report.junit5.test.BaseTest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
@@ -50,7 +50,7 @@ import static com.github.tomakehurst.wiremock.client.WireMock.getAllServeEvents;
 import static com.github.tomakehurst.wiremock.client.WireMock.stubFor;
 import static com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo;
 import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.wireMockConfig;
-import static io.bitsmart.bdd.report.mermaid.MessageBuilder.aMessage;
+import static io.techthinking.flowbdd.report.mermaid.MessageBuilder.aMessage;
 import static java.util.Collections.singletonList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.http.HttpStatus.EXPECTATION_FAILED;
@@ -60,7 +60,7 @@ import static org.springframework.http.HttpStatus.NOT_FOUND;
  * To get UML and docs extend BaseTest
  */
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-@ExtendWith(SmartReport.class)
+@ExtendWith(FlowBDD.class)
 @SpringBootTest(
     webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT
 )
@@ -68,7 +68,7 @@ public class GetBookByIsbnTest extends BaseTest {
 
     @Override
     public void doc() {
-        featureNotes("Working progress for example of usage Smart BDD");
+        featureNotes("Working progress for example of usage Flow BDD");
     }
 
     @Autowired

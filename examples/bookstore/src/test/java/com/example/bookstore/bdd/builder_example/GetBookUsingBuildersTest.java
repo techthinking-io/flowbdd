@@ -1,5 +1,5 @@
 /*
- * Smart BDD - The smart way to do behavior-driven development.
+ * Flow BDD - The productive way to test.
  * Copyright (C)  2022  James Bayliss
  *
  * This program is free software: you can redistribute it and/or modify
@@ -47,7 +47,7 @@ public class GetBookUsingBuildersTest extends BaseBookStoreTest {
 
     @Override
     public void doc() {
-        featureNotes("Working progress for example of usage Smart BDD");
+        featureNotes("Working progress for example of usage Flow BDD");
     }
 
     @Test

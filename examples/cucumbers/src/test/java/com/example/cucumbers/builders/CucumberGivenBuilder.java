@@ -1,5 +1,5 @@
 /*
- * Smart BDD - The smart way to do behavior-driven development.
+ * Flow BDD - The productive way to test.
  * Copyright (C)  2021  James Bayliss
  *
  * This program is free software: you can redistribute it and/or modify
@@ -19,7 +19,7 @@
 package com.example.cucumbers.builders;
 
 import com.example.cucumbers.model.CucumberGiven;
-import io.bitsmart.bdd.report.utils.GivenBuilder;
+import io.techthinking.flowbdd.bdd.report.utils.GivenBuilder;
 
 public class CucumberGivenBuilder implements GivenBuilder<CucumberGiven> {
     private final CucumbersBuilder cucumbers;

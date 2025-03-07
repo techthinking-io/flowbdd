@@ -1,5 +1,5 @@
 /*
- * Smart BDD - The smart way to do behavior-driven development.
+ * Flow BDD - The productive way to test.
  * Copyright (C)  2021  James Bayliss
  *
  * This program is free software: you can redistribute it and/or modify
@@ -23,7 +23,7 @@ plugins {
     id("io.spring.dependency-management") version "1.0.15.RELEASE"
 }
 
-group = "io.bitsmart.bdd.example"
+group = "com.flowbdd.example"
 version = "0.1.1-SNAPSHOT"
 description = "Bookstore example"
 //java.sourceCompatibility = JavaVersion.VERSION_1_8
@@ -48,8 +48,8 @@ dependencies {
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 
-    testImplementation(project(":report"))
-    testImplementation(project(":test-utils")) // should this be an additional dependency or report api?
+    testImplementation(project(":flowbdd"))
+    testImplementation(project(":flowbdd-test-utils")) // should this be an additional dependency or report api?
 }
 
 tasks.test {

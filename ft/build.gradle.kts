@@ -1,5 +1,5 @@
 /*
- * Smart BDD - The smart way to do behavior-driven development.
+ * Flow BDD - The productive way to test.
  * Copyright (C)  2021  James Bayliss
  *
  * This program is free software: you can redistribute it and/or modify
@@ -17,10 +17,10 @@
  */
 
 plugins {
-    id("smart-bdd.java-lib")
+    id("flowbdd.java-lib")
 }
 
-group = "io.bitsmart.bdd.ft"
+group = "com.flowbdd.ft"
 version = "0.1.1-SNAPSHOT"
 description = "Functional Tests"
 
@@ -29,8 +29,8 @@ repositories {
 }
 
 dependencies {
-    implementation(project(":report"))
-    implementation(project(":test-utils"))
+    implementation(project(":flowbdd"))
+    implementation(project(":flowbdd-test-utils"))
 
     implementation("com.fasterxml.jackson.core:jackson-databind:2.12.1")
     implementation("com.fasterxml.jackson.core:jackson-annotations:2.12.1")

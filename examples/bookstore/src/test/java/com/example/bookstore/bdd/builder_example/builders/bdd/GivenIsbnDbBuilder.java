@@ -1,5 +1,5 @@
 /*
- * Smart BDD - The smart way to do behavior-driven development.
+ * Flow BDD - The productive way to test.
  * Copyright (C)  2021  James Bayliss
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,7 +20,7 @@ package com.example.bookstore.bdd.builder_example.builders.bdd;
 
 import com.example.bookstore.bdd.builder_example.model.bdd.GivenIsbnDb;
 import com.example.bookstore.bdd.builder_example.model.bdd.GivenIsbnDbEntry;
-import io.bitsmart.bdd.report.utils.Builder;
+import io.techthinking.flowbdd.bdd.report.utils.Builder;
 
 import java.util.ArrayList;
 import java.util.List;

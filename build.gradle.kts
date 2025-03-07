@@ -1,5 +1,5 @@
 /*
- * Smart BDD - The smart way to do behavior-driven development.
+ * Flow BDD - The productive way to test.
  * Copyright (C)  2021  James Bayliss
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,7 +20,7 @@ plugins {
     java
 }
 
-group = "io.bit-smart.bdd"
+group = "com.flowbdd"
 version "0.1-SNAPSHOT"
 
 repositories {
