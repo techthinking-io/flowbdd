@@ -19,7 +19,7 @@
 package com.example.cucumbers.builders;
 
 import com.example.cucumbers.model.UserGiven;
-import com.flowbdd.bdd.report.utils.Builder;
+import io.techthinking.flowbdd.bdd.report.utils.Builder;
 
 public final class UserGivenBuilder implements Builder<UserGiven>  {
     private boolean isHungry;

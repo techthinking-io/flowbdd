@@ -19,7 +19,7 @@
 package io.techthinking.flowbdd.report.report.model.builders;
 
 import io.techthinking.flowbdd.report.report.model.DataReportIndex;
-import com.flowbdd.bdd.report.utils.Builder;
+import io.techthinking.flowbdd.bdd.report.utils.Builder;
 
 import static io.techthinking.flowbdd.report.report.model.builders.TestSuiteLinksBuilder.aTestSuiteLinks;
 import static io.techthinking.flowbdd.report.report.model.builders.TestSuiteSummaryBuilder.aTestSuiteSummary;

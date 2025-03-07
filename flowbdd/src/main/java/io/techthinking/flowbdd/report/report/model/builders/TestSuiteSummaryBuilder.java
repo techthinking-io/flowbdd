@@ -19,7 +19,7 @@
 package io.techthinking.flowbdd.report.report.model.builders;
 
 import io.techthinking.flowbdd.report.report.model.TestSuiteSummary;
-import com.flowbdd.bdd.report.utils.Builder;
+import io.techthinking.flowbdd.bdd.report.utils.Builder;
 
 public final class TestSuiteSummaryBuilder implements Builder<TestSuiteSummary> {
     private int testCase;

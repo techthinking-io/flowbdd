@@ -22,7 +22,7 @@ import io.techthinking.flowbdd.report.report.model.Status;
 import io.techthinking.flowbdd.report.report.model.TestCaseTimings;
 import io.techthinking.flowbdd.report.report.model.TestCase;
 import io.techthinking.flowbdd.report.report.model.notes.Notes;
-import com.flowbdd.bdd.report.utils.Builder;
+import io.techthinking.flowbdd.bdd.report.utils.Builder;
 
 public final class TestCaseBuilder implements Builder<TestCase> {
     private String wordify;

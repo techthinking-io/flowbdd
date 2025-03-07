@@ -19,7 +19,7 @@
 package com.example.cucumbers.builders;
 
 import com.example.cucumbers.model.CucumberThen;
-import com.flowbdd.bdd.report.utils.ThenBuilder;
+import io.techthinking.flowbdd.bdd.report.utils.ThenBuilder;
 
 import java.util.List;
 

@@ -19,8 +19,8 @@
 package io.techthinking.flowbdd.report.report.model.builders;
 
 import io.techthinking.flowbdd.report.report.model.Method;
-import com.flowbdd.bdd.report.utils.Builder;
-import com.flowbdd.bdd.report.utils.BuilderUtils;
+import io.techthinking.flowbdd.bdd.report.utils.Builder;
+import io.techthinking.flowbdd.bdd.report.utils.BuilderUtils;
 
 import java.util.ArrayList;
 import java.util.List;

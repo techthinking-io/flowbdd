@@ -20,7 +20,7 @@ package com.example.bookstore.bdd.builder_example.builders.bdd;
 
 import com.example.bookstore.bdd.builder_example.model.bdd.GivenIsbnDb;
 import com.example.bookstore.bdd.builder_example.model.bdd.GivenIsbnDbEntry;
-import com.flowbdd.bdd.report.utils.Builder;
+import io.techthinking.flowbdd.bdd.report.utils.Builder;
 
 import java.util.ArrayList;
 import java.util.List;

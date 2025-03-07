@@ -19,7 +19,7 @@
 package io.techthinking.flowbdd.report.report.model.builders;
 
 import io.techthinking.flowbdd.report.junit5.results.model.notes.Notes;
-import com.flowbdd.bdd.report.utils.Builder;
+import io.techthinking.flowbdd.bdd.report.utils.Builder;
 
 /**
  * TODO should we create builders for things that don't have logic in the build()?
