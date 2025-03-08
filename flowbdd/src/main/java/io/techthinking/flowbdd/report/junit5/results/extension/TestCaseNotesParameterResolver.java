@@ -33,7 +33,7 @@ public class TestCaseNotesParameterResolver implements ParameterResolver {
 
     @Override
     public Object resolveParameter(ParameterContext parameterContext, ExtensionContext extensionContext) {
-        TestResults testResults = FlowBDD.getTestContext().getTestResults();
+        TestResults testResults = FlowBdd.getTestContext().getTestResults();
         return testResults.getTestResultsForClass(extensionContext).getTestCaseResult(extensionContext).getNotes();
     }
 }

@@ -19,7 +19,7 @@
 package component.report.wip;
 
 import io.techthinking.flowbdd.report.junit5.launcher.TestLauncher;
-import io.techthinking.flowbdd.report.junit5.results.extension.FlowBDD;
+import io.techthinking.flowbdd.report.junit5.results.extension.FlowBdd;
 import io.techthinking.flowbdd.report.report.adapter.ReportFactory;
 import io.techthinking.flowbdd.report.report.model.Clazz;
 import io.techthinking.flowbdd.report.report.model.Method;
@@ -58,14 +58,14 @@ public class ReportComponentBuilderWipTest {
 
     @BeforeEach
     void setUp() {
-        FlowBDD.getTestContext().reset();
+        FlowBdd.getTestContext().reset();
     }
 
     @Test
     void createReport() {
         TestLauncher.launch(CLASS_UNDER_TEST);
 
-        Report report = ReportFactory.create(FlowBDD.getTestContext().getTestResults(), testVersionInfo());
+        Report report = ReportFactory.create(FlowBdd.getTestContext().getTestResults(), testVersionInfo());
         assertThat(report).isNotNull();
         assertThat(report.getTestCases()).hasSize(6);
 

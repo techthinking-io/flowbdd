@@ -18,7 +18,7 @@
 
 package shared.undertest.basic;
 
-import io.techthinking.flowbdd.report.junit5.results.extension.FlowBDD;
+import io.techthinking.flowbdd.report.junit5.results.extension.FlowBdd;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -50,7 +50,7 @@ import static org.junit.jupiter.api.Assumptions.assumeTrue;
  *
  * Not sure why the generated report states skipped. But the TestWatcher extension raises an aborted event.
  */
-@ExtendWith(FlowBDD.class)
+@ExtendWith(FlowBdd.class)
 public class AbortedTestCasesUnderTest {
 
     @Test

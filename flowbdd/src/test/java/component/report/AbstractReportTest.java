@@ -18,7 +18,7 @@
 
 package component.report;
 
-import io.techthinking.flowbdd.report.junit5.results.extension.FlowBDD;
+import io.techthinking.flowbdd.report.junit5.results.extension.FlowBdd;
 import io.techthinking.flowbdd.report.report.model.Report;
 import io.techthinking.flowbdd.report.report.model.TestSuiteNameToFile;
 import io.techthinking.flowbdd.report.report.model.VersionInfo;
@@ -56,7 +56,7 @@ public abstract class AbstractReportTest {
 
     @BeforeEach
     void setUp() {
-        FlowBDD.getTestContext().reset();
+        FlowBdd.getTestContext().reset();
     }
 
     void assertSuiteLinks(List<TestSuiteNameToFile> suiteNameToFiles) {

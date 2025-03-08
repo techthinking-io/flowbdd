@@ -18,7 +18,7 @@
 
 package io.techthinking.flowbdd.ft.undertest.basic;
 
-import io.techthinking.flowbdd.report.junit5.results.extension.FlowBDD;
+import io.techthinking.flowbdd.report.junit5.results.extension.FlowBdd;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledIf;
@@ -41,7 +41,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  *   <system-err><![CDATA[]]></system-err>
  * </testsuite>
  */
-@ExtendWith(FlowBDD.class)
+@ExtendWith(FlowBdd.class)
 @EnabledIf("isEnabled")
 public class DisabledTestCasesUnderTest {
     private static Boolean enabled = false;

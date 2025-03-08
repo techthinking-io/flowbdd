@@ -18,7 +18,7 @@
 
 package io.techthinking.flowbdd.ft.undertest.basic;
 
-import io.techthinking.flowbdd.report.junit5.results.extension.FlowBDD;
+import io.techthinking.flowbdd.report.junit5.results.extension.FlowBdd;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledIf;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -51,7 +51,7 @@ import static org.junit.jupiter.api.Assumptions.assumeTrue;
  *
  * Not sure why the generated report states skipped. But the TestWatcher extension raises an aborted event.
  */
-@ExtendWith(FlowBDD.class)
+@ExtendWith(FlowBdd.class)
 @EnabledIf("isEnabled")
 public class AbortedTestCasesUnderTest {
     private static Boolean enabled = false;
