@@ -1,6 +1,8 @@
 # Flow BDD
 
 ![example workflow](https://github.com/techthinking-io/flowbdd/actions/workflows/build.yml/badge.svg)
+![Static Badge](https://img.shields.io/badge/License-GPL--3.0-yellow)
+![Static Badge](https://img.shields.io/badge/Junit-5-yellow)
 
 ## Overview
 
