@@ -1,6 +1,6 @@
 # Flow BDD
 
-![example workflow](https://github.com/bit-smart-io/smart-bdd/actions/workflows/build.yml/badge.svg)
+![example workflow](https://github.com/techthinking-io/flowbdd/actions/workflows/build.yml/badge.svg)
 
 ## Overview
 

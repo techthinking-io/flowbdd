@@ -23,7 +23,7 @@ plugins {
     signing
 }
 
-group = "com.flowbdd"
+group = "io.techthinking"
 version = "0.1.1-SNAPSHOT"
 description = "Test Utils"
 
@@ -57,7 +57,7 @@ publishing {
             pom {
                 name.set("Test Utils")
                 description.set("Test Utils")
-                url.set("https://github.com/bit-smart-io/smart-bdd")
+                url.set("https://github.com/techthinking-io/flowbdd")
 
                 licenses {
                     license {
@@ -73,8 +73,8 @@ publishing {
                     }
                 }
                 scm {
-                    connection.set("https://github.com/bitsmartio/smart-bdd.git")
-                    url.set("https://github.com/bit-smart-io/smart-bdd")
+                    connection.set("https://github.com/techthinking-io/flowbdd.git")
+                    url.set("https://github.com/techthinking-io/flowbdd")
                 }
             }
         }

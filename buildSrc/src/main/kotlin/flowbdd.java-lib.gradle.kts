@@ -20,7 +20,7 @@ plugins {
     `java-library`
 }
 
-group = "com.flowbdd"
+group = "io.techthinking"
 version = "0.1.1-SNAPSHOT"
 description = "Java dependencies"
 val junitVersion = "5.10.2"
