@@ -18,7 +18,7 @@
 
 package io.techthinking.flowbdd.ft.undertest.basic;
 
-import io.techthinking.flowbdd.report.junit5.results.extension.FlowBDD;
+import io.techthinking.flowbdd.report.junit5.results.extension.FlowBdd;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -49,7 +49,7 @@ import static org.junit.jupiter.params.provider.Arguments.arguments;
  *   <system-err><![CDATA[]]></system-err>
  * </testsuite>
  */
-@ExtendWith(FlowBDD.class)
+@ExtendWith(FlowBdd.class)
 @EnabledIf("isEnabled")
 @TestMethodOrder(OrderAnnotation.class)
 public class ClassUnderTest {

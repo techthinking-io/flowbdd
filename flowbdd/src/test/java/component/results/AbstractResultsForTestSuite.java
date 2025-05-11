@@ -19,7 +19,7 @@
 package component.results;
 
 import io.techthinking.flowbdd.report.junit5.launcher.TestLauncher;
-import io.techthinking.flowbdd.report.junit5.results.extension.FlowBDD;
+import io.techthinking.flowbdd.report.junit5.results.extension.FlowBdd;
 import io.techthinking.flowbdd.report.junit5.results.model.TestCaseResult;
 import io.techthinking.flowbdd.report.junit5.results.model.TestSuiteClass;
 import io.techthinking.flowbdd.report.junit5.results.model.TestSuiteResult;
@@ -35,7 +35,7 @@ public abstract class AbstractResultsForTestSuite {
 
     @BeforeEach
     void setupEachTest() {
-        FlowBDD.getTestContext().reset();
+        FlowBdd.getTestContext().reset();
         TestLauncher.launch(classUnderTest());
         testSuiteResult = testSuiteResult(classUnderTest());
     }
@@ -80,7 +80,7 @@ public abstract class AbstractResultsForTestSuite {
     }
 
     private TestSuiteResult testSuiteResult(Class<?> clazz) {
-        return FlowBDD.getTestContext().getTestResults().getTestSuiteResults(TestSuiteClass.testSuiteClass(clazz));
+        return FlowBdd.getTestContext().getTestResults().getTestSuiteResults(TestSuiteClass.testSuiteClass(clazz));
     }
 
     protected void assertTestSuitClass(TestSuiteResult testSuiteResult, Class<?> clazz) {

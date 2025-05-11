@@ -22,7 +22,7 @@ import io.techthinking.flowbdd.report.report.adapter.ReportFactory;
 import io.techthinking.flowbdd.report.report.model.Report;
 import io.techthinking.flowbdd.report.report.model.TestVersionInfoFactory;
 import io.techthinking.flowbdd.report.report.model.VersionInfo;
-import io.techthinking.flowbdd.report.junit5.results.extension.FlowBDD;
+import io.techthinking.flowbdd.report.junit5.results.extension.FlowBdd;
 import org.junit.platform.engine.TestExecutionResult;
 import org.junit.platform.engine.reporting.ReportEntry;
 import org.junit.platform.launcher.TestExecutionListener;
@@ -56,8 +56,8 @@ public class SmartTestExecutionListener implements TestExecutionListener {
 //        roots.forEach(root -> logger.debug("source: " + root.getSource()));
 //        roots.forEach(root -> logger.debug("id: " + root.getParentId()));
         final VersionInfo versionInfo = TestVersionInfoFactory.create(Clock.systemDefaultZone());
-        final Report report = ReportFactory.create(FlowBDD.getTestContext().getTestResults(), versionInfo);
-        FlowBDD.getTestContext().writeIndex(report, versionInfo);
+        final Report report = ReportFactory.create(FlowBdd.getTestContext().getTestResults(), versionInfo);
+        FlowBdd.getTestContext().writeIndex(report, versionInfo);
     }
 
     @Override

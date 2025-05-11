@@ -24,7 +24,7 @@ import io.techthinking.flowbdd.ft.report.launcher.TestExecutionListener;
 import io.techthinking.flowbdd.ft.report.launcher.TestLauncher;
 import io.techthinking.flowbdd.report.config.ResolvedSmartBddConfig;
 import io.techthinking.flowbdd.report.config.SmartBddConfig;
-import io.techthinking.flowbdd.report.junit5.results.extension.FlowBDD;
+import io.techthinking.flowbdd.report.junit5.results.extension.FlowBdd;
 import io.techthinking.flowbdd.report.report.model.DataReportIndex;
 import io.techthinking.flowbdd.report.report.model.TestCase;
 import io.techthinking.flowbdd.report.report.model.TestSuite;
@@ -69,7 +69,7 @@ public abstract class AbstractResultsForData extends AbstractReportTest {
 
     @BeforeEach
     void beforeEach() throws IOException {
-        FlowBDD.getTestContext().reset();
+        FlowBdd.getTestContext().reset();
         startTime = LocalDateTime.now();
         TestExecutionListener testListener = new TestExecutionListener();
         TestLauncher.launch(classUnderTest(), testListener);

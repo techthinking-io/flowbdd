@@ -19,7 +19,7 @@
 package component.results.annotations;
 
 import io.techthinking.flowbdd.report.junit5.annotations.InjectNotes;
-import io.techthinking.flowbdd.report.junit5.results.extension.FlowBDD;
+import io.techthinking.flowbdd.report.junit5.results.extension.FlowBdd;
 import io.techthinking.flowbdd.report.junit5.results.extension.TestCaseNotesParameterResolver;
 import io.techthinking.flowbdd.report.junit5.results.model.notes.Notes;
 import org.junit.jupiter.api.BeforeEach;
@@ -32,7 +32,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @TestMethodOrder(OrderAnnotation.class)
-@ExtendWith({FlowBDD.class, TestCaseNotesParameterResolver.class})
+@ExtendWith({FlowBdd.class, TestCaseNotesParameterResolver.class})
 public class NotesUnderTest {
 
     private Notes notes;

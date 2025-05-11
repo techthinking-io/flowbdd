@@ -1,10 +1,13 @@
 # Flow BDD
 
-![example workflow](https://github.com/bit-smart-io/smart-bdd/actions/workflows/build.yml/badge.svg)
+![example workflow](https://github.com/techthinking-io/flowbdd/actions/workflows/build.yml/badge.svg)
+![Static Badge](https://img.shields.io/badge/License-GPL--3.0-yellow)
+![Static Badge](https://img.shields.io/badge/Junit-5-yellow)
 
 ## Overview
 
-Flow BDD is the most productive way to implement Behaviour Driven Development. Traditional frameworks have you write
+Flow BDD (formally Smart BDD) is the most productive way to implement Behaviour Driven Development. Traditional
+frameworks have you write
 the static feature files first, then implement code.
 
 With Flow BDD you write the code first using best practices and this generates:
@@ -53,7 +56,7 @@ public class GetBookTest extends BaseBookStoreTest {
 
 `when(aUserRequestsABook());` tokenised to `when a user requests a book`. It gives you the freedom to write tests in the
 way you want. There's a simple api to add notes, capture inputs and output, create uml diagrams etc... It uses JUnit5 to
-be powerful and extensible, it even facilities re-running tests. 
+be powerful and extensible, it even facilities re-running tests.
 
 ## Why is this significant?
 
@@ -98,20 +101,20 @@ The projects aim is to:
 - The above declarative JSON could also be used to generate a demo application
 - Results can be persisted so that previous test results can be queried
 
-## smart-bdd usage:
+## Flow BDD usage:
 
 Please see `example:bookstore` and `example:cucumbers`. Run `GetBookTest` and or `EatCucumbersTest`. You'll see in the
 console there is a link to the generated html and json files.
 
-1. Import the `report` project `testImplementation("io.bit-smart.bdd:report:0.2-SNAPSHOT")`
+1. Import the `report` project `testImplementation("io.techthinking:flowbdd:0.1.1-SNAPSHOT")`
    or locally withing this repo `testImplementation(project(":flowbdd"))`
-2. Add `@ExtendWith(SmartReport.class)` to any class that you want to generate a report from.
+2. Add `@ExtendWith(FlowBdd.class)` to any class that you want to generate a report from.
 
 ### Example to from `example:bookstore`
 
 ```java
 
-@ExtendWith(SmartReport.class)
+@ExtendWith(FlowBdd.class)
 public class GetBookTest {
     @Test
     public void getBook() {
@@ -131,8 +134,8 @@ Then the book is returned
 ### Example to from `example:cucumbers`
 
 ```java
-void givenOneRedAndOneBlueCucumber_whenIEatOneRed_IhaveOneBlueCucumberLeft(){
-    given(iHave(aCucumber().withColour("red"),andACucumber().withColour("blue")));
+void givenOneRedAndOneBlueCucumber_whenIEatOneRed_IhaveOneBlueCucumberLeft() {
+    given(iHave(aCucumber().withColour("red"), andACucumber().withColour("blue")));
     when(iRequestToEatCucumbers().withColour("red"));
     then(iShouldHaveCucumbers().withquantity(1));
 }
@@ -146,22 +149,20 @@ When I request to eat cucumbers with colour "red"
 Then I should have cucumbers with quantity 1 with colour "blue"
 ```
 
-## Flow BDD projects:
+## Flow BDD Github project contains:
 
-| project name  | package  | description  | notes  |
-|------------|-------------|--------------|--------|
-| root       | io.bitsmart.bdd | root for repo  |
-| report     | io.bitsmart.bdd.report | reporting extension `@SmartReport` and report creation (.html and .json)  | |
-| wordify    | io.bitsmart.bdd.wordify | wordify java code | |
-| ft         | io.bitsmart.bdd.ft | FT for the report generation | | 
-| test-utils | io.bitsmart.bdd.report.utils | testing utils such as builder | only the builders at the moment | 
-| examples   | n/a| examples of using Flow BDD |  | 
+| project name | package                              | description                                                          | notes                           |
+|--------------|--------------------------------------|----------------------------------------------------------------------|---------------------------------|
+| root         | io.techthinking.flowbdd              | root for repo                                                        |
+| flowbdd      | io.techthinking.flowbdd.report       | reporting extension `@FlowBdd` and report creation (.html and .json) |                                 |
+| wordify      | io.techthinking.flowbdd.wordify      | wordify java code                                                    |                                 |
+| ft           | io.techthinking.flowbdd.ft           | FT for the report generation                                         |                                 | 
+| test-utils   | io.techthinking.flowbdd.report.utils | testing utils such as builder                                        | only the builders at the moment | 
+| examples     | n/a                                  | examples of using Flow BDD                                           |                                 | 
 
-Notes on naming:
+## Location
 
-* `@SmartReport` or is `@SmartBdd` a better annotation?
-* Current group name `io.bit-smart.bdd` as everything is BDD orientated. Using `io.bit-smart.bdd` implies new group
-  names like `io.bit-smart.nft` for performance testing artifacts.
+https://github.com/techthinking-io/flowbdd
 
 ## Testing Locally
 
@@ -173,10 +174,19 @@ Create report, wordify, test-utils
 `./gradlew publishToMavenLocal`
 
 To check the jar was created in maven local  
-`ls -la ~/.m2/repository/io/bit-smart/bdd/report/0.1-SNAPSHOT`
+`ls -la ~/.m2/repository/io/techthinking/flowbdd`
 
-Then use the following in your app  
-`testImplementation("io.bit-smart.bdd:report:0.1-SNAPSHOT")`
+Then use the following in your app, please check what version to use
+`testImplementation("io.techthinking:flowbdd:0.1.1-SNAPSHOT")`
+
+Example POM extract
+
+```xml
+
+<groupId>io.techthinking</groupId>
+<artifactId>flowbdd</artifactId>
+<version>0.1.1-SNAPSHOT</version>
+```
 
 ## Comparison to existing approaches:
 
@@ -217,7 +227,7 @@ of the solution. Layers 1-3 exist so that we can have feature files, these serve
 There are no guaranties that the documentation is consistent, in fact there isn't anything enforcing it.
 
 The alternative to this is generating dynamic, consistent documentation. With Flow BDD you leg up on developing the
-actual FT framework, so you can focus on testing your application. You add `@SmartReport` annotation to your class, this
+actual FT framework, so you can focus on testing your application. You add `@FlowBdd` annotation to your class, this
 will generate a report. There is a `wordify` process that takes the Java code and converts it in English sentences. For
 example `givenSomething()` would produce `given something`. There is a strong emphasis on using builders therefore
 forcing you to create a fluent API.

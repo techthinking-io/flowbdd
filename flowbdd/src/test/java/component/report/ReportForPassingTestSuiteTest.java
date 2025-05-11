@@ -19,7 +19,7 @@
 package component.report;
 
 import io.techthinking.flowbdd.report.junit5.launcher.TestLauncher;
-import io.techthinking.flowbdd.report.junit5.results.extension.FlowBDD;
+import io.techthinking.flowbdd.report.junit5.results.extension.FlowBdd;
 import io.techthinking.flowbdd.report.report.adapter.ReportFactory;
 import io.techthinking.flowbdd.report.report.model.TestSuiteNameToFile;
 import io.techthinking.flowbdd.report.report.model.TestSuiteSummary;
@@ -59,7 +59,7 @@ public class ReportForPassingTestSuiteTest extends AbstractReportTest {
     @Test
     void reportForOneClassGeneratedCorrectly() {
         TestLauncher.launch(PASSING_CLASS_UNDER_TEST);
-        report = ReportFactory.create(FlowBDD.getTestContext().getTestResults(), testVersionInfo());
+        report = ReportFactory.create(FlowBdd.getTestContext().getTestResults(), testVersionInfo());
 
         assertSuiteLinks();
         assertThat(report.getIndex().getSummary()).isEqualTo(new TestSuiteSummary(6, 6, 0, 0, 0));

@@ -43,7 +43,7 @@ import java.util.Optional;
  * TODO should this also do all the timings?
  * TODO WordifyExtensionContext and TestCaseNameFactory need to be injectable and or overridable
  */
-public class FlowBDD implements
+public class FlowBdd implements
     BeforeAllCallback, BeforeEachCallback, AfterAllCallback, AfterEachCallback, TestWatcher, InvocationInterceptor, ParameterResolver {
 
     private final TestCaseResultParameterResolver resultParameterResolver = new TestCaseResultParameterResolver();
