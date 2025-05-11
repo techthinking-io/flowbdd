@@ -1,5 +1,5 @@
 Purpose:
-* To work with smart-bdd
+* To work with flowbdd
 * Consistent 
 * Fluent
 * Provide default values
@@ -20,7 +20,7 @@ Goals:
 * Figure out how to enforce the rules/style?
 
 More details:
-* smart-bdd works best with a fluent builders.
+* Flow BDD works best with a fluent builders.
   * It describes what is under test - giving you a concise and consistent view layer 
   * It is productive - as you easily set the state for the test
   * You can add more test coverage - you don't have to worry about your framework not supporting your test scenario

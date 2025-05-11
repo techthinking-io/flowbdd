@@ -45,11 +45,11 @@ public class BookControllerIT {
 This is good enough to test your book store application, however we can take it to the next level.
 
 Generating documentation from code and enriching your tests is very easy;
-1. Taking existing code; just add `@ExtendWith(SmartReport.class)` to use Flow BDD
+1. Taking existing code; just add `@ExtendWith(FlowBdd.class)` to use Flow BDD
 2. To further benefit from UML, see the example below
 
 ```java
-@ExtendWith(SmartReport.class)
+@ExtendWith(FlowBdd.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class BookControllerIT {
     // skipped setup...
@@ -103,7 +103,7 @@ public class BookControllerIT {
 **Firstly**, Flow BDD uses JUnit5 and this is the only dependency for Flow BDD.
 
 1. Import the `report` project
-    1. Gradle `testImplementation("io.bit-smart.bdd:report:0.1-SNAPSHOT")`
+    1. Gradle `testImplementation("io.techthinking:flowbdd:0.1.1-SNAPSHOT")`
     2. Or Maven
    ```xml
    <dependency>
@@ -113,7 +113,7 @@ public class BookControllerIT {
       <scope>test</scope>
    </dependency>
    ```
-2. Add `@ExtendWith(SmartReport.class)` to any class that you want to generate a report from.
+2. Add `@ExtendWith(FlowBdd.class)` to any class that you want to generate a report from.
 
 3. A link to the generated results and documentation is outputted in the console i.e.
 

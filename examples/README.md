@@ -1,6 +1,6 @@
 ### README
 
-The idea is to demonstrate how smart-bdd works.
+The idea is to demonstrate how Flow BDD works.
 
 First use-case could be a bookstore.
 

@@ -20,7 +20,7 @@ package io.techthinking.flowbdd.ft.infrastructure.utils;
 
 import com.google.common.jimfs.Configuration;
 import com.google.common.jimfs.Jimfs;
-import io.techthinking.flowbdd.report.config.SmartBddConfig;
+import io.techthinking.flowbdd.report.config.FlowBddConfig;
 
 import java.nio.file.FileSystem;
 import java.nio.file.Path;
@@ -36,7 +36,7 @@ public class TestConfig {
 
     static {
         if (inMemoryDirectory) {
-            SmartBddConfig.overrideBasePath(TestConfig.getBasePath());
+            FlowBddConfig.overrideBasePath(TestConfig.getBasePath());
         }
     }
 

@@ -31,11 +31,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Notes:
- * Due to the static nature of SmartReport, this class can't be annotated with SmartReport.
+ * Due to the static nature of Report, this class can't be annotated with flowBdd.
  * <p>
  * TODO address the below
- * SmartTestExecutionListener will write the index and test suites files twice as it will also listen to this as a test.
- * There's no point adding logic to SmartTestExecutionListener as this is specific to how it is run here.
+ * FlowBddTestExecutionListener will write the index and test suites files twice as it will also listen to this as a test.
+ * There's no point adding logic to FlowBddTestExecutionListener as this is specific to how it is run here.
  * Else we could check a tag and or annotation maybe?
  */
 public class FailingDueToExceptionResultsTest extends AbstractResultsForData {

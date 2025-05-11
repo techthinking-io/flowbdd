@@ -11,7 +11,7 @@
 - [x] Copy write every class
     - https://choosealicense.com/licenses/mit/ - short and cucumber has this
     - https://choosealicense.com/licenses/gpl-3.0/ - means don't profit from my code
-- [ ] Investigate if META-INF/Services SmartTestExecutionListener gets exported
+- [ ] Investigate if META-INF/Services FlowBddTestExecutionListener gets exported
 
 ## Post MVP:
 
@@ -268,12 +268,12 @@ SimpleCar simpleCar = aDummyCar().updateEngine().withSize(anotherEngineSize).bui
 assertThat(getCar().withEngine(anotherEngineSize))).isEqualTo(simpleCarBuilder);
 ```
 
-### smart-bdd projects to do:
+### flowbdd projects to do:
 
 * client-side-report or webpage or webapp - dynamic React web app. Have created a Vue.js app, React would be better.
 * test-re-runner - rest app to select a test and parse in params. FT's have a dependency on this and can therefore spin
   up Spring Boot app?
-* smart-report-shipper - shipping results
+* flowbdd-report-shipper - shipping results
     * create webpage?
     * file data json/xml
     * data to db

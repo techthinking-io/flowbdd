@@ -22,10 +22,10 @@ import java.nio.file.FileSystem;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
 
-public class ResolvedSmartBddConfig {
+public class ResolvedFlowBddConfig {
     private static final FileSystem fileSystem = FileSystems.getDefault();
 
     public static Path getBasePath() {
-        return SmartBddConfig.getOverriddenBasePath().orElse(fileSystem.getPath(SmartBddConfig.getDefaultBaseFolder()));
+        return FlowBddConfig.getOverriddenBasePath().orElse(fileSystem.getPath(FlowBddConfig.getDefaultBaseFolder()));
     }
 }

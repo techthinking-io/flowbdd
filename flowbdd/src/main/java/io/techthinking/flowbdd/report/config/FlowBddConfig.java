@@ -23,7 +23,7 @@ import java.util.Optional;
 
 import static java.lang.System.getProperty;
 
-public class SmartBddConfig  {
+public class FlowBddConfig {
     private static final String dataFolder = "flowbdd/data/";
     private static final String reportFolder = "flowbdd/report/";
     private static String defaultBaseFolder = getProperty("java.io.tmpdir");

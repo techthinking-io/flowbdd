@@ -22,8 +22,8 @@ import io.techthinking.flowbdd.ft.common.AbstractReportTest;
 import io.techthinking.flowbdd.ft.infrastructure.utils.TestConfig;
 import io.techthinking.flowbdd.ft.report.launcher.TestExecutionListener;
 import io.techthinking.flowbdd.ft.report.launcher.TestLauncher;
-import io.techthinking.flowbdd.report.config.ResolvedSmartBddConfig;
-import io.techthinking.flowbdd.report.config.SmartBddConfig;
+import io.techthinking.flowbdd.report.config.ResolvedFlowBddConfig;
+import io.techthinking.flowbdd.report.config.FlowBddConfig;
 import io.techthinking.flowbdd.report.junit5.results.extension.FlowBdd;
 import io.techthinking.flowbdd.report.report.model.DataReportIndex;
 import io.techthinking.flowbdd.report.report.model.TestCase;
@@ -61,9 +61,9 @@ public abstract class AbstractResultsForData extends AbstractReportTest {
         // do gradlew dir=in-mem, root, class, tmp-dir
         // run this as failsafe/it
         if (TestConfig.inMemoryDirectory) {
-            SmartBddConfig.overrideBasePath(TestConfig.getBasePath());
+            FlowBddConfig.overrideBasePath(TestConfig.getBasePath());
             log.info("basePath: " + TestConfig.getBasePath());
-            log.info("resolved path: " + ResolvedSmartBddConfig.getBasePath().resolve(SmartBddConfig.getDataFolder()));
+            log.info("resolved path: " + ResolvedFlowBddConfig.getBasePath().resolve(FlowBddConfig.getDataFolder()));
         }
     }
 

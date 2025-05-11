@@ -1,1 +1,1 @@
-io.techthinking.flowbdd.report.junit5.listeners.SmartTestExecutionListener
+io.techthinking.flowbdd.report.junit5.listeners.FlowBddTestExecutionListener

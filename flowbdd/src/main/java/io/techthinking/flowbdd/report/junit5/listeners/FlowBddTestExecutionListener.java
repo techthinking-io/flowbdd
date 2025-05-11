@@ -38,14 +38,14 @@ import java.util.concurrent.CopyOnWriteArrayList;
 /**
  * This has been added to resources/META-INF/services/
  */
-public class SmartTestExecutionListener implements TestExecutionListener {
-    private static final Logger logger = LoggerFactory.getLogger(SmartTestExecutionListener.class.getName());
+public class FlowBddTestExecutionListener implements TestExecutionListener {
+    private static final Logger logger = LoggerFactory.getLogger(FlowBddTestExecutionListener.class.getName());
     private final List<String> methodNames = new CopyOnWriteArrayList<>();
 
     @Override
     public void testPlanExecutionStarted(TestPlan testPlan) {
         logger.debug("testPlanExecutionStarted: " + testPlan.containsTests() + ", roots: " + testPlan.getRoots());
-        // init the SmartReport?
+        // init the Report?
     }
 
     @Override

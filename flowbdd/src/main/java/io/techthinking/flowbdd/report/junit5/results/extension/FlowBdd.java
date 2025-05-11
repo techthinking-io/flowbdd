@@ -42,6 +42,8 @@ import java.util.Optional;
  * Potentially we can add - BeforeTestExecutionCallback, AfterTestExecutionCallback
  * TODO should this also do all the timings?
  * TODO WordifyExtensionContext and TestCaseNameFactory need to be injectable and or overridable
+ *
+ * IntelliJ seems to have an issue with this file
  */
 public class FlowBdd implements
     BeforeAllCallback, BeforeEachCallback, AfterAllCallback, AfterEachCallback, TestWatcher, InvocationInterceptor, ParameterResolver {

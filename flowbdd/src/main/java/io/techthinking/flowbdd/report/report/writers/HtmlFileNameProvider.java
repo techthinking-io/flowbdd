@@ -18,8 +18,8 @@
 
 package io.techthinking.flowbdd.report.report.writers;
 
-import io.techthinking.flowbdd.report.config.ResolvedSmartBddConfig;
-import io.techthinking.flowbdd.report.config.SmartBddConfig;
+import io.techthinking.flowbdd.report.config.ResolvedFlowBddConfig;
+import io.techthinking.flowbdd.report.config.FlowBddConfig;
 import io.techthinking.flowbdd.report.report.model.TestSuite;
 
 import java.nio.file.Path;
@@ -29,7 +29,7 @@ public class HtmlFileNameProvider implements FileNameProvider {
 
     @Override
     public Path path() {
-        return ResolvedSmartBddConfig.getBasePath().resolve(SmartBddConfig.getReportFolder());
+        return ResolvedFlowBddConfig.getBasePath().resolve(FlowBddConfig.getReportFolder());
     }
 
     @Override
