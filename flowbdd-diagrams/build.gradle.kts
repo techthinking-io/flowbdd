@@ -1,6 +1,6 @@
 /*
  * Flow BDD - The productive way to test.
- * Copyright (C)  2021  James Bayliss
+ * Copyright (C)  2025  James Bayliss
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,7 +25,7 @@ plugins {
 
 group = "io.techthinking"
 version = "0.1.1-SNAPSHOT"
-description = "Generate the report and feature file / documentation"
+description = "Mermaid diagram generation for flowbdd"
 
 java {
     withJavadocJar()
@@ -37,25 +37,20 @@ repositories {
 }
 
 dependencies {
-    api(project(":flowbdd-wordify"))
-    api(project(":flowbdd-test-utils"))
-    // api(project(":flowbdd-diagrams")) //TODO
-
     implementation("com.fasterxml.jackson.core:jackson-databind:2.12.1")
     implementation("com.fasterxml.jackson.core:jackson-annotations:2.12.1")
 
-    implementation("org.thymeleaf:thymeleaf:3.0.12.RELEASE")
-
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.7.0")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.7.0")
+    testImplementation("org.assertj:assertj-core:3.19.0")
     testImplementation("org.mockito:mockito-all:1.10.19")
-    testImplementation("com.google.jimfs:jimfs:1.1")
 }
 
 publishing {
     publications {
         create<MavenPublication>("mavenJava") {
-            artifactId = "flowbdd"
+            artifactId = "flowbdd-diagrams"
             from(components["java"])
-            //artifact(tasks["jar"])
             versionMapping {
                 usage("java-api") {
                     fromResolutionOf("runtimeClasspath")
@@ -65,8 +60,8 @@ publishing {
                 }
             }
             pom {
-                name.set("flowbdd")
-                description.set("Generate the report and feature file / documentation")
+                name.set("flowbdd-diagrams")
+                description.set("Mermaid diagram generation for flowbdd")
                 url.set("https://github.com/techthinking-io/flowbdd")
 
                 licenses {
@@ -91,7 +86,6 @@ publishing {
     }
     repositories {
         maven {
-            // change URLs to point to your repos, e.g. http://my.org/repo
             val snapshotsRepoUrl = uri("https://s01.oss.sonatype.org/content/repositories/snapshots/")
             val releasesRepoUrl = uri("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/")
             url = if (version.toString().endsWith("SNAPSHOT")) snapshotsRepoUrl else releasesRepoUrl
@@ -117,4 +111,8 @@ tasks.javadoc {
     if (JavaVersion.current().isJava9Compatible) {
         (options as StandardJavadocDocletOptions).addBooleanOption("html5", true)
     }
+}
+
+tasks.test {
+    useJUnitPlatform()
 }
