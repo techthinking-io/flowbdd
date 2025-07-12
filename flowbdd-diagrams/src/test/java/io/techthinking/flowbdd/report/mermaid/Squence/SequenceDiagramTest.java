@@ -45,16 +45,9 @@ class SequenceDiagramTest {
         SequenceDiagram diagram = new SequenceDiagram();
         diagram.addParticipant("Alice");
         diagram.addParticipant("Bob");
-
         diagram.add(new Message("Alice", "Bob", "Hello John, how are you?"));
         diagram.add(new Message("Bob", "Alice", "Great!"));
-        assertThat(diagram.generate()).isEqualTo(
-            "sequenceDiagram\n" +
-                "\tparticipant Alice\n" +
-                "\tparticipant Bob\n" +
-                "\tAlice->>Bob: Hello John, how are you?\n" +
-                "\tBob->>Alice: Great!"
-        );
+        assertThat(diagram.generate()).isEqualTo(sequenceDiagram);
     }
 
     @Test
@@ -65,13 +58,7 @@ class SequenceDiagramTest {
         diagram
             .add(new Message("Alice", "Bob", "Hello John, how are you?"))
             .add(new Message("Bob", "Alice", "Great!"));
-        assertThat(diagram.generate()).isEqualTo(
-            "sequenceDiagram\n" +
-            "\tparticipant Alice\n" +
-            "\tparticipant Bob\n" +
-            "\tAlice->>Bob: Hello John, how are you?\n" +
-            "\tBob->>Alice: Great!"
-        );
+        assertThat(diagram.generate()).isEqualTo(sequenceDiagram);
     }
 
     @Test
@@ -82,14 +69,7 @@ class SequenceDiagramTest {
         diagram
             .add(aMessage().from("Alice").to("Bob").text("Hello John, how are you?"))
             .add(aMessage().from("Bob").to("Alice").text("Great!"));
-
-        assertThat(diagram.generate()).isEqualTo(
-            "sequenceDiagram\n" +
-                "\tparticipant Alice\n" +
-                "\tparticipant Bob\n" +
-                "\tAlice->>Bob: Hello John, how are you?\n" +
-                "\tBob->>Alice: Great!"
-        );
+        assertThat(diagram.generate()).isEqualTo(sequenceDiagram);
     }
 
     @Test
@@ -107,4 +87,11 @@ class SequenceDiagramTest {
                 "\tBob->>Alice: Great!"
         );
     }
+
+    private static final String NEW_LINE = System.lineSeparator();
+    private static final String sequenceDiagram = "sequenceDiagram" + NEW_LINE +
+        "\tparticipant Alice" + NEW_LINE +
+        "\tparticipant Bob" + NEW_LINE +
+        "\tAlice->>Bob: Hello John, how are you?" + NEW_LINE +
+        "\tBob->>Alice: Great!";
 }

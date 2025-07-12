@@ -45,15 +45,18 @@ import java.util.stream.Collectors;
  * }</pre>
  */
 public class SequenceDiagram implements Expression {
+    private static final String NEW_LINE = System.lineSeparator();
+    private static final String TAB = "\t";
+
     private final List<Participant> participants = new ArrayList<>();
     private final Map<String, Integer> participantsOrder = new HashMap<>();
     private final List<Expression> expressions = new ArrayList<>();
 
     @Override
     public String generate() {
-        return "sequenceDiagram\n"
-            + participants.stream().map(Expression::generate).collect(Collectors.joining("\n\t", "\t", "\n"))
-            + expressions.stream().map(Expression::generate).collect(Collectors.joining("\n\t", "\t", ""));
+        return "sequenceDiagram" + NEW_LINE
+            + participants.stream().map(Expression::generate).collect(Collectors.joining(NEW_LINE + TAB, TAB, NEW_LINE))
+            + expressions.stream().map(Expression::generate).collect(Collectors.joining(NEW_LINE + TAB, TAB, ""));
     }
 
     public SequenceDiagram addActor(String name) {
