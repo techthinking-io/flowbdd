@@ -18,40 +18,7 @@
 
 package io.techthinking.flowbdd.report.mermaid;
 
-public final class MessageBuilder {
-    private String from;
-    private String to;
-    private String text;
-    private String type = "->>";
-
-    private MessageBuilder() {
-    }
-
-    public static MessageBuilder aMessage() {
-        return new MessageBuilder();
-    }
-
-    public MessageBuilder from(String from) {
-        this.from = from;
-        return this;
-    }
-
-    public MessageBuilder to(String to) {
-        this.to = to;
-        return this;
-    }
-
-    public MessageBuilder text(String text) {
-        this.text = text;
-        return this;
-    }
-
-    public MessageBuilder type(String type) {
-        this.type = type;
-        return this;
-    }
-
-    public Message build() {
-        return new Message(from, to, text, type);
-    }
+public interface Builder<T> {
+    T build();
 }
+

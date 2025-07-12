@@ -16,28 +16,19 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package io.techthinking.flowbdd.report.mermaid;
+package io.techthinking.flowbdd.report.mermaid.Squence;
 
-public class Participant implements Expression {
+public enum NoteLocationType {
+    LEFT("left"),
+    RIGHT("right");
 
-    private final String name;
-    private final ParticipantType type;
+    private final String value;
 
-    public Participant(String name) {
-        this(name, ParticipantType.PARTICIPANT);
+    NoteLocationType(String value) {
+        this.value = value;
     }
 
-    public Participant(String name, ParticipantType type) {
-        this.name = name;
-        this.type = type;
-    }
-
-    @Override
-    public String generate() {
-        return type() + " "+ name;
-    }
-
-    private String type() {
-        return type == ParticipantType.PARTICIPANT ? "participant" : "actor";
+    public String getValue() {
+        return value;
     }
 }

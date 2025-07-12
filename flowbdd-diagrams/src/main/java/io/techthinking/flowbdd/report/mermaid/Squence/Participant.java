@@ -16,19 +16,36 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package io.techthinking.flowbdd.report.mermaid;
+package io.techthinking.flowbdd.report.mermaid.Squence;
 
-public class Note implements Expression {
+import io.techthinking.flowbdd.report.mermaid.Expression;
 
-    // maybe need to add position??
-    private final String text;
+public class Participant implements Expression {
 
-    public Note(String text) {
-        this.text = text;
+    private final String name;
+    private final ParticipantType type;
+    private final Integer position;
+
+    public Participant(String name, Integer position) {
+        this(name, ParticipantType.PARTICIPANT, position);
+    }
+
+    public Participant(String name, ParticipantType type, Integer position) {
+        this.name = name;
+        this.type = type;
+        this.position = position;
+    }
+
+    public Integer position() {
+        return position;
     }
 
     @Override
     public String generate() {
-        return "Note right of John: Rational thoughts <br/>prevail!";
+        return type() + " "+ name;
+    }
+
+    private String type() {
+        return type == ParticipantType.PARTICIPANT ? "participant" : "actor";
     }
 }

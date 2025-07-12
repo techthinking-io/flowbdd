@@ -16,11 +16,11 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package io.techthinking.flowbdd.report.mermaid;
+package io.techthinking.flowbdd.report.mermaid.Squence;
 
 import org.junit.jupiter.api.Test;
 
-import static io.techthinking.flowbdd.report.mermaid.MessageBuilder.aMessage;
+import static io.techthinking.flowbdd.report.mermaid.Squence.MessageBuilder.aMessage;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
@@ -41,12 +41,30 @@ import static org.assertj.core.api.Assertions.assertThat;
 class SequenceDiagramTest {
 
     @Test
-    void basicSequenceDiagramWithTwoParticipantsIsGenerated() {
+    void basicSequenceDiagramNoBuilders() {
         SequenceDiagram diagram = new SequenceDiagram();
         diagram.addParticipant("Alice");
         diagram.addParticipant("Bob");
-        diagram.addMessage(new Message("Alice", "Bob", "Hello John, how are you?"));
-        diagram.addMessage(new Message("Bob", "Alice", "Great!"));
+
+        diagram.add(new Message("Alice", "Bob", "Hello John, how are you?"));
+        diagram.add(new Message("Bob", "Alice", "Great!"));
+        assertThat(diagram.generate()).isEqualTo(
+            "sequenceDiagram\n" +
+                "\tparticipant Alice\n" +
+                "\tparticipant Bob\n" +
+                "\tAlice->>Bob: Hello John, how are you?\n" +
+                "\tBob->>Alice: Great!"
+        );
+    }
+
+    @Test
+    void basicSequenceDiagramWithTwoParticipants() {
+        SequenceDiagram diagram = new SequenceDiagram()
+            .addParticipant("Alice")
+            .addParticipant("Bob");
+        diagram
+            .add(new Message("Alice", "Bob", "Hello John, how are you?"))
+            .add(new Message("Bob", "Alice", "Great!"));
         assertThat(diagram.generate()).isEqualTo(
             "sequenceDiagram\n" +
             "\tparticipant Alice\n" +
@@ -57,12 +75,13 @@ class SequenceDiagramTest {
     }
 
     @Test
-    void basicSequenceDiagramWithTwoParticipantsIsGeneratedWithBuilder() {
-        SequenceDiagram diagram = new SequenceDiagram();
-        diagram.addParticipant("Alice");
-        diagram.addParticipant("Bob");
-        diagram.add(aMessage().from("Alice").to("Bob").text("Hello John, how are you?"));
-        diagram.add(aMessage().from("Bob").to("Alice").text("Great!"));
+    void basicSequenceDiagramWithTwoParticipantsWithBuilders() {
+        SequenceDiagram diagram = new SequenceDiagram()
+            .addParticipant("Alice")
+            .addParticipant("Bob");
+        diagram
+            .add(aMessage().from("Alice").to("Bob").text("Hello John, how are you?"))
+            .add(aMessage().from("Bob").to("Alice").text("Great!"));
 
         assertThat(diagram.generate()).isEqualTo(
             "sequenceDiagram\n" +
@@ -78,8 +97,8 @@ class SequenceDiagramTest {
         SequenceDiagram diagram = new SequenceDiagram();
         diagram.addActor("Alice");
         diagram.addParticipant("Bob");
-        diagram.addMessage(new Message("Alice", "Bob", "Hello John, how are you?"));
-        diagram.addMessage(new Message("Bob", "Alice", "Great!"));
+        diagram.add(new Message("Alice", "Bob", "Hello John, how are you?"));
+        diagram.add(new Message("Bob", "Alice", "Great!"));
         assertThat(diagram.generate()).isEqualTo(
             "sequenceDiagram\n" +
                 "\tactor Alice\n" +

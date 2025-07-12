@@ -16,10 +16,15 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package io.techthinking.flowbdd.report.mermaid;
+package io.techthinking.flowbdd.report.mermaid.Squence;
+
+import io.techthinking.flowbdd.report.mermaid.Expression;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -40,36 +45,56 @@ import java.util.stream.Collectors;
  * }</pre>
  */
 public class SequenceDiagram implements Expression {
-    private List<Participant> participants = new ArrayList<>();
-    private List<Message> messages = new ArrayList<>();
+    private final List<Participant> participants = new ArrayList<>();
+    private final Map<String, Integer> participantsOrder = new HashMap<>();
+    private final List<Expression> expressions = new ArrayList<>();
 
     @Override
     public String generate() {
         return "sequenceDiagram\n"
             + participants.stream().map(Expression::generate).collect(Collectors.joining("\n\t", "\t", "\n"))
-            + messages.stream().map(Expression::generate).collect(Collectors.joining("\n\t", "\t", ""));
+            + expressions.stream().map(Expression::generate).collect(Collectors.joining("\n\t", "\t", ""));
     }
 
     public SequenceDiagram addActor(String name) {
         //TODO if "Actor" throw illegal state exception
-        participants.add(new Participant(name, ParticipantType.ACTOR));
+        participants.add(new Participant(name, ParticipantType.ACTOR, participants.size()));
+        participantsOrder.put(name, participants.size());
         return this;
     }
 
     public SequenceDiagram addParticipant(String name) {
-        participants.add(new Participant(name));
+        participants.add(new Participant(name, participants.size()));
+        participantsOrder.put(name, participants.size());
         return this;
     }
 
-    public SequenceDiagram addMessage(Message message) {
-        messages.add(message);
+//    public SequenceDiagram addMessage(Message message) {
+//        expressions.add(message);
+//        return this;
+//    }
+//
+//    public SequenceDiagram addNote(Note note) {
+//        expressions.add(note);
+//        return this;
+//    }
+
+    public SequenceDiagram add(Expression... expressions) {
+        this.expressions.addAll(Arrays.asList(expressions));
         return this;
     }
 
     // TODO what if we don't have any actors and or participants should we create?
     // first from being an actor, then participants
-    public SequenceDiagram add(MessageBuilder message) {
-        messages.add(message.build());
+//    public SequenceDiagram add(MessageBuilder message) {
+//        messages.add(message.build());
+//        return this;
+//    }
+
+    public SequenceDiagram add(ExpressionBuilder<?>... expressions) {
+        for (ExpressionBuilder<?> messageBuilder : expressions) {
+            this.expressions.add(messageBuilder.build());
+        }
         return this;
     }
 }
