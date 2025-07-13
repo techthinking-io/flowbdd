@@ -27,22 +27,38 @@ public class Message implements Expression {
     private final String from;
     private final String to;
     private final String text;
-    private final String type;
+    private final MessageType type;
 
     public Message(String from, String to, String text) {
-        this(from, to, text, "->>");
+        this(from, to, text, MessageType.ARROW_SYNC);
     }
 
-    public Message(String from, String to, String text, String type) {
+    public Message(String from, String to, String text, MessageType type) {
         this.from = from;
         this.to = to;
         this.text = text;
         this.type = type;
     }
 
+    public String from() {
+        return from;
+    }
+
+    public String to() {
+        return to;
+    }
+
+    public String text() {
+        return text;
+    }
+
+    public MessageType type() {
+        return type;
+    }
+
     @Override
     public String generate() {
-        return from + type + to + ": " + text;
+        return from + type.rawText() + to + ": " + text;
     }
 
     @Override
@@ -50,7 +66,10 @@ public class Message implements Expression {
         if (this == o) return true;
         if (!(o instanceof Message)) return false;
         Message message1 = (Message) o;
-        return Objects.equals(from, message1.from) && Objects.equals(to, message1.to) && Objects.equals(text, message1.text) && Objects.equals(type, message1.type);
+        return Objects.equals(from, message1.from) && 
+               Objects.equals(to, message1.to) && 
+               Objects.equals(text, message1.text) && 
+               Objects.equals(type, message1.type);
     }
 
     @Override

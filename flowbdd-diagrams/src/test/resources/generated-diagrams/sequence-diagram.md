@@ -4,18 +4,18 @@
 sequenceDiagram
 	actor User
 	participant System
-	User->System: Solid line without arrow
-	User-->System: Dotted line without arrow
-	User->>System: Solid line with arrowhead - Simple Request - Correct usage
-	System->>User: Solid line with arrowhead - Simple Request - Simplified it's okay
-	User-->>System: Dotted line with arrowhead - Simple responses - Dotted for response
-	System-->>User: Dotted line with arrowhead - Simple responses - Correct usage
-	User-xSystem: Solid line with a cross at the end
-	System-xUser: Solid line with a cross at the end
-	User--xSystem: Dotted line with a cross at the end
-	System--xUser: Dotted line with a cross at the end
-	User-)System: Solid line with an open arrow at the end (async)
-	System-)User: Solid line with an open arrow at the end (async)
-	User--)System: Dotted line with an open arrow at the end (async)
-	System--)User: Dotted line with an open arrow at the end (async)
+	User->System: Notification Request - Solid line without arrow
+	User-->System: Notification Response - Dotted line without arrow
+	User->>System: Sync Request - Solid line with arrowhead
+	System->>User: Sync Request (as a response) - Solid line with arrowhead
+	User-->>System: Sync Response (as a request) -Dotted line with arrowhead
+	System-->>User: Sync Response - Dotted line with arrowhead
+	User-xSystem: Request Not Arrive - Solid line with a cross at the end
+	System-xUser: Request Not Arrive (as a request) - Solid line with a cross at the end
+	User--xSystem: Response Not Arrive (as a request) Dotted line with a cross at the end
+	System--xUser: Response Not Arrive - Dotted line with a cross at the end
+	User-)System: Async Request - Solid line with an open arrow at the end (async)
+	System-)User: Async Request (as a response) - Solid line with an open arrow at the end (async)
+	User--)System: Async Response (as a request) - Dotted line with an open arrow at the end (async)
+	System--)User: Async Response - Dotted line with an open arrow at the end (async)
 ```

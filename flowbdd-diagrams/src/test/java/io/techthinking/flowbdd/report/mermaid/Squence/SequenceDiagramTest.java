@@ -21,6 +21,9 @@ package io.techthinking.flowbdd.report.mermaid.Squence;
 import org.junit.jupiter.api.Test;
 
 import static io.techthinking.flowbdd.report.mermaid.Squence.MessageBuilder.aMessage;
+import static io.techthinking.flowbdd.report.mermaid.Squence.MessageType.ARROW_SYNC_DOTTED;
+import static io.techthinking.flowbdd.report.mermaid.Squence.MessageType.LINE;
+import static io.techthinking.flowbdd.report.mermaid.Squence.MessageType.LINE_DOTTED;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
@@ -86,6 +89,30 @@ class SequenceDiagramTest {
                 "\tAlice->>Bob: Hello John, how are you?\n" +
                 "\tBob->>Alice: Great!"
         );
+    }
+
+    @Test
+    void basicSequenceDiagramWithDottedResponses() {
+        SequenceDiagram diagram = new SequenceDiagram()
+            .addParticipant("Alice")
+            .addParticipant("Bob");
+        diagram
+            .add(aMessage().from("Alice").to("Bob").text("Hello John, how are you?"))
+            .add(aMessage().from("Bob").to("Alice").text("Great!").type(ARROW_SYNC_DOTTED));
+        assertThat(diagram.generate()).contains("Bob-->>Alice: Great!");
+    }
+
+    @Test
+    void basicSequenceDiagramWithLineTypes() {
+        SequenceDiagram diagram = new SequenceDiagram()
+            .addParticipant("User")
+            .addParticipant("System");
+        diagram
+            .add(aMessage().from("User").to("System").text("Solid line without arrow").type(LINE))
+            .add(aMessage().from("User").to("System").text("Dotted line without arrow").type(LINE_DOTTED));
+        String generated = diagram.generate();
+        assertThat(generated).contains("User->System: Solid line without arrow");
+        assertThat(generated).contains("User-->System: Dotted line without arrow");
     }
 
     private static final String NEW_LINE = System.lineSeparator();

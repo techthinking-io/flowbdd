@@ -49,7 +49,7 @@ public class SequenceDiagram implements Expression {
     private static final String TAB = "\t";
 
     private final List<Participant> participants = new ArrayList<>();
-    private final Map<String, Integer> participantsOrder = new HashMap<>();
+    //private final Map<String, Integer> participantsOrder = new HashMap<>();
     private final List<Expression> expressions = new ArrayList<>();
 
     @Override
@@ -62,37 +62,20 @@ public class SequenceDiagram implements Expression {
     public SequenceDiagram addActor(String name) {
         //TODO if "Actor" throw illegal state exception
         participants.add(new Participant(name, ParticipantType.ACTOR, participants.size()));
-        participantsOrder.put(name, participants.size());
+        //participantsOrder.put(name, participants.size());
         return this;
     }
 
     public SequenceDiagram addParticipant(String name) {
         participants.add(new Participant(name, participants.size()));
-        participantsOrder.put(name, participants.size());
+        //participantsOrder.put(name, participants.size());
         return this;
     }
-
-//    public SequenceDiagram addMessage(Message message) {
-//        expressions.add(message);
-//        return this;
-//    }
-//
-//    public SequenceDiagram addNote(Note note) {
-//        expressions.add(note);
-//        return this;
-//    }
 
     public SequenceDiagram add(Expression... expressions) {
         this.expressions.addAll(Arrays.asList(expressions));
         return this;
     }
-
-    // TODO what if we don't have any actors and or participants should we create?
-    // first from being an actor, then participants
-//    public SequenceDiagram add(MessageBuilder message) {
-//        messages.add(message.build());
-//        return this;
-//    }
 
     public SequenceDiagram add(ExpressionBuilder<?>... expressions) {
         for (ExpressionBuilder<?> messageBuilder : expressions) {

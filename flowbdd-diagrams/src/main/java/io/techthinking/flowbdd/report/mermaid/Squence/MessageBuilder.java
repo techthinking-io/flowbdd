@@ -23,7 +23,7 @@ public final class MessageBuilder extends ExpressionBuilder<Message> {
     private String from;
     private String to;
     private String text;
-    private String type = "->>";
+    private MessageType type = MessageType.ARROW_SYNC;
 
     private MessageBuilder() {
     }
@@ -47,17 +47,22 @@ public final class MessageBuilder extends ExpressionBuilder<Message> {
         return this;
     }
 
-    public MessageBuilder type(String type) {
+    public MessageBuilder type(MessageType type) {
         this.type = type;
         return this;
     }
+
+//    public MessageBuilder typeAsRawText(String typeValue) {
+//        this.type = MessageType.fromRawValue(typeValue);
+//        return this;
+//    }
 
     @Override
     public Message build() {
         return new Message(from, to, text, type);
     }
 
-//    public Message buildV2(Map<String, Integer> participantsOrder) {
+//    public Message buildAndMakeResponseDotted(Map<String, Integer> participantsOrder) {
 //        //TODO workout the direct from/to
 //        int fromOrder = participantsOrder.get(from);
 //        int toOrder = participantsOrder.get(to);

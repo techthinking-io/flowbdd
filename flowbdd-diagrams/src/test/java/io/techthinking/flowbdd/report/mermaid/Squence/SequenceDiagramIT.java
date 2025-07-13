@@ -26,6 +26,14 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 import static io.techthinking.flowbdd.report.mermaid.Squence.MessageBuilder.aMessage;
+import static io.techthinking.flowbdd.report.mermaid.Squence.MessageType.ARROW_ASYNC;
+import static io.techthinking.flowbdd.report.mermaid.Squence.MessageType.ARROW_ASYNC_DOTTED;
+import static io.techthinking.flowbdd.report.mermaid.Squence.MessageType.ARROW_SYNC;
+import static io.techthinking.flowbdd.report.mermaid.Squence.MessageType.ARROW_SYNC_DOTTED;
+import static io.techthinking.flowbdd.report.mermaid.Squence.MessageType.LINE;
+import static io.techthinking.flowbdd.report.mermaid.Squence.MessageType.LINE_DOTTED;
+import static io.techthinking.flowbdd.report.mermaid.Squence.MessageType.NOT_ARRIVED;
+import static io.techthinking.flowbdd.report.mermaid.Squence.MessageType.NOT_ARRIVED_DOTTED;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
@@ -66,22 +74,22 @@ class SequenceDiagramIT {
         //--)	 Dotted line with a open arrow at the end (async)
         diagram.add(
             //aNote().participant("User").text("Solid lines are default, dotted responses"),
-            aMessage().from("User").to("System").text("Solid line without arrow").type("->"),
-            aMessage().from("User").to("System").text("Dotted line without arrow").type("-->"),
+            aMessage().from("User").to("System").text("Notification Request - Solid line without arrow").type(LINE),
+            aMessage().from("User").to("System").text("Notification Response - Dotted line without arrow").type(LINE_DOTTED),
 
-            aMessage().from("User").to("System").text("Solid line with arrowhead - Simple Request - Correct usage").type("->>"),
-            aMessage().from("System").to("User").text("Solid line with arrowhead - Simple Request - Simplified it's okay").type("->>"),
-            aMessage().from("User").to("System").text("Dotted line with arrowhead - Simple responses - Dotted for response").type("-->>"),
-            aMessage().from("System").to("User").text("Dotted line with arrowhead - Simple responses - Correct usage").type("-->>"),
-            aMessage().from("User").to("System").text("Solid line with a cross at the end").type("-x"),
-            aMessage().from("System").to("User").text("Solid line with a cross at the end").type("-x"),
-            aMessage().from("User").to("System").text("Dotted line with a cross at the end").type("--x"),
-            aMessage().from("System").to("User").text("Dotted line with a cross at the end").type("--x"),
+            aMessage().from("User").to("System").text("Sync Request - Solid line with arrowhead").type(ARROW_SYNC),
+            aMessage().from("System").to("User").text("Sync Request (as a response) - Solid line with arrowhead").type(ARROW_SYNC),
+            aMessage().from("User").to("System").text("Sync Response (as a request) -Dotted line with arrowhead").type(ARROW_SYNC_DOTTED),
+            aMessage().from("System").to("User").text("Sync Response - Dotted line with arrowhead").type(ARROW_SYNC_DOTTED),
+            aMessage().from("User").to("System").text("Request Not Arrive - Solid line with a cross at the end").type(NOT_ARRIVED),
+            aMessage().from("System").to("User").text("Request Not Arrive (as a request) - Solid line with a cross at the end").type(NOT_ARRIVED),
+            aMessage().from("User").to("System").text("Response Not Arrive (as a request) Dotted line with a cross at the end").type(NOT_ARRIVED_DOTTED),
+            aMessage().from("System").to("User").text("Response Not Arrive - Dotted line with a cross at the end").type(NOT_ARRIVED_DOTTED),
 
-            aMessage().from("User").to("System").text("Solid line with an open arrow at the end (async)").type("-)"),
-            aMessage().from("System").to("User").text("Solid line with an open arrow at the end (async)").type("-)"),
-            aMessage().from("User").to("System").text("Dotted line with an open arrow at the end (async)").type("--)"),
-            aMessage().from("System").to("User").text("Dotted line with an open arrow at the end (async)").type("--)")
+            aMessage().from("User").to("System").text("Async Request - Solid line with an open arrow at the end (async)").type(ARROW_ASYNC),
+            aMessage().from("System").to("User").text("Async Request (as a response) - Solid line with an open arrow at the end (async)").type(ARROW_ASYNC),
+            aMessage().from("User").to("System").text("Async Response (as a request) - Dotted line with an open arrow at the end (async)").type(ARROW_ASYNC_DOTTED),
+            aMessage().from("System").to("User").text("Async Response - Dotted line with an open arrow at the end (async)").type(ARROW_ASYNC_DOTTED)
         );
 
         // Generate the diagram content
@@ -94,50 +102,10 @@ class SequenceDiagramIT {
             "Sequence Diagram"
         );
 
-        // Verify file exists and contains the expected content
         assertThat(Paths.get(filePath).toFile()).exists();
-        String fileContent = new String(Files.readAllBytes(Paths.get(filePath)));
-        String loadOutputDiagram = DiagramTestUtil.loadOutputDiagram("sequence-diagram.md");
-        assertThat(fileContent).isEqualTo(loadOutputDiagram);
-        System.out.println("Sequence diagram written to: " + filePath);
-    }
+        String actualDiagram = new String(Files.readAllBytes(Paths.get(filePath)));
 
-    @Test
-    void generateComplexSequenceDiagramAndWriteToFile() throws IOException {
-        // Create a sequence diagram with more complex elements
-        SequenceDiagram diagram = new SequenceDiagram();
-        diagram.addActor("Customer")
-            .addParticipant("WebApp")
-            .addParticipant("API")
-            .addParticipant("Database");
-
-        MessageBuilder message = aMessage().from("Customer").to("WebApp").text("Login")
-            .from("WebApp").to("API").text("Authenticate")
-            .from("API").to("Database").text("Verify credentials")
-            .from("Database").to("API").text("User authenticated").type("-->>")
-            .from("API").to("WebApp").text("Authentication successful").type("-->>")
-            .from("WebApp").to("Customer").text("Welcome!").type("-->>");
-
-        diagram.add(message);
-
-        // Generate the diagram content
-        String diagramContent = diagram.generate();
-
-        // Write to file using the utility
-        String filePath = DiagramTestUtil.writeDiagramToFile(
-            diagramContent,
-            "complex-sequence-diagram.md",
-            "Complex Sequence Diagram"
-        );
-
-        // Verify file exists and contains the expected content
-        assertThat(Paths.get(filePath).toFile()).exists();
-        String fileContent = new String(Files.readAllBytes(Paths.get(filePath)));
-        assertThat(fileContent).contains("actor Customer");
-        assertThat(fileContent).contains("participant WebApp");
-        assertThat(fileContent).contains("participant API");
-        assertThat(fileContent).contains("participant Database");
-
-        System.out.println("Complex sequence diagram written to: " + filePath);
+        String expectedDiagram = DiagramTestUtil.loadReferenceDiagram("sequence-diagram.md");
+        assertThat(actualDiagram).isEqualTo(expectedDiagram);
     }
 }
