@@ -23,6 +23,7 @@ include(
     "ft",
     "flowbdd-test-utils",
     "flowbdd-diagrams",
+    "flowbdd-validate",
     "examples:bookstore",
     "examples:cucumbers",
     //TODO "examples:server",
