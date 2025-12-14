@@ -27,7 +27,5 @@ include(
     "examples:bookstore",
     "examples:cucumbers",
     //TODO "examples:server",
-    "learning")
-
-//TODO
-//include 'junit5'
+    "learning"
+)

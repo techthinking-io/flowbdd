@@ -41,13 +41,14 @@ dependencies {
     api(project(":flowbdd-test-utils"))
     // api(project(":flowbdd-diagrams")) //TODO
 
-    implementation("com.fasterxml.jackson.core:jackson-databind:2.12.1")
-    implementation("com.fasterxml.jackson.core:jackson-annotations:2.12.1")
+    implementation(platform(libs.jackson.bom))
+    implementation(libs.jackson.databind)
+    implementation(libs.jackson.annotations)
 
-    implementation("org.thymeleaf:thymeleaf:3.0.12.RELEASE")
+    implementation(libs.thymeleaf)
 
-    testImplementation("org.mockito:mockito-all:1.10.19")
-    testImplementation("com.google.jimfs:jimfs:1.1")
+    testImplementation(libs.mockito.all)
+    testImplementation(libs.jimfs)
 }
 
 publishing {
