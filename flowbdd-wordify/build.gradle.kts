@@ -39,8 +39,8 @@ repositories {
 dependencies {
     implementation("com.thoughtworks.qdox:qdox:2.0.0")
 
-    testImplementation("org.mockito:mockito-all:1.10.19")
     testImplementation(project(":flowbdd-test-utils"))
+    testImplementation(libs.mockito.core)
 }
 
 publishing {

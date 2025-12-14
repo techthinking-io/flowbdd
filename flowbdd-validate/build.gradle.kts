@@ -37,7 +37,7 @@ repositories {
 }
 
 dependencies {
-    testImplementation(libs.mockito.all)
+    testImplementation(libs.mockito.core)
 }
 
 publishing {

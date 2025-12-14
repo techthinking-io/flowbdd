@@ -37,7 +37,7 @@ repositories {
 }
 
 dependencies {
-    testImplementation("org.mockito:mockito-all:1.10.19")
+    testImplementation(libs.mockito.core)
 }
 
 publishing {

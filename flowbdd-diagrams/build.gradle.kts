@@ -41,7 +41,7 @@ dependencies {
     implementation(libs.jackson.databind)
     implementation(libs.jackson.annotations)
 
-    testImplementation(libs.mockito.all)
+    testImplementation(libs.mockito.core)
 }
 
 publishing {

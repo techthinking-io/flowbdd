@@ -47,7 +47,7 @@ dependencies {
 
     implementation(libs.thymeleaf)
 
-    testImplementation(libs.mockito.all)
+    testImplementation(libs.mockito.core)
     testImplementation(libs.jimfs)
 }
 

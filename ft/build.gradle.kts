@@ -37,7 +37,7 @@ dependencies {
     implementation("org.awaitility:awaitility:3.0.0")
     implementation("com.google.jimfs:jimfs:1.1")
 
-    testImplementation("org.mockito:mockito-all:1.10.19")
+    testImplementation(libs.mockito.core)
 }
 
 tasks.test {
