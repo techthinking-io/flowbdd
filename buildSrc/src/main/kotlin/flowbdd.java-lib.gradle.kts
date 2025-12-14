@@ -37,7 +37,8 @@ dependencies {
     implementation("org.junit.jupiter:junit-jupiter-params:$junitVersion")
     implementation("org.junit.platform:junit-platform-runner:1.7.0")
 
-    testImplementation("org.assertj:assertj-core:3.11.1")
+    // https://mvnrepository.com/artifact/org.assertj/assertj-core
+    testImplementation("org.assertj:assertj-core:3.19.0")
     //testImplementation("org.assertj:assertj-core:3.26.3")
 }
 

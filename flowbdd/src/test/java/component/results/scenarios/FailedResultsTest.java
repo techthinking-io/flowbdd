@@ -60,7 +60,7 @@ public class FailedResultsTest extends AbstractResultsForTestSuite {
 
         TestCaseResult testMethod = testCaseResult("testMethod");
         assertEqualsIgnoringCause(testMethod, aFailedTestMethod());
-        assertCauseWithMessage(testMethod, "\n" + "Expecting:\n" + " <true>\n" + "to be equal to:\n" + " <false>\n" + "but was not.");
+        assertCauseWithMessage(testMethod, "\nExpecting value to be false but was true");
 
         assertEqualsIgnoringCause(firstTestCaseResult("paramTest"),
             aFailedParamTestCaseResult()
@@ -70,7 +70,7 @@ public class FailedResultsTest extends AbstractResultsForTestSuite {
                 .withDisplayName("Param test value 1")
                 .build()
         );
-        assertCauseWithMessage(firstTestCaseResult("paramTest"), "\nExpecting:\n <\"value 1\">\nto be equal to:\n <null>\nbut was not.");
+        assertCauseWithMessage(firstTestCaseResult("paramTest"), "\nexpected: null\nbut was : \"value 1\"");
 
         assertEqualsIgnoringCause(secondTestCaseResult("paramTest"),
             aFailedParamTestCaseResult()
@@ -80,7 +80,7 @@ public class FailedResultsTest extends AbstractResultsForTestSuite {
                 .withDisplayName("Param test value 2")
                 .build()
         );
-        assertCauseWithMessage(secondTestCaseResult("paramTest"), "\nExpecting:\n <\"value 2\">\nto be equal to:\n <null>\nbut was not.");
+        assertCauseWithMessage(secondTestCaseResult("paramTest"), "\nexpected: null\nbut was : \"value 2\"");
 
         assertEqualsIgnoringCause(thirdTestCaseResult("paramTest"),
             aFailedParamTestCaseResult()
@@ -90,7 +90,7 @@ public class FailedResultsTest extends AbstractResultsForTestSuite {
                 .withDisplayName("Param test value 3")
                 .build()
         );
-        assertCauseWithMessage(thirdTestCaseResult("paramTest"), "\nExpecting:\n <\"value 3\">\nto be equal to:\n <null>\nbut was not.");
+        assertCauseWithMessage(thirdTestCaseResult("paramTest"), "\nexpected: null\nbut was : \"value 3\"");
     }
 
     private TestCaseResultBuilder aFailedParamTestCaseResult() {
