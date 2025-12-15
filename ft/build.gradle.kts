@@ -32,10 +32,11 @@ dependencies {
     implementation(project(":flowbdd"))
     implementation(project(":flowbdd-test-utils"))
 
-    implementation("com.fasterxml.jackson.core:jackson-databind:2.12.1")
-    implementation("com.fasterxml.jackson.core:jackson-annotations:2.12.1")
-    implementation("org.awaitility:awaitility:3.0.0")
-    implementation("com.google.jimfs:jimfs:1.1")
+    implementation(platform(libs.jackson.bom))
+    implementation(libs.jackson.databind)
+    implementation(libs.jackson.annotations)
+    implementation(libs.jimfs)
+    implementation("org.awaitility:awaitility:4.3.0")
 
     testImplementation(libs.mockito.core)
 }
