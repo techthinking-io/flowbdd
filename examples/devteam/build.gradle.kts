@@ -1,6 +1,6 @@
 /*
  * Flow BDD - The productive way to test.
- * Copyright (C)  2021  James Bayliss
+ * Copyright (C)  2025  James Bayliss
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,18 +15,30 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
+plugins {
+    `java-library`
+    id("org.springframework.boot") version "2.7.6"
+    id("io.spring.dependency-management") version "1.0.15.RELEASE"
+}
 
-rootProject.name = "flowbdd"
-include(
-    "flowbdd-wordify",
-    "flowbdd",
-    "ft",
-    "flowbdd-test-utils",
-    "flowbdd-diagrams",
-    "flowbdd-validate",
-    "examples:bookstore",
-    "examples:devteam",
-    "examples:cucumbers",
-    //TODO "examples:server",
-    "learning"
-)
+group = "com.flowbdd.example"
+version = "0.1.0-SNAPSHOT"
+description = "Dev Team Simulator"
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation("org.springframework.boot:spring-boot-starter-actuator")
+    implementation("org.springframework.boot:spring-boot-starter-web")
+
+    testImplementation("org.springframework.boot:spring-boot-starter-test")
+
+    testImplementation(project(":flowbdd"))
+    testImplementation(project(":flowbdd-test-utils"))
+}
+
+tasks.test {
+    useJUnitPlatform()
+}

@@ -120,7 +120,7 @@ public abstract class BaseTest {
 
     // addOnce(), then this logic doesn't have to be here
     public void featureNotes(String notes) {
-        if (featureNotes().text().getNotes().size() == 0) {
+        if (featureNotes().text().getNotes().isEmpty()) {
             featureNotes().text().add(notes);
         }
     }

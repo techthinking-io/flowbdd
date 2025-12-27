@@ -17,6 +17,7 @@
 
 - [x] Name change maybe; FlowBDD, CaffeineFlow or something else
 - [x] New project for mermaid wrapper 
+- [ ] Copyright $originalComment.match("Copyright (\d+)", 1, "-")$today.year - https://stackoverflow.com/questions/48173062/intellij-update-copyright-year
 - [ ] Try scala files
 - [ ] Add timestamp, hostname, time (maybe setup, execute and after times)
 - [ ] Add error 
@@ -159,6 +160,10 @@ This means something like:
 These ideas centre around builders and features that the user may or may not want. That is why linting would be a good
 tool. To achieve consistency in the wordify you'd need the builders to be consistent. Note that wordify can have custom
 rules, these would break down if the builders are not consistent.
+
+### Linting Test names
+
+Make style consistent across code
 
 ### Try to make some tests more concise
 

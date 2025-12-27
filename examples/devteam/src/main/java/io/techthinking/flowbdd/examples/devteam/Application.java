@@ -1,6 +1,6 @@
 /*
  * Flow BDD - The productive way to test.
- * Copyright (C)  2021  James Bayliss
+ * Copyright (C)  2025  James Bayliss
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,17 +16,14 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-rootProject.name = "flowbdd"
-include(
-    "flowbdd-wordify",
-    "flowbdd",
-    "ft",
-    "flowbdd-test-utils",
-    "flowbdd-diagrams",
-    "flowbdd-validate",
-    "examples:bookstore",
-    "examples:devteam",
-    "examples:cucumbers",
-    //TODO "examples:server",
-    "learning"
-)
+package io.techthinking.flowbdd.examples.devteam;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class Application {
+    public static void main(String[] args) {
+        SpringApplication.run(Application.class, args);
+    }
+}
