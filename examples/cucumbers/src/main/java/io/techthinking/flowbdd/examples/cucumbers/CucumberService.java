@@ -16,10 +16,10 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.example.cucumbers;
+package io.techthinking.flowbdd.examples.cucumbers;
 
-import com.example.cucumbers.model.Cucumber;
-import com.example.cucumbers.model.User;
+import io.techthinking.flowbdd.examples.cucumbers.model.Cucumber;
+import io.techthinking.flowbdd.examples.cucumbers.model.User;
 
 import java.util.ArrayList;
 import java.util.List;

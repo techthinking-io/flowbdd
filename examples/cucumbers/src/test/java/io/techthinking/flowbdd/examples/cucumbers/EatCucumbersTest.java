@@ -16,20 +16,20 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.example.cucumbers;
+package io.techthinking.flowbdd.examples.cucumbers;
 
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 
-import static com.example.cucumbers.builders.CucumberBuilder.aCucumber;
-import static com.example.cucumbers.builders.CucumberBuilder.andACucumber;
-import static com.example.cucumbers.builders.CucumberGivenBuilder.iHave;
-import static com.example.cucumbers.builders.CucumberThenBuilder.iShouldHave;
-import static com.example.cucumbers.builders.CucumberThenBuilder.iShouldHaveCucumbers;
-import static com.example.cucumbers.builders.CucumberWhenBuilder.iRequestToEatACucumber;
-import static com.example.cucumbers.builders.UserGivenBuilder.iAm;
+import static io.techthinking.flowbdd.examples.cucumbers.builders.CucumberBuilder.aCucumber;
+import static io.techthinking.flowbdd.examples.cucumbers.builders.CucumberBuilder.andACucumber;
+import static io.techthinking.flowbdd.examples.cucumbers.builders.CucumberGivenBuilder.iHave;
+import static io.techthinking.flowbdd.examples.cucumbers.builders.CucumberThenBuilder.iShouldHave;
+import static io.techthinking.flowbdd.examples.cucumbers.builders.CucumberThenBuilder.iShouldHaveCucumbers;
+import static io.techthinking.flowbdd.examples.cucumbers.builders.CucumberWhenBuilder.iRequestToEatACucumber;
+import static io.techthinking.flowbdd.examples.cucumbers.builders.UserGivenBuilder.iAm;
 
 /**
  * Tutorial and example usage of builders

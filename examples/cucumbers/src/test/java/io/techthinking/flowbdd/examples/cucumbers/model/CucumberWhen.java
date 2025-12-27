@@ -16,42 +16,16 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.example.cucumbers.model;
+package io.techthinking.flowbdd.examples.cucumbers.model;
 
-import java.util.Objects;
+public class CucumberWhen {
+    private final String colour;
 
-public class User {
-    private boolean isHungry;
-
-    public User(boolean isHungry) {
-        this.isHungry = isHungry;
+    public CucumberWhen(String colour) {
+        this.colour = colour;
     }
 
-    public void setHungry(boolean hungry) {
-        isHungry = hungry;
-    }
-
-    public boolean isHungry() {
-        return isHungry;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof User)) return false;
-        User user = (User) o;
-        return isHungry == user.isHungry;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(isHungry);
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-            "isHungry=" + isHungry +
-            '}';
+    public String getColour() {
+        return colour;
     }
 }

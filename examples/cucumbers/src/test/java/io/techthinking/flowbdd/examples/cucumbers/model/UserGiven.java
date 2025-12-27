@@ -16,32 +16,16 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.example.cucumbers.builders;
+package io.techthinking.flowbdd.examples.cucumbers.model;
 
-import com.example.cucumbers.model.UserGiven;
-import io.techthinking.flowbdd.bdd.report.utils.Builder;
+public class UserGiven {
+    private final boolean isHungry;
 
-public final class UserGivenBuilder implements Builder<UserGiven>  {
-    private boolean isHungry;
-
-    private UserGivenBuilder() {
-    }
-
-    public static UserGivenBuilder iAm() {
-        return new UserGivenBuilder();
-    }
-
-    public UserGivenBuilder notHungry() {
-        this.isHungry = false;
-        return this;
-    }
-
-    public UserGivenBuilder withIsHungry(boolean isHungry) {
+    public UserGiven(boolean isHungry) {
         this.isHungry = isHungry;
-        return this;
     }
 
-    public UserGiven build() {
-        return new UserGiven(isHungry);
+    public boolean isHungry() {
+        return isHungry;
     }
 }

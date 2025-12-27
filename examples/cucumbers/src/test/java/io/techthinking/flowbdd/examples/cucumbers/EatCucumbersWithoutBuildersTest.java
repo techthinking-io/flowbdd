@@ -16,10 +16,10 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.example.cucumbers;
+package io.techthinking.flowbdd.examples.cucumbers;
 
-import com.example.cucumbers.model.Cucumber;
-import com.example.cucumbers.builders.CucumberBuilder;
+import io.techthinking.flowbdd.examples.cucumbers.model.Cucumber;
+import io.techthinking.flowbdd.examples.cucumbers.builders.CucumberBuilder;
 import io.techthinking.flowbdd.report.junit5.results.extension.FlowBdd;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.MethodOrderer;

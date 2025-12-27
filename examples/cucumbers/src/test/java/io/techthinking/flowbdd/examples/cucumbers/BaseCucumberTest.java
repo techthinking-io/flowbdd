@@ -16,16 +16,16 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.example.cucumbers;
+package io.techthinking.flowbdd.examples.cucumbers;
 
-import com.example.cucumbers.builders.CucumberBuilder;
-import com.example.cucumbers.builders.CucumberGivenBuilder;
-import com.example.cucumbers.builders.UserGivenBuilder;
-import com.example.cucumbers.model.Cucumber;
-import com.example.cucumbers.model.CucumberGiven;
-import com.example.cucumbers.model.CucumberThen;
-import com.example.cucumbers.model.CucumberWhen;
-import com.example.cucumbers.model.UserGiven;
+import io.techthinking.flowbdd.examples.cucumbers.builders.CucumberBuilder;
+import io.techthinking.flowbdd.examples.cucumbers.builders.CucumberGivenBuilder;
+import io.techthinking.flowbdd.examples.cucumbers.builders.UserGivenBuilder;
+import io.techthinking.flowbdd.examples.cucumbers.model.Cucumber;
+import io.techthinking.flowbdd.examples.cucumbers.model.CucumberGiven;
+import io.techthinking.flowbdd.examples.cucumbers.model.CucumberThen;
+import io.techthinking.flowbdd.examples.cucumbers.model.CucumberWhen;
+import io.techthinking.flowbdd.examples.cucumbers.model.UserGiven;
 import io.techthinking.flowbdd.report.junit5.test.BaseTest;
 import io.techthinking.flowbdd.bdd.report.utils.ThenBuilder;
 import io.techthinking.flowbdd.bdd.report.utils.WhenBuilder;

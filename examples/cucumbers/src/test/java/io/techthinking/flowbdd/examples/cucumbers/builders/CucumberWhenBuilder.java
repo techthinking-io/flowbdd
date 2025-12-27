@@ -16,9 +16,9 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.example.cucumbers.builders;
+package io.techthinking.flowbdd.examples.cucumbers.builders;
 
-import com.example.cucumbers.model.CucumberWhen;
+import io.techthinking.flowbdd.examples.cucumbers.model.CucumberWhen;
 import io.techthinking.flowbdd.bdd.report.utils.WhenBuilder;
 
 public class CucumberWhenBuilder implements WhenBuilder<CucumberWhen> {

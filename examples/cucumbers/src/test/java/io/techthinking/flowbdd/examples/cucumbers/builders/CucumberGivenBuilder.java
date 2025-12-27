@@ -16,18 +16,23 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.example.cucumbers.model;
+package io.techthinking.flowbdd.examples.cucumbers.builders;
 
-import java.util.List;
+import io.techthinking.flowbdd.examples.cucumbers.model.CucumberGiven;
+import io.techthinking.flowbdd.bdd.report.utils.GivenBuilder;
 
-public class CucumberGiven {
-    private final List<Cucumber> cucumbers;
+public class CucumberGivenBuilder implements GivenBuilder<CucumberGiven> {
+    private final CucumbersBuilder cucumbers;
 
-    public CucumberGiven(List<Cucumber> cucumbers) {
+    private CucumberGivenBuilder(CucumbersBuilder cucumbers) {
         this.cucumbers = cucumbers;
     }
 
-    public List<Cucumber> getCucumbers() {
-        return cucumbers;
+    public static CucumberGivenBuilder iHave(CucumberBuilder... cucumbers) {
+        return new CucumberGivenBuilder(CucumbersBuilder.cucumbers().with(cucumbers));
+    }
+
+    public CucumberGiven build() {
+        return new CucumberGiven(cucumbers.build());
     }
 }

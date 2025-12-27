@@ -16,23 +16,38 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.example.cucumbers.builders;
+package io.techthinking.flowbdd.examples.cucumbers.model;
 
-import com.example.cucumbers.model.CucumberGiven;
-import io.techthinking.flowbdd.bdd.report.utils.GivenBuilder;
+import java.util.Objects;
 
-public class CucumberGivenBuilder implements GivenBuilder<CucumberGiven> {
-    private final CucumbersBuilder cucumbers;
+public class Cucumber {
+    private final String colour;
 
-    private CucumberGivenBuilder(CucumbersBuilder cucumbers) {
-        this.cucumbers = cucumbers;
+    public Cucumber(String colour) {
+        this.colour = colour;
     }
 
-    public static CucumberGivenBuilder iHave(CucumberBuilder... cucumbers) {
-        return new CucumberGivenBuilder(CucumbersBuilder.cucumbers().with(cucumbers));
+    public String getColour() {
+        return colour;
     }
 
-    public CucumberGiven build() {
-        return new CucumberGiven(cucumbers.build());
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Cucumber)) return false;
+        Cucumber cucumber = (Cucumber) o;
+        return Objects.equals(colour, cucumber.colour);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(colour);
+    }
+
+    @Override
+    public String toString() {
+        return "Cucumber{" +
+            "colour='" + colour + '\'' +
+            '}';
     }
 }

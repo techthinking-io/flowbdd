@@ -16,9 +16,9 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.example.cucumbers.builders;
+package io.techthinking.flowbdd.examples.cucumbers.builders;
 
-import com.example.cucumbers.model.CucumberThen;
+import io.techthinking.flowbdd.examples.cucumbers.model.CucumberThen;
 import io.techthinking.flowbdd.bdd.report.utils.ThenBuilder;
 
 import java.util.List;

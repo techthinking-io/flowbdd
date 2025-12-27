@@ -16,38 +16,18 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.example.cucumbers.model;
+package io.techthinking.flowbdd.examples.cucumbers.model;
 
-import java.util.Objects;
+import java.util.List;
 
-public class Cucumber {
-    private final String colour;
+public class CucumberGiven {
+    private final List<Cucumber> cucumbers;
 
-    public Cucumber(String colour) {
-        this.colour = colour;
+    public CucumberGiven(List<Cucumber> cucumbers) {
+        this.cucumbers = cucumbers;
     }
 
-    public String getColour() {
-        return colour;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Cucumber)) return false;
-        Cucumber cucumber = (Cucumber) o;
-        return Objects.equals(colour, cucumber.colour);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(colour);
-    }
-
-    @Override
-    public String toString() {
-        return "Cucumber{" +
-            "colour='" + colour + '\'' +
-            '}';
+    public List<Cucumber> getCucumbers() {
+        return cucumbers;
     }
 }

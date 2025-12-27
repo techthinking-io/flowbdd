@@ -16,16 +16,30 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.example.cucumbers.model;
+package io.techthinking.flowbdd.examples.cucumbers.builders;
 
-public class CucumberWhen {
-    private final String colour;
+import io.techthinking.flowbdd.examples.cucumbers.model.Cucumber;
+import io.techthinking.flowbdd.bdd.report.utils.Builder;
 
-    public CucumberWhen(String colour) {
+public final class CucumberBuilder implements Builder<Cucumber> {
+    private String colour;
+
+    private CucumberBuilder() {
+    }
+
+    public static CucumberBuilder aCucumber() {
+        return new CucumberBuilder();
+    }
+
+    public static CucumberBuilder andACucumber() {
+        return aCucumber();
+    }
+
+    public CucumberBuilder withColour(String colour) {
         this.colour = colour;
+        return this;
     }
 
-    public String getColour() {
-        return colour;
-    }
-}
+    public Cucumber build() {
+        return new Cucumber(colour);
+    }}
