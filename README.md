@@ -53,7 +53,6 @@ public class DevTeamSimulatorTest extends BaseTest {
 ```
 
 ## How does it work?
-
 Flow BDD uses a process called **Wordify** to turn your clean Java code into human-readable documentation.
 
 For example, a test method like `whenDeveloperDrinksCoffee()` is automatically tokenized to:  
@@ -67,7 +66,6 @@ It gives you the freedom to write tests in the way you want, without the "Gherki
 
 
 ## The Outcome: BDD that Scales
-
 By removing the "Gherkin tax" and focusing on code-first documentation, Flow BDD delivers:
 
 *   **Zero Drift:** Your documentation is a reflection of your code, not a separate text file that you hope someone remembered to update.
@@ -76,7 +74,6 @@ By removing the "Gherkin tax" and focusing on code-first documentation, Flow BDD
 *   **Trustworthy Specs:** When a test fails, you aren't just looking at a stack trace; you're looking at a Sequence Diagram of exactly where the communication broke down.
 
 ## Core Capabilities
-
 *   **Living Documentation:** Automatically generate HTML feature files directly from your Java or Kotlin or hopefully any JVM test code.
 *   **Visual Flow Analysis:** Integrated **Mermaid.js** support to capture downstream interactions and render them as UML Sequence Diagrams.
 *   **Deep Data Inspection:** Capture and display full HTTP request/response payloads (headers and bodies) within the documentation.
@@ -84,7 +81,6 @@ By removing the "Gherkin tax" and focusing on code-first documentation, Flow BDD
 *   **Zero Glue Layer:** Eliminate the complexity of traditional BDD frameworks. No regex, no separate feature files, no "Gherkin tax."
 
 ## The Roadmap: Toward Peak Productivity
-
 Flow BDD is evolving. Here is what’s on the horizon:
 *   **AI Context Engine:** LLMs are the "missing glue." We are integrating AI to answer questions like *"How does the checkout flow actually work?"* or *"Should the Developer receive a 401 when the coffee machine is empty?"* by using your living documentation as the source of truth.
 *   **AI Boundary Guard:** If you choose to use AI to generate more code, testing at a **boundary** becomes non-negotiable. Flow BDD will provide the safety net to ensure AI-generated logic follows the expected behavior.
@@ -100,13 +96,23 @@ Flow BDD is evolving. Here is what’s on the horizon:
 * **Making Code "LLM-Readable":** LLMs struggle with large, messy codebases, but they thrive on structured BDD steps and Sequence Diagrams. Flow BDD provides the high-signal context that AI needs to be actually useful.
 
 ## Testing 30,000 ft view: The Assurance Scale
-**E2E and Integration tests are not enough.** They tell you *if* a system works, but they don't always tell you *why* or if it's doing the *right thing* at the boundary. If you are using AI to generate code this is even more important. 
+**E2E and Integration tests are not enough.** They tell you *if* a system works, but they don't always tell you *why* or if it's doing the *right thing* at the boundary. If you are using AI to generate code, this is even more important. 
 
 Flow BDD focuses on **Behavioral Assurance**:
 1. **Unit Tests:** (The "How") Logic verification.
 2. **TDD Test Driven Development:** Drives architecture. Tests are a by product.
 3. **Integration Tests:** (The "Connection") Validates the integration between components and external systems.
 4. **Flow BDD:** (The "What & Why") **Behavioral verification.**
+
+## Philosophy & Culture
+I developed **VIEW MAP Communication & Culture** - The core principles that serve as the fundamental building blocks of productivity and competitiveness. Traditional BDD often introduces **Waste** (the "Gherkin tax," fragile glue code, and documentation drift) and therefore impacts **Iterating with Fast Validated Feedback** and **Value**. **Value** is added by using Flow BDD that ensures we build exactly what was intended.
+
+We believe in:
+*   **Waste Elimination:** Identify and remove non-value-adding activities.
+*   **Iterating with Fast Validated Feedback:** Develop products and services through continuous, feedback-driven iterations. This leads to shared knowledge, which is far more important than most people realize.
+*   **Value Amplification:** Focus on increasing the value delivered to customers.
+
+Learn more here: [**VIEW MAP: Communication & Culture in Engineering**](https://www.techthinking.io/culture).
 
 ## Getting Started
 
