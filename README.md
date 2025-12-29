@@ -11,9 +11,9 @@
 ## The Purpose of Functional Testing including BDD
 Testing isn't just about catching bugs. When done correctly, automated tests serve critical functions:
 1. **Verifying Behavior:** Ensuring the system does exactly what the business intended.
-2. **Enabling Refactoring and increased agility:** Providing the safety net needed to improve code without breaking functionality.
+2. **Enabling Refactoring:** Providing the safety net needed to improve code without breaking functionality.
 3. **Living Documentation:** Acting as the ultimate source of truth for how the system actually works.
-4. See [Philosophy & Culture](#philosophy--culture) for:
+4. **Increased agility:** See [Philosophy & Culture](#philosophy--culture) more:
    * **Waste Elimination**
    * **Iterating with Fast Validated Feedback** 
    * **Value Amplification**
