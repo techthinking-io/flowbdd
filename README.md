@@ -6,13 +6,23 @@
 
 ## Overview
 
-**Turn your automated tests into living product documentation — without the BDD overhead.**
+**Turn your automated tests into living product documentation — without the BDD (behavior-driven development) overhead.**
 
-## The Problem: The "Cucumber Trap"
-Traditional BDD frameworks often start easy but end messy. You've likely seen it:
-* **Step Explosion:** Fragile glue code and copy-pasted scenarios.
-* **Documentation Rot:** When the feature files drift from the reality of the code, your docs become "fanfic."
-* **The Glass Ceiling:** You spend more time maintaining the framework than testing the product.
+## The Purpose of Functional Testing including BDD
+Testing isn't just about catching bugs. When done correctly, automated tests serve critical functions:
+1. **Verifying Behavior:** Ensuring the system does exactly what the business intended.
+2. **Enabling Refactoring and increased agility:** Providing the safety net needed to improve code without breaking functionality.
+3. **Living Documentation:** Acting as the ultimate source of truth for how the system actually works.
+4. See [Philosophy & Culture](#philosophy--culture) for:
+   * **Waste Elimination**
+   * **Iterating with Fast Validated Feedback** 
+   * **Value Amplification**
+
+## The Problem: Inefficiency and the "Cucumber Trap"
+The conventional approach to BDD (like Cucumber or Gherkin) tries to solve this but often introduces **Waste** and is suboptimal at solving the above. By forcing you to maintain separate feature files and "glue code," it creates:
+* **Complexity:** You spend more time managing the framework than testing the product.
+* **Fragility:** Tests break because of text changes, not logic changes.
+* **Documentation Rot:** Feature files quickly drift from the actual code behavior.
 
 ## The Solution: Flow BDD
 Flow BDD is the most productive way to implement Behavior Driven Development by turning the process on its head. Instead of writing static feature files first, you write **clean, best-practice code first**.
@@ -67,7 +77,6 @@ It gives you the freedom to write tests in the way you want, without the "Gherki
 
 ## The Outcome: BDD that Scales
 By removing the "Gherkin tax" and focusing on code-first documentation, Flow BDD delivers:
-
 *   **Zero Drift:** Your documentation is a reflection of your code, not a separate text file that you hope someone remembered to update.
 *   **Maintainable Tests:** No regex glue layers or "step explosion." If your code compiles, your documentation is ready.
 *   **Better Practice baked in:** The framework encourages clean, builder-based test design (like our `DevTeamSimulatorTest`) which naturally leads to better system architecture.
