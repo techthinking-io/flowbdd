@@ -1,4 +1,4 @@
-Dev Team Simulator – A small fun BDD example using Flow BDD to generate documentation.
+Dev Team Simulator - The world's most advanced team simulator... that only masters drinking coffee and accumulating tech debt.
 
 How to run
 

@@ -86,26 +86,27 @@ By removing the "Gherkin tax" and focusing on code-first documentation, Flow BDD
 ## The Roadmap: Toward Peak Productivity
 
 Flow BDD is evolving. Here is what’s on the horizon:
+*   **AI Context Engine:** LLMs are the "missing glue." We are integrating AI to answer questions like *"How does the checkout flow actually work?"* or *"Should the Developer receive a 401 when the coffee machine is empty?"* by using your living documentation as the source of truth.
+*   **AI Boundary Guard:** If you choose to use AI to generate more code, testing at a **boundary** becomes non-negotiable. Flow BDD will provide the safety net to ensure AI-generated logic follows the expected behavior.
 *   **Interactive Test Runner:** A built-in UI to re-run specific tests and modify parameters (like coffee intake!) on the fly.
 *   **Asynchronous Actions:** Wrapping steps in async actions to significantly improve test execution performance.
 *   **Intelligent Mutation Testing:** Automatically validate the correctness of your scenarios by mutating steps and asserting state changes.
 *   **Declarative JSON Builders:** Generate Type-Safe builders directly from JSON schema definitions.
 *   **Persistent Analytics:** Store test results over time to query trends, irregular failures, and performance regressions.
 
-## Flow BDD examples:
+## AI Philosophy
+* **A Tool, Not a Replacement:** I use AI every day, but it’s a co-pilot, not the captain. AI can write implementation faster than us, but it doesn't always understand the *intent* and or optimise for code *quality*
+* **The "Coffee Gap":** An AI can write a `drinks-coffee` endpoint in 2 seconds, but Flow BDD can tell the AI: *"Hey, Alice is still sleepy, you forgot to calculate the productivity boost!"* ☕️🤖
+* **Making Code "LLM-Readable":** LLMs struggle with large, messy codebases, but they thrive on structured BDD steps and Sequence Diagrams. Flow BDD provides the high-signal context that AI needs to be actually useful.
 
-Please see 
-* `examples:devteams`
-* `examples:bookstore` 
-* `example:cucumbers`. 
-* Run `DevTeamSimulatorTest`, `GetBookTest` and or `EatCucumbersTest`. 
-  * You'll see in the console there is a link to the generated HTML and JSON files. Example output on Mac:
-```
-Results Index: file:///var/folders/x6/w8rxpq011g328g44nx7fkz7w0000gn/T/flowbdd/data/index.json
-HTML    Index: file:///var/folders/x6/w8rxpq011g328g44nx7fkz7w0000gn/T/flowbdd/report/index.html
-Results Suite: file:///var/folders/x6/w8rxpq011g328g44nx7fkz7w0000gn/T/flowbdd/data/TEST-io.techthinking.flowbdd.examples.devteam.bdd.DevTeamSimulatorTest.json
-HTML    Suite: file:///var/folders/x6/w8rxpq011g328g44nx7fkz7w0000gn/T/flowbdd/report/TEST-io.techthinking.flowbdd.examples.devteam.bdd.DevTeamSimulatorTest.html
-```
+## Testing 30,000 ft view: The Assurance Scale
+**E2E and Integration tests are not enough.** They tell you *if* a system works, but they don't always tell you *why* or if it's doing the *right thing* at the boundary. If you are using AI to generate code this is even more important. 
+
+Flow BDD focuses on **Behavioral Assurance**:
+1. **Unit Tests:** (The "How") Logic verification.
+2. **TDD Test Driven Development:** Drives architecture. Tests are a by product.
+3. **Integration Tests:** (The "Connection") Validates the integration between components and external systems.
+4. **Flow BDD:** (The "What & Why") **Behavioral verification.**
 
 ## Getting Started
 
@@ -137,13 +138,31 @@ public class MyFirstFlowTest {
 ```
 
 ## Flow BDD Github project contains:
-
 | Project Name | Package | Description |
 | :--- | :--- | :--- |
 | **flowbdd** | `io.techthinking.flowbdd.report` | The core JUnit 5 extension and report engine. |
 | **wordify** | `io.techthinking.flowbdd.wordify` | The engine that translates Java code into natural language. |
 | **flowbdd-diagrams** | `io.techthinking.flowbdd.report.mermaid` | Mermaid.js wrapper for Sequence Diagrams. |
 | **examples** | `io.techthinking.flowbdd.examples` | Demo projects (DevTeam, Bookstore, Cucumbers). |
+
+## How to Run the Demo
+Want to see it in action? The **Dev Team Simulator** is our hero example:
+
+1. **Clone the repo:** `git clone https://github.com/techthinking-io/flowbdd.git`
+2. **Run the test:** 
+  * Run `DevTeamSimulatorTest` in your IDE
+  * `./gradlew :examples:devteam:test`
+3. **Open the Report:**
+   Check your IDE/Terminal console. Flow BDD automatically prints a direct link to your living documentation:
+   ```text
+   HTML Suite: file:///tmp/flowbdd/report/TEST-io.techthinking.flowbdd.examples.devteam.bdd.DevTeamSimulatorTest.html
+   ```
+
+## Other examples:
+Please see
+* `examples:bookstore`
+* `example:cucumbers`
+* Run `GetBookTest` and or `EatCucumbersTest`
 
 ## Testing & Deploying
 * Run all tests:
@@ -161,4 +180,5 @@ I am actively looking for real-world use cases! If you're interested in migratin
 * Maintainer: James Bayliss
 * GitHub: jrbayliss
 * Repo: https://github.com/techthinking-io/flowbdd
+* Website: https://techthinking.io
 * With thanks to the Yatspec https://github.com/bodar/yatspec project for the initial inspiration!
