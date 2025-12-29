@@ -25,7 +25,10 @@ import io.techthinking.flowbdd.examples.devteam.model.TechDept;
 import io.techthinking.flowbdd.report.junit5.results.extension.FlowBdd;
 import io.techthinking.flowbdd.report.junit5.test.BaseTest;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -40,6 +43,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(FlowBdd.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class DevTeamSimulatorTest extends BaseTest {
 
     @Override
@@ -54,9 +58,10 @@ public class DevTeamSimulatorTest extends BaseTest {
     private ResponseEntity<String> response;
     private ProductivityBoost productivityBoostResponse;
     private TechDept techDeptResponse;
+    private String developerName;
 
     private static final String USER = "User";
-    private static final String DEV_TEAM_SIMULATOR = "DevTeamSimulator";
+    private static final String DEV_TEAM_SIMULATOR = "Dev Team Simulator";
 
     @BeforeEach
     void setupDoc() {
@@ -67,38 +72,39 @@ public class DevTeamSimulatorTest extends BaseTest {
         response = null;
         productivityBoostResponse = null;
         techDeptResponse = null;
+        developerName = "defaultDeveloper";
     }
 
-    /**
-     * Potentially next steps
-     * givenDeveloper("Alice");
-     * whenDeveloperDrinksCoffee();
-     * thenDeveloperGetsPerformanceBoost();
-     */
+    @Order(0)
     @Test
     void developerDrinksCoffee_getsPerformanceBoost() throws Exception {
+        givenDeveloperIs("Alice");
         whenDeveloperDrinksCoffee();
         thenDeveloperGetsPerformanceBoost();
     }
 
+    @Order(1)
     @Test
     void developerDoesNoTesting_getsTechDept() throws Exception {
+        givenDeveloperIs("Bob");
         whenDeveloperDoesNoTesting();
         thenDeveloperGetsTechDept();
     }
 
     private void whenDeveloperDrinksCoffee() throws JsonProcessingException {
         Object request = Collections.emptyMap();
-        response = template.postForEntity("/dev/Alice/drinks-coffee", request, String.class);
+        String url = "/dev/" + developerName + "/drinks-coffee";
+        response = template.postForEntity(url, request, String.class);
         productivityBoostResponse = productivityBoost(response.getBody());
-        generateSequenceDiagram("/dev/Alice/drinks-coffee");
+        generateSequenceDiagram(url);
     }
 
     private void whenDeveloperDoesNoTesting() throws JsonProcessingException {
         Object request = Collections.emptyMap();
-        response = template.postForEntity("/dev/Bob/does-no-testing", request, String.class);
+        String url = "/dev/" + developerName + "/does-no-testing";
+        response = template.postForEntity(url, request, String.class);
         techDeptResponse = techDept(response.getBody());
-        generateSequenceDiagram("/dev/Bob/does-no-testing");
+        generateSequenceDiagram(url);
     }
 
     private ProductivityBoost productivityBoost(String text) throws JsonProcessingException {
@@ -116,15 +122,19 @@ public class DevTeamSimulatorTest extends BaseTest {
 
     private void thenDeveloperGetsPerformanceBoost() {
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-        assertThat(productivityBoostResponse.getDeveloper()).isEqualTo("Alice");
+        assertThat(productivityBoostResponse.getDeveloper()).isEqualTo(developerName);
         assertThat(productivityBoostResponse.getBoost()).isEqualTo(40);
-        assertThat(productivityBoostResponse.getMessage()).isEqualTo("1.21 Gigawatts of caffeine! Alice is seeing some serious productivity.");
+        assertThat(productivityBoostResponse.getMessage()).isEqualTo("1.21 Gigawatts of caffeine! " + developerName  + " is seeing some serious productivity.");
     }
 
     private void thenDeveloperGetsTechDept() {
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-        assertThat(techDeptResponse.getDeveloper()).isEqualTo("Bob");
+        assertThat(techDeptResponse.getDeveloper()).isEqualTo(developerName);
         assertThat(techDeptResponse.getDebt()).isEqualTo(10);
-        assertThat(techDeptResponse.getMessage()).isEqualTo("Bob tonight, we dine in Technical Debt! For tomorrow, we push to production");
+        assertThat(techDeptResponse.getMessage()).isEqualTo(developerName + " tonight, we dine in Technical Debt! For tomorrow, we push to production");
+    }
+
+    private void givenDeveloperIs(String name) {
+        this.developerName = name;
     }
 }

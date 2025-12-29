@@ -17,7 +17,7 @@
 
 - [x] Name change maybe; FlowBDD, CaffeineFlow or something else
 - [x] New project for mermaid wrapper 
-- [ ] Copyright $originalComment.match("Copyright (\d+)", 1, "-")$today.year - https://stackoverflow.com/questions/48173062/intellij-update-copyright-year
+- [x] Update copyright
 - [ ] Try scala files
 - [ ] Add timestamp, hostname, time (maybe setup, execute and after times)
 - [ ] Add error 
