@@ -32,7 +32,7 @@ Flow BDD then automatically generates:
 * **UML Diagrams:** Visualizing downstream interactions and data flows (HTTP headers/bodies).
 * **Living UI:** A generated dashboard with buttons to re-run tests and modify parameters on the fly.
 
-**Reduce BDD entropy. Restore signal.**
+**Focus on testing the behavior with best practices. Automate the documentation.**
 
 ### This is an example of the documentation generated from the following test below:
 ![alt text](docs/images/dev-team-simulator.png "Dev Team Simulator")
