@@ -6,236 +6,159 @@
 
 ## Overview
 
-Flow BDD (formally Smart BDD) is the most productive way to implement Behaviour Driven Development. Traditional
-frameworks have you write
-the static feature files first, then implement code.
+**Turn your automated tests into living product documentation — without the BDD overhead.**
 
-With Flow BDD you write the code first using best practices and this generates:
+## The Problem: The "Cucumber Trap"
+Traditional BDD frameworks often start easy but end messy. You've likely seen it:
+* **Step Explosion:** Fragile glue code and copy-pasted scenarios.
+* **Documentation Rot:** When the feature files drift from the reality of the code, your docs become "fanfic."
+* **The Glass Ceiling:** You spend more time maintaining the framework than testing the product.
 
-* **Interactive** feature files that serve as documentation
-* UML diagrams to better document the product
-* A button to re-run the test
-* UI that allows you to change the parameters of the test
+## The Solution: Flow BDD
+Flow BDD is the most productive way to implement Behavior Driven Development by turning the process on its head. Instead of writing static feature files first, you write **clean, best-practice code first**.
 
-### This is an example of the end result
+Flow BDD then automatically generates:
+* **Interactive Feature Files:** Documentation that is always in sync with your code.
+* **UML Diagrams:** Visualizing downstream interactions and data flows (HTTP headers/bodies).
+* **Living UI:** A generated dashboard with buttons to re-run tests and modify parameters on the fly.
 
-![alt text](docs/images/doc01.png "Doc Snippet")
+**Reduce BDD entropy. Restore signal.**
+
+### This is an example of the documentation generated from the following test below:
+![alt text](docs/images/dev-team-simulator.png "Dev Team Simulator")
 
 ```java
-public class GetBookTest extends BaseBookStoreTest {
+@ExtendWith(FlowBdd.class)
+public class DevTeamSimulatorTest extends BaseTest {
 
     @Override
     public void doc() {
-        featureNotes("Working progress for example of usage Flow BDD");
+        featureNotes("Dev Team Simulator: Verify developer actions endpoints – the world's most advanced team simulator... that only masters drinking coffee and accumulating tech debt, with predetermined biased outputs ☕🚫");
     }
 
     @Test
-    public void getBookByIsbnUsingDefaults() {
-        when(aUserRequestsABook());
-        then(theResponseContains(aDefaultIsbnBook()));
+    void developerDrinksCoffee_getsPerformanceBoost() throws Exception {
+        givenDeveloperIs("Alice");
+        whenDeveloperDrinksCoffee();
+        thenDeveloperGetsPerformanceBoost();
     }
 
     @Test
-    public void getBookByIsbnShowingAllDefaultValues() {
-        given(theIsbnDbContains().anEntry(
-            forAnIsbn("default-isbn")
-                .thatWillReturn(anIsbnBook()
-                    .withIsbn("default-isbn")
-                    .withTitle("default-title")
-                    .withAuthor("default-author"))));
-        when(aUserRequestsABook().withIsbn("default-isbn"));
-        then(theResponseContains(anIsbnBook()
-            .withIsbn("default-isbn")
-            .withTitle("default-title")
-            .withAuthors(singletonList("default-author"))));
+    void developerDoesNoTesting_getsTechDept() throws Exception {
+        givenDeveloperIs("Bob");
+        whenDeveloperDoesNoTesting();
+        thenDeveloperGetsTechDept();
     }
 }
 ```
 
 ## How does it work?
 
-`when(aUserRequestsABook());` tokenised to `when a user requests a book`. It gives you the freedom to write tests in the
-way you want. There's a simple api to add notes, capture inputs and output, create uml diagrams etc... It uses JUnit5 to
-be powerful and extensible, it even facilities re-running tests.
+Flow BDD uses a process called **Wordify** to turn your clean Java code into human-readable documentation.
 
-## Why is this significant?
+For example, a test method like `whenDeveloperDrinksCoffee()` is automatically tokenized to:  
+`When developer drinks coffee`.
 
-The advantages may or may not be obvious, you get to write code that is best suited to test the functionally of your
-product and or service. As a bonus you get better documentation and a demo app.
+It gives you the freedom to write tests in the way you want, without the "Gherkin tax." There is a simple API to:
+* **Add Notes:** Use `featureNotes()` to set the scene (e.g., explaining that your simulator only masters coffee and tech debt).
+* **Capture Interactions:** Automatically generate **Sequence Diagrams** showing the flow between a `User` and the `DevTeamSimulator`.
+* **Inspect Data:** Capture HTTP request/response headers and bodies (like the "1.21 Gigawatts of caffeine" payload).
+* **Interactive Control:** It leverages JUnit 5 to provide a UI where you can re-run tests or even modify parameters on the fly.
 
-So what is wrong with existing approach? Far form doing the above, you write a feature file in plain text, then write
-code that is corrupted by the feature file. This is additional complexity and will most likely result in:
 
-* Badly written code
-* Which leads to diminishing returns
-* Which can and often leads to a glass ceiling
-* Which too often results rewriting the testing framework
+## The Outcome: BDD that Scales
 
-Yes a small and simple Cucumber, Concordion, JBehave etc... project is simple, the same can be said about most
-frameworks and projects. So the argument for Flow BDD is best made with real world projects.
+By removing the "Gherkin tax" and focusing on code-first documentation, Flow BDD delivers:
 
-## Implemented Features
+*   **Zero Drift:** Your documentation is a reflection of your code, not a separate text file that you hope someone remembered to update.
+*   **Maintainable Tests:** No regex glue layers or "step explosion." If your code compiles, your documentation is ready.
+*   **Better Practice baked in:** The framework encourages clean, builder-based test design (like our `DevTeamSimulatorTest`) which naturally leads to better system architecture.
+*   **Trustworthy Specs:** When a test fails, you aren't just looking at a stack trace; you're looking at a Sequence Diagram of exactly where the communication broke down.
 
-- Create html documentation / feature files from Java code (as above)
-- Capture downstream interactions and show with diagrams
-- Capture downstream data such as HTTP request/response headers and body
-- More consistent as builders are used to set state and exercise the system under test
-- More productive as you are encouraged to use best practices and don't have the complexities of traditional glue layers
+## Core Capabilities
 
-The projects aim is to:
+*   **Living Documentation:** Automatically generate HTML feature files directly from your Java or Kotlin or hopefully any JVM test code.
+*   **Visual Flow Analysis:** Integrated **Mermaid.js** support to capture downstream interactions and render them as UML Sequence Diagrams.
+*   **Deep Data Inspection:** Capture and display full HTTP request/response payloads (headers and bodies) within the documentation.
+*   **Fluent Test Design:** Encourages the use of Type-Safe Builders, leading to more consistent state setup and more readable assertions.
+*   **Zero Glue Layer:** Eliminate the complexity of traditional BDD frameworks. No regex, no separate feature files, no "Gherkin tax."
 
-- Improve the quality and usefulness of the documentation
-- Improve the confidence and coverage of the tests
-- Improve the performance of the tests
-- Improve the productivity of writing and maintaining the tests
+## The Roadmap: Toward Peak Productivity
 
-## Road Map:
+Flow BDD is evolving. Here is what’s on the horizon:
+*   **Interactive Test Runner:** A built-in UI to re-run specific tests and modify parameters (like coffee intake!) on the fly.
+*   **Asynchronous Actions:** Wrapping steps in async actions to significantly improve test execution performance.
+*   **Intelligent Mutation Testing:** Automatically validate the correctness of your scenarios by mutating steps and asserting state changes.
+*   **Declarative JSON Builders:** Generate Type-Safe builders directly from JSON schema definitions.
+*   **Persistent Analytics:** Store test results over time to query trends, irregular failures, and performance regressions.
 
-- Ability to re-run tests
-- Ability to modify the state under test, for example a textbox or a dropdown to modify values
-- Steps wrapped in actions:
-    - So that they can be executed asynchronously to improve performance
-- Validate correctness of the scenario by adding/removing and or mutating steps and asserting the expected state and or
-  behavior.
-- Define the data and behaviour JSON documents and generate the builders
-- The above declarative JSON could also be used to generate a demo application
-- Results can be persisted so that previous test results can be queried
+## Flow BDD examples:
 
-## Flow BDD usage:
-
-Please see `example:bookstore` and `example:cucumbers`. Run `GetBookTest` and or `EatCucumbersTest`. You'll see in the
-console there is a link to the generated html and json files.
-
-1. Import the `report` project `testImplementation("io.techthinking:flowbdd:0.1.1-SNAPSHOT")`
-   or locally withing this repo `testImplementation(project(":flowbdd"))`
-2. Add `@ExtendWith(FlowBdd.class)` to any class that you want to generate a report from.
-
-### Example to from `example:bookstore`
-
-```java
-
-@ExtendWith(FlowBdd.class)
-public class GetBookTest {
-    @Test
-    public void getBook() {
-        whenGetBookIsCalled();
-        thenTheBookIsReturned();
-    }
-}
+Please see 
+* `examples:devteams`
+* `examples:bookstore` 
+* `example:cucumbers`. 
+* Run `DevTeamSimulatorTest`, `GetBookTest` and or `EatCucumbersTest`. 
+  * You'll see in the console there is a link to the generated HTML and JSON files. Example output on Mac:
+```
+Results Index: file:///var/folders/x6/w8rxpq011g328g44nx7fkz7w0000gn/T/flowbdd/data/index.json
+HTML    Index: file:///var/folders/x6/w8rxpq011g328g44nx7fkz7w0000gn/T/flowbdd/report/index.html
+Results Suite: file:///var/folders/x6/w8rxpq011g328g44nx7fkz7w0000gn/T/flowbdd/data/TEST-io.techthinking.flowbdd.examples.devteam.bdd.DevTeamSimulatorTest.json
+HTML    Suite: file:///var/folders/x6/w8rxpq011g328g44nx7fkz7w0000gn/T/flowbdd/report/TEST-io.techthinking.flowbdd.examples.devteam.bdd.DevTeamSimulatorTest.html
 ```
 
-Will produce the following step defs:
+## Getting Started
 
-```
-When get book is called 
-Then the book is returned
-```
-
-### Example to from `example:cucumbers`
-
-```java
-void givenOneRedAndOneBlueCucumber_whenIEatOneRed_IhaveOneBlueCucumberLeft() {
-    given(iHave(aCucumber().withColour("red"), andACucumber().withColour("blue")));
-    when(iRequestToEatCucumbers().withColour("red"));
-    then(iShouldHaveCucumbers().withquantity(1));
-}
+### 1. Installation
+Include the dependency in your `build.gradle.kts`:
+```kotlin
+testImplementation("io.techthinking:flowbdd:0.1.1-SNAPSHOT")
 ```
 
-Will produce the following step defs:
-
-```
-Given I have a cucumber with colour "red" and a cucumber with colour "blue" 
-When I request to eat cucumbers with colour "red" 
-Then I should have cucumbers with quantity 1 with colour "blue"
-```
-
-## Flow BDD Github project contains:
-
-| project name | package                              | description                                                          | notes                           |
-|--------------|--------------------------------------|----------------------------------------------------------------------|---------------------------------|
-| root         | io.techthinking.flowbdd              | root for repo                                                        |
-| flowbdd      | io.techthinking.flowbdd.report       | reporting extension `@FlowBdd` and report creation (.html and .json) |                                 |
-| wordify      | io.techthinking.flowbdd.wordify      | wordify java code                                                    |                                 |
-| ft           | io.techthinking.flowbdd.ft           | FT for the report generation                                         |                                 | 
-| test-utils   | io.techthinking.flowbdd.report.utils | testing utils such as builder                                        | only the builders at the moment | 
-| examples     | n/a                                  | examples of using Flow BDD                                           |                                 | 
-
-## Location
-
-https://github.com/techthinking-io/flowbdd
-
-## Testing Locally
-
-`./gradlew test`
-
-## Deploying Locally
-
-Create report, wordify, test-utils  
-`./gradlew publishToMavenLocal`
-
-To check the jar was created in maven local  
-`ls -la ~/.m2/repository/io/techthinking/flowbdd`
-
-Then use the following in your app, please check what version to use
-`testImplementation("io.techthinking:flowbdd:0.1.1-SNAPSHOT")`
-
-Example POM extract
-
+Example POM for Maven:
 ```xml
-
 <groupId>io.techthinking</groupId>
 <artifactId>flowbdd</artifactId>
 <version>0.1.1-SNAPSHOT</version>
 ```
 
-## Comparison to existing approaches:
+### 2. Usage
+Annotate your test class with `@FlowBdd`
+```java
+@ExtendWith(FlowBdd.class)
+public class MyFirstFlowTest {
+    @Test
+    void myAwesomeScenario() {
+        givenSomething();
+        whenAnActionIsPerformed();
+        thenTheResultIsVerified();
+    }
+}
+```
 
-The fundamental approach is in stark contrast to existing frameworks: Cucumber, JBehave, Concordion etc...
+## Flow BDD Github project contains:
 
-Traditionally BDD frameworks have approximately four layers:
+| Project Name | Package | Description |
+| :--- | :--- | :--- |
+| **flowbdd** | `io.techthinking.flowbdd.report` | The core JUnit 5 extension and report engine. |
+| **wordify** | `io.techthinking.flowbdd.wordify` | The engine that translates Java code into natural language. |
+| **flowbdd-diagrams** | `io.techthinking.flowbdd.report.mermaid` | Mermaid.js wrapper for Sequence Diagrams. |
+| **examples** | `io.techthinking.flowbdd.examples` | Demo projects (DevTeam, Bookstore, Cucumbers). |
 
-1. Feature file / specification / UI:
-    - A feature is a text description of a feature that consists of scenarios and are made up of steps
-    - This is the first thing that is writen and leads the design for the following.
-1. The glue layer:
-    - Matches Java method for that step and the corresponding arguments. Usually a regular expression.
-1. Orchestration of the actual FT framework:
-    - A Java method has been supplied data from the glue layer. You'll need to orchestrate your actual FT framework to
-      actually do any testing.
-    - You may have more data than you require - in non-trivial steps you have to chose code re-use or code duplication.
-      Opting for code reuse makes glue layer and down more complex.
-    - You may have a different domain and or bounded context for the feature file and the actual FT framework domain.
-      This means adapting/transforming the data for the FT framework.
-1. The actual FT framework:
-    - This usually would have the following functionality:
-        - Set state before and after tests.
-        - Exercise the thing under test.
-        - Store state so that you assert on expected behaviour.
-        - State and behaviour verification.
-    - This has been designed to accommodate additional complexities from above.
+## Testing & Deploying
+* Run all tests:
+  * `./gradlew test`
+* Publish to Maven Local:
+  *  `./gradlew publishToMavenLocal`
+* To check the jar was created in maven local:
+  * `ls -la ~/.m2/repository/io/techthinking/flowbdd`
 
-Adding new data, steps and or features is not linear because of the following:
+Then use the following in your app, please check what version to use
+`testImplementation("io.techthinking:flowbdd:0.1.1-SNAPSHOT")`
 
-* Complexity
-* Coupling to between layers
-* Limitations in the glue layer
-    * Forcing step definitions to be constructed in a certain way. Possibly not the way you planned and or wanted.
-    * Forcing refactoring when you alter steps definitions
-
-These 3 forces can unfortunately can compound each other. Complexity and coupling should be kept to a minimum not part
-of the solution. Layers 1-3 exist so that we can have feature files, these serve as static documentation for the system.
-There are no guaranties that the documentation is consistent, in fact there isn't anything enforcing it.
-
-The alternative to this is generating dynamic, consistent documentation. With Flow BDD you leg up on developing the
-actual FT framework, so you can focus on testing your application. You add `@FlowBdd` annotation to your class, this
-will generate a report. There is a `wordify` process that takes the Java code and converts it in English sentences. For
-example `givenSomething()` would produce `given something`. There is a strong emphasis on using builders therefore
-forcing you to create a fluent API.
-
-The `wordify` process isn't finished, you can't simply get rid of complexity and coupling, but it's the gaol of this
-project to reduce both of them.
-
-With thanks to https://github.com/bodar/yatspec who did a similar project that worked with JUnit 4.
-
-I'm looking for more real world usages, I've love help anyone write new tests and or migrate legacy tests to this
-framework. If you're interested please contact me - see https://github.com/jrbayliss for my contact details.
+## Contributing & Contact
+I am actively looking for real-world use cases! If you're interested in migrating legacy tests or starting a new project with Flow BDD, I’d love to help.
+* Maintainer: James Bayliss
+* GitHub: jrbayliss
+* Repo: https://github.com/techthinking-io/flowbdd
+* With thanks to the Yatspec https://github.com/bodar/yatspec project for the initial inspiration!
