@@ -152,14 +152,6 @@ public class MyFirstFlowTest {
 }
 ```
 
-## Flow BDD Github project contains:
-| Project Name | Package | Description |
-| :--- | :--- | :--- |
-| **flowbdd** | `io.techthinking.flowbdd.report` | The core JUnit 5 extension and report engine. |
-| **wordify** | `io.techthinking.flowbdd.wordify` | The engine that translates Java code into natural language. |
-| **flowbdd-diagrams** | `io.techthinking.flowbdd.report.mermaid` | Mermaid.js wrapper for Sequence Diagrams. |
-| **examples** | `io.techthinking.flowbdd.examples` | Demo projects (DevTeam, Bookstore, Cucumbers). |
-
 ## How to Run the Demo
 Want to see it in action? The **Dev Team Simulator** is our hero example:
 
@@ -189,6 +181,14 @@ Please see
 
 Then use the following in your app, please check what version to use
 `testImplementation("io.techthinking:flowbdd:0.1.1-SNAPSHOT")`
+
+## Flow BDD Github project contains:
+| Project Name | Package | Description |
+| :--- | :--- | :--- |
+| **flowbdd** | `io.techthinking.flowbdd.report` | The core JUnit 5 extension and report engine. |
+| **wordify** | `io.techthinking.flowbdd.wordify` | The engine that translates Java code into natural language. |
+| **flowbdd-diagrams** | `io.techthinking.flowbdd.report.mermaid` | Mermaid.js wrapper for Sequence Diagrams. |
+| **examples** | `io.techthinking.flowbdd.examples` | Demo projects (DevTeam, Bookstore, Cucumbers). |
 
 ## Contributing & Contact
 I am actively looking for real-world use cases! If you're interested in migrating legacy tests or starting a new project with Flow BDD, I’d love to help.
