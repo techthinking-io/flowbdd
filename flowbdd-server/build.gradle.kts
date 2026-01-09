@@ -15,31 +15,40 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
+
 plugins {
-    `java-library`
+    java
     id("org.springframework.boot") version "2.7.6"
     id("io.spring.dependency-management") version "1.0.15.RELEASE"
 }
 
-group = "com.flowbdd.example"
-version = "0.1.0-SNAPSHOT"
-description = "Dev Team Simulator"
+group = "io.techthinking"
+version = "0.1.1-SNAPSHOT"
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
+}
 
 repositories {
     mavenCentral()
+    mavenLocal()
 }
 
 dependencies {
-    implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation("org.springframework.boot:spring-boot-starter-web")
-    implementation(project(":flowbdd-server"))
+    implementation("org.slf4j:slf4j-api:1.7.36")
 
-    testImplementation("org.springframework.boot:spring-boot-starter-test")
+    // JUnit Platform to run tests programmatically
+    implementation("org.junit.platform:junit-platform-launcher:1.9.2")
+    implementation("org.junit.platform:junit-platform-engine:1.9.2")
 
+    // Optional: bring FlowBDD on classpath when needed
+    // If using locally published snapshot, it'll resolve from mavenLocal
     testImplementation(project(":flowbdd"))
-    testImplementation(project(":flowbdd-test-utils"))
+    testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
 
-tasks.test {
+tasks.withType<Test> {
     useJUnitPlatform()
 }

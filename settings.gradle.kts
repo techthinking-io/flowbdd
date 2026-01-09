@@ -27,6 +27,6 @@ include(
     "examples:bookstore",
     "examples:devteam",
     "examples:cucumbers",
-    //TODO "examples:server",
+    "flowbdd-server",
     "learning"
 )
