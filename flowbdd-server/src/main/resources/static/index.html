@@ -1,0 +1,86 @@
+<!--
+  ~ Flow BDD - The most productive way to test.
+  ~ Copyright (C) 2021-2025 James Bayliss.
+  ~
+  ~ This program is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ This program is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with this program.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FlowBDD Server</title>
+  <style>
+    body { font-family: -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif; margin: 2rem; }
+    label { display:block; margin-top: 0.5rem; }
+    input, button { padding: 0.5rem; font-size: 1rem; }
+    pre { background:#f7f7f7; padding:1rem; overflow:auto; }
+  </style>
+</head>
+<body>
+<h1>FlowBDD Server</h1>
+<p>Run JUnit tests (including FlowBDD tests) on demand.</p>
+
+<form id="runForm">
+  <label>Class Name <input type="text" id="className" placeholder="com.example.MyTest" /></label>
+  <label>Method Name <input type="text" id="methodName" placeholder="testMethod" /></label>
+  <label>Tags (comma separated) <input type="text" id="tags" placeholder="smoke,fast" /></label>
+  <label>Rerun Count <input type="number" id="rerunCount" min="0" value="0" /></label>
+  <button type="submit">Run</button>
+  <button type="button" id="statusBtn">Status</button>
+  <a href="/api/tests/status" target="_blank">Open status JSON</a>
+  <div>
+    <small>Default FlowBDD output dirs: <code>/tmp/flowbdd/report</code>, <code>/tmp/flowbdd/data</code></small>
+  </div>
+  <p>
+    <small>Note: Static page uses fetch() POST to call the API.</small>
+  </p>
+  <hr/>
+  <h3>Result</h3>
+  <pre id="output">(no result yet)</pre>
+  <div id="links"></div>
+  <script>
+    const out = document.getElementById('output');
+    const links = document.getElementById('links');
+    document.getElementById('runForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      links.innerHTML = '';
+      const payload = {
+        className: document.getElementById('className').value || null,
+        methodName: document.getElementById('methodName').value || null,
+        tags: (document.getElementById('tags').value || '').split(',').map(s => s.trim()).filter(Boolean),
+        rerunCount: parseInt(document.getElementById('rerunCount').value || '0', 10)
+      };
+      const res = await fetch('/api/tests/run', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+      const json = await res.json();
+      out.textContent = JSON.stringify(json, null, 2);
+      if (Array.isArray(json.reportLinks)) {
+        links.innerHTML = json.reportLinks.map(u => `<div><a href="${u}" target="_blank">${u}</a></div>`).join('');
+      }
+    });
+    document.getElementById('statusBtn').addEventListener('click', async () => {
+      links.innerHTML = '';
+      const res = await fetch('/api/tests/status');
+      const json = await res.json();
+      out.textContent = JSON.stringify(json, null, 2);
+      if (Array.isArray(json.reportLinks)) {
+        links.innerHTML = json.reportLinks.map(u => `<div><a href="${u}" target="_blank">${u}</a></div>`).join('');
+      }
+    });
+  </script>
+</form>
+
+</body>
+</html>

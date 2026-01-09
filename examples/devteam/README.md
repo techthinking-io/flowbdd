@@ -27,6 +27,7 @@ From project root:
 ./gradlew :examples:devteam:bootRun -PmainClass=io.techthinking.flowbddserver.FlowBddServerApplication
 ```
 (Note: You might need to adjust the port if 8085 is taken)
+Open http://localhost:8085
 
 Then you can run a test via curl:
 ```bash
