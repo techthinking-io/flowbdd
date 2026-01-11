@@ -18,17 +18,17 @@
 
 package io.techthinking.flowbdd.report.report.writers;
 
-import io.techthinking.flowbdd.report.config.ResolvedFlowBddConfig;
 import io.techthinking.flowbdd.report.config.FlowBddConfig;
 import io.techthinking.flowbdd.report.report.model.TestSuite;
 
 import java.nio.file.Path;
 
+
 public class DataFileNameProvider implements FileNameProvider {
 
     @Override
     public Path path() {
-        return ResolvedFlowBddConfig.getBasePath().resolve(FlowBddConfig.getDataFolder());
+        return FlowBddConfig.getDataPath();
     }
 
     @Override

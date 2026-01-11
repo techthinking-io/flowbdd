@@ -47,6 +47,6 @@ public class DataReportTestUtils {
     }
 
     public static Path outputDirectory() {
-        return TestConfig.getBasePath().resolve("flowbdd/data/");
+        return TestConfig.getBasePath().resolve("data/");
     }
 }

@@ -19,31 +19,50 @@
 package io.techthinking.flowbdd.report.config;
 
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Optional;
 
-import static java.lang.System.getProperty;
-
 public class FlowBddConfig {
-    private static final String dataFolder = "flowbdd/data/";
-    private static final String reportFolder = "flowbdd/report/";
-    private static String defaultBaseFolder = getProperty("java.io.tmpdir");
+    private static final String DEFAULT_BASE_NAME = "flowbdd";
+    private static final String DEFAULT_DATA_DIR = "data";
+    private static final String DEFAULT_REPORT_DIR = "report";
+    /**
+     * Set basepath, for testing on another file system you set this
+     */
     private static Path overriddenBasePath = null;
 
-    public static void setBaseFolder(String folder) {
-        defaultBaseFolder = folder;
+    /**
+     * Resolves the base directory.
+     * Priority: System Property -> Environment Variable -> Temp Dir
+     */
+    public static Path getBasePath() {
+        if (overriddenBasePath != null) return overriddenBasePath;
+
+        String property = System.getProperty("flowbdd.base.dir");
+        if (property != null) return Paths.get(property);
+
+        String env = System.getenv("FLOWBDD_BASE_DIR");
+        if (env != null) return Paths.get(env);
+
+        return Paths.get(System.getProperty("java.io.tmpdir"), DEFAULT_BASE_NAME);
     }
 
-    public static String getDataFolder() {
-        return dataFolder;
+    public static Path getDataPath() {
+        return getBasePath().resolve(System.getProperty("flowbdd.data.dir", DEFAULT_DATA_DIR));
     }
 
-    public static String getReportFolder() {
-        return reportFolder;
+    public static Path getReportPath() {
+        return getBasePath().resolve(System.getProperty("flowbdd.report.dir", DEFAULT_REPORT_DIR));
     }
 
-    public static String getDefaultBaseFolder() {
-        return defaultBaseFolder;
-    }
+    //TODO maybe setBasePathProperty?
+//    public static void setBasePath(String path) {
+//        System.setProperty("flowbdd.base.dir", path);
+//    }
+//
+//    public static void setBasePath(Path path) {
+//        System.setProperty("flowbdd.base.dir", path.toString());
+//    }
 
     public static void overrideBasePath(Path path) {
         overriddenBasePath = path;

@@ -39,6 +39,6 @@ public class HtmlReportTestUtils {
     }
 
     public static Path outputDirectory() {
-        return TestConfig.getBasePath().resolve("flowbdd/report/");
+        return TestConfig.getBasePath().resolve("report/");
     }
 }

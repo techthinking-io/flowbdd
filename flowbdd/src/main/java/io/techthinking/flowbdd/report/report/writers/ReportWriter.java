@@ -29,6 +29,11 @@ public class ReportWriter {
     private final DataReportWriter dataReportWriter = new DataReportWriter(new DataFileNameProvider());
     private final HtmlReportWriter htmlReportWriter = new HtmlReportWriter(new HtmlFileNameProvider());
 
+    public void writeStart() {
+        String message = "**********************\n** Flow BDD Results **\n**********************";
+        System.out.println(message);
+    }
+
     public void write(Report report, VersionInfo versionInfo) {
         dataReportWriter.write(report.getIndex());
         htmlReportWriter.write(report.getIndex(), versionInfo);

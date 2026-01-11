@@ -36,6 +36,7 @@ public class TestConfig {
 
     static {
         if (inMemoryDirectory) {
+            //TODO FlowBddConfig.setBasePath(TestConfig.getBasePath());
             FlowBddConfig.overrideBasePath(TestConfig.getBasePath());
         }
     }
