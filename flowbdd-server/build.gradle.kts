@@ -45,7 +45,7 @@ dependencies {
 
     // Optional: bring FlowBDD on classpath when needed
     // If using locally published snapshot, it'll resolve from mavenLocal
-    testImplementation(project(":flowbdd"))
+    implementation(project(":flowbdd"))
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
 

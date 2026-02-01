@@ -20,6 +20,7 @@ package io.techthinking.flowbddserver.core;
 
 import io.techthinking.flowbddserver.api.RunRequest;
 import io.techthinking.flowbddserver.api.RunResult;
+import io.techthinking.flowbdd.report.config.FlowBddConfig;
 import org.junit.platform.engine.DiscoverySelector;
 import org.junit.platform.engine.discovery.DiscoverySelectors;
 import org.junit.platform.launcher.*;
@@ -121,14 +122,12 @@ public class TestRunService {
         result.setStatus(summary.getFailures().isEmpty() ? "SUCCESS" : "FAILED");
 
         // Best-effort: point to default FlowBDD report directory (HTML + data)
-//        List<String> links = new ArrayList<>();
-//        Path reportDir = Path.of(System.getProperty("flowbdd.report.dir", "/tmp/flowbdd/report"));
-//        try {
-//            links.add(reportDir.toUri().toString());
-//            Path data = Path.of(System.getProperty("flowbdd.data.dir", "/tmp/flowbdd/data"));
-//            links.add(data.toUri().toString());
-//        } catch (Exception ignored) { }
-//        result.setReportLinks(links);
+        List<String> links = new ArrayList<>();
+        try {
+            links.add(FlowBddConfig.getReportPath().toUri().toString());
+            links.add(FlowBddConfig.getDataPath().toUri().toString());
+        } catch (Exception ignored) { }
+        result.setReportLinks(links);
 
         lastRun = result;
         return result;
