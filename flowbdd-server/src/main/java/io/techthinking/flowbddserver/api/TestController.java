@@ -47,6 +47,11 @@ public class TestController {
         if (last == null) {
             RunResult empty = new RunResult();
             empty.setStatus("IDLE");
+            empty.setTests(0);
+            empty.setPassed(0);
+            empty.setFailed(0);
+            empty.setSkipped(0);
+            empty.setAborted(0);
             empty.setMessage("No runs executed yet");
             return empty;
         }

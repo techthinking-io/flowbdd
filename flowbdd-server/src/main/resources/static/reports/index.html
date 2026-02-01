@@ -21,16 +21,17 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>FlowBDD Server - Home</title>
+  <title>FlowBDD Server - Reports</title>
   <style>
     body { font-family: -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif; margin: 0; display: flex; flex-direction: column; min-height: 100vh; }
     header, footer { background: #333; color: white; padding: 1rem 2rem; }
     header nav a, footer a { color: #eee; margin-right: 1rem; text-decoration: none; }
     header nav a:hover, footer a:hover { text-decoration: underline; }
     main { flex: 1; padding: 2rem; }
-    .hero { background: #eee; padding: 2rem; border-radius: 8px; margin-bottom: 2rem; }
-    .suite-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1rem; }
-    .suite-card { border: 1px solid #ddd; padding: 1rem; border-radius: 8px; }
+    .report-card { background: #f9f9f9; border: 1px solid #ddd; padding: 1.5rem; border-radius: 8px; margin-bottom: 2rem; }
+    .suite-list { list-style: none; padding: 0; }
+    .suite-item { padding: 0.5rem 0; border-bottom: 1px solid #eee; }
+    .suite-item:last-child { border-bottom: none; }
     .footer-links { margin-top: 0.5rem; }
   </style>
 </head>
@@ -45,14 +46,9 @@
 </header>
 
 <main>
-  <div class="hero">
-    <h1>Welcome to FlowBDD Server</h1>
-    <p>Efficiently run and analyze your Behavior-Driven Development tests.</p>
-  </div>
-
-  <h2>Available Test Suites</h2>
-  <div id="suitesContainer" class="suite-grid">
-    <p>Loading suites...</p>
+  <h1>Latest Manually run test - Report Summary</h1>
+  <div id="reportContainer">
+    <p>Loading latest report...</p>
   </div>
 </main>
 
@@ -65,32 +61,53 @@
 </footer>
 
 <script>
-  async function loadSuites() {
-    const container = document.getElementById('suitesContainer');
+  async function loadReport() {
+    const container = document.getElementById('reportContainer');
     try {
       const res = await fetch('/api/report/index');
       if (!res.ok) {
-        container.innerHTML = '<p>No report found. Use the <a href="/runner/index.html">Test Runner</a> to run some tests manually.</p>';
+        container.innerHTML = '<p>No report found. Run some tests first!</p>';
         return;
       }
       const index = await res.json();
-      if (index.links && index.links.testSuites && index.links.testSuites.length > 0) {
-        container.innerHTML = index.links.testSuites.map(s => `
-          <div class="suite-card">
-            <h3>${s.name}</h3>
-            <p><a href="/api/report/suite/${s.file}" target="_blank">View JSON Data</a></p>
-          </div>
-        `).join('');
-      } else {
-        container.innerHTML = '<p>No suites found in the latest report.</p>';
+      
+      let suitesHtml = '';
+      if (index.links && index.links.testSuites) {
+        suitesHtml = `
+          <h3>Test Suites:</h3>
+          <ul class="suite-list">
+            ${index.links.testSuites.map(s => `
+              <li class="suite-item">
+                <strong>${s.name}</strong> - 
+                <a href="/api/report/suite/${s.file}" target="_blank">JSON</a>
+              </li>
+            `).join('')}
+          </ul>
+        `;
       }
+
+      container.innerHTML = `
+        <div class="report-card">
+          <p><strong>Generated At:</strong> ${index.timeStamp}</p>
+          <hr/>
+          <p><strong>Summary:</strong></p>
+          <ul>
+            <li>Total Tests: ${index.summary.tests}</li>
+            <li>Passed: ${index.summary.passed}</li>
+            <li>Failed: ${index.summary.failed}</li>
+            <li>Skipped: ${index.summary.skipped}</li>
+            <li>Aborted: ${index.summary.aborted}</li>
+          </ul>
+          ${suitesHtml}
+        </div>
+      `;
     } catch (err) {
       console.error(err);
-      container.innerHTML = '<p>Error loading suites.</p>';
+      container.innerHTML = '<p>Error loading report.</p>';
     }
   }
 
-  loadSuites();
+  loadReport();
 </script>
 
 </body>

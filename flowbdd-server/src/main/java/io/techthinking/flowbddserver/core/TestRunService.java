@@ -112,13 +112,14 @@ public class TestRunService {
         Instant finished = Instant.now();
 
         RunResult result = new RunResult();
-        result.setStartedAt(started);
-        result.setFinishedAt(finished);
+        result.setStartedAt(started.toString());
+        result.setFinishedAt(finished.toString());
         result.setTimeMillis(Duration.between(started, finished).toMillis());
-        result.setTestsFound((int) summary.getTestsFoundCount());
-        result.setTestsSucceeded((int) summary.getTestsSucceededCount());
-        result.setTestsFailed((int) summary.getTestsFailedCount());
-        result.setTestsSkipped((int) summary.getTestsSkippedCount());
+        result.setTests((int) summary.getTestsFoundCount());
+        result.setPassed((int) summary.getTestsSucceededCount());
+        result.setFailed((int) summary.getTestsFailedCount());
+        result.setSkipped((int) summary.getTestsSkippedCount());
+        result.setAborted((int) summary.getTestsAbortedCount());
         result.setStatus(summary.getFailures().isEmpty() ? "SUCCESS" : "FAILED");
 
         // Best-effort: point to default FlowBDD report directory (HTML + data)

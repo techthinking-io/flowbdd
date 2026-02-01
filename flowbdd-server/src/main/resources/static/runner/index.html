@@ -1,0 +1,168 @@
+<!--
+  ~ Flow BDD - The most productive way to test.
+  ~ Copyright (C) 2021-2025 James Bayliss.
+  ~
+  ~ This program is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ This program is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with this program.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FlowBDD Server - Test Runner</title>
+  <style>
+    body { font-family: -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif; margin: 0; display: flex; flex-direction: column; min-height: 100vh; }
+    header, footer { background: #333; color: white; padding: 1rem 2rem; }
+    header nav a, footer a { color: #eee; margin-right: 1rem; text-decoration: none; }
+    header nav a:hover, footer a:hover { text-decoration: underline; }
+    main { flex: 1; padding: 2rem; }
+    label { display:block; margin-top: 0.5rem; }
+    input, button { padding: 0.5rem; font-size: 1rem; }
+    pre { background:#f7f7f7; padding:1rem; overflow:auto; border: 1px solid #ddd; }
+    .footer-links { margin-top: 0.5rem; }
+  </style>
+</head>
+<body>
+
+<header>
+  <nav>
+    <a href="/">Home</a>
+    <a href="/reports/index.html">Last Report</a>
+    <a href="/runner/index.html">Test Runner</a>
+  </nav>
+</header>
+
+<main>
+  <h1>Test Runner</h1>
+  <p>Run JUnit tests (including FlowBDD tests) on demand.</p>
+  <p>
+    <em>You can run tests manually and or experiment with giving tests different parameters.</em>
+  </p>
+
+  <form id="runForm">
+    <label>Class Name <input type="text" id="className" placeholder="com.example.MyTest" /></label>
+    <label>Method Name <input type="text" id="methodName" placeholder="testMethod" /></label>
+    <label>Tags (comma separated) <input type="text" id="tags" placeholder="smoke,fast" /></label>
+    <label>Rerun Count <input type="number" id="rerunCount" min="0" value="0" /></label>
+    <button type="submit">Run</button>
+    <button type="button" id="statusBtn">Status</button>
+    <button type="button" id="loadReportBtn">Load Latest Report</button>
+    <a href="/api/tests/status" target="_blank">Open status JSON</a>
+    <div>
+      <small>Default FlowBDD output dirs: <code>/tmp/flowbdd/report</code>, <code>/tmp/flowbdd/data</code></small>
+    </div>
+    <p>
+      <small>Note: Static page uses fetch() POST to call the API.</small>
+    </p>
+    <hr/>
+    <div id="reportSummary" style="display:none; background: #eef; padding: 1rem; margin-bottom: 1rem; border-radius: 4px;">
+      <h3>Latest Manually run test - Report Summary</h3>
+      <div id="summaryContent"></div>
+      <div id="suiteLinks"></div>
+    </div>
+    <h3>Result</h3>
+    <pre id="output">(no result yet)</pre>
+    <div id="links"></div>
+  </form>
+</main>
+
+<footer>
+  <div>&copy; 2021-2025 James Bayliss. Flow BDD - The most productive way to test.</div>
+  <div class="footer-links">
+    <a href="https://techthinking.io" target="_blank">techthinking.io</a>
+    <a href="https://github.com/tech-thinking-io/flowbdd" target="_blank">GitHub Repo</a>
+  </div>
+</footer>
+
+<script>
+  const out = document.getElementById('output');
+  const links = document.getElementById('links');
+  const reportSummary = document.getElementById('reportSummary');
+  const summaryContent = document.getElementById('summaryContent');
+  const suiteLinks = document.getElementById('suiteLinks');
+
+  async function loadReport() {
+    try {
+      const res = await fetch('/api/report/index');
+      if (!res.ok) throw new Error('Report not found');
+      const index = await res.json();
+      reportSummary.style.display = 'block';
+      summaryContent.innerHTML = `
+        <p>Time: ${index.timeStamp}</p>
+        <p>Passed: ${index.summary.passed} / Total: ${index.summary.tests}</p>
+        <p>Failed: ${index.summary.failed}, Aborted: ${index.summary.aborted}</p>
+      `;
+      if (index.links && index.links.testSuites) {
+        suiteLinks.innerHTML = '<h4>Test Suites JSON:</h4>' + index.links.testSuites.map(s =>
+          `<div><a href="/api/report/suite/${s.file}" target="_blank">${s.name}</a></div>`
+        ).join('');
+      }
+    } catch (err) {
+      console.error(err);
+      reportSummary.style.display = 'none';
+    }
+  }
+
+  document.getElementById('loadReportBtn').addEventListener('click', loadReport);
+
+  document.getElementById('runForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    links.innerHTML = '';
+    const payload = {
+      className: document.getElementById('className').value || null,
+      methodName: document.getElementById('methodName').value || null,
+      tags: (document.getElementById('tags').value || '').split(',').map(s => s.trim()).filter(Boolean),
+      rerunCount: parseInt(document.getElementById('rerunCount').value || '0', 10)
+    };
+    const res = await fetch('/api/tests/run', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+    const json = await res.json();
+    
+    // Format the summary nicely
+    const summary = `
+      <h4>Run Result: ${json.status}</h4>
+      <p>Time: ${json.startedAt}</p>
+      <p>Tests: ${json.tests}, Passed: ${json.passed}, Failed: ${json.failed}, Skipped: ${json.skipped}, Aborted: ${json.aborted}</p>
+      <p>Duration: ${json.timeMillis}ms</p>
+    `;
+    out.innerHTML = summary + '<pre>' + JSON.stringify(json, null, 2) + '</pre>';
+    
+    if (Array.isArray(json.reportLinks)) {
+      links.innerHTML = '<h4>Report Links:</h4>' + json.reportLinks.map(u => `<div><a href="${u}" target="_blank">${u}</a></div>`).join('');
+    }
+    loadReport(); // Automatically load report after run
+  });
+  document.getElementById('statusBtn').addEventListener('click', async () => {
+    links.innerHTML = '';
+    const res = await fetch('/api/tests/status');
+    const json = await res.json();
+    
+    const summary = `
+      <h4>Last Run Status: ${json.status}</h4>
+      <p>Time: ${json.startedAt || 'N/A'}</p>
+      <p>Tests: ${json.tests}, Passed: ${json.passed}, Failed: ${json.failed}, Skipped: ${json.skipped}, Aborted: ${json.aborted}</p>
+    `;
+    out.innerHTML = summary + '<pre>' + JSON.stringify(json, null, 2) + '</pre>';
+    
+    if (Array.isArray(json.reportLinks)) {
+      links.innerHTML = '<h4>Report Links:</h4>' + json.reportLinks.map(u => `<div><a href="${u}" target="_blank">${u}</a></div>`).join('');
+    }
+  });
+
+  // Load report on page load
+  loadReport();
+</script>
+
+</body>
+</html>

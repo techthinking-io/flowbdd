@@ -18,40 +18,42 @@
 
 package io.techthinking.flowbddserver.api;
 
-import java.time.Instant;
 import java.util.List;
 
 /** TODO should this be the same from the core project? */
 public class RunResult {
     private String status; // SUCCESS, FAILED, ERROR
-    private int testsFound;
-    private int testsSucceeded;
-    private int testsFailed;
-    private int testsSkipped;
+    private int tests;
+    private int passed;
+    private int failed;
+    private int skipped;
+    private int aborted;
     private long timeMillis;
     private List<String> reportLinks; // e.g., file:///tmp/flowbdd/report/...
     private String message;
-    private Instant startedAt;
-    private Instant finishedAt;
+    private String startedAt;
+    private String finishedAt;
 
     public String getStatus() { return status; }
     public void setStatus(String status) { this.status = status; }
-    public int getTestsFound() { return testsFound; }
-    public void setTestsFound(int testsFound) { this.testsFound = testsFound; }
-    public int getTestsSucceeded() { return testsSucceeded; }
-    public void setTestsSucceeded(int testsSucceeded) { this.testsSucceeded = testsSucceeded; }
-    public int getTestsFailed() { return testsFailed; }
-    public void setTestsFailed(int testsFailed) { this.testsFailed = testsFailed; }
-    public int getTestsSkipped() { return testsSkipped; }
-    public void setTestsSkipped(int testsSkipped) { this.testsSkipped = testsSkipped; }
+    public int getTests() { return tests; }
+    public void setTests(int tests) { this.tests = tests; }
+    public int getPassed() { return passed; }
+    public void setPassed(int passed) { this.passed = passed; }
+    public int getFailed() { return failed; }
+    public void setFailed(int failed) { this.failed = failed; }
+    public int getSkipped() { return skipped; }
+    public void setSkipped(int skipped) { this.skipped = skipped; }
+    public int getAborted() { return aborted; }
+    public void setAborted(int aborted) { this.aborted = aborted; }
     public long getTimeMillis() { return timeMillis; }
     public void setTimeMillis(long timeMillis) { this.timeMillis = timeMillis; }
     public List<String> getReportLinks() { return reportLinks; }
     public void setReportLinks(List<String> reportLinks) { this.reportLinks = reportLinks; }
     public String getMessage() { return message; }
     public void setMessage(String message) { this.message = message; }
-    public Instant getStartedAt() { return startedAt; }
-    public void setStartedAt(Instant startedAt) { this.startedAt = startedAt; }
-    public Instant getFinishedAt() { return finishedAt; }
-    public void setFinishedAt(Instant finishedAt) { this.finishedAt = finishedAt; }
+    public String getStartedAt() { return startedAt; }
+    public void setStartedAt(String startedAt) { this.startedAt = startedAt; }
+    public String getFinishedAt() { return finishedAt; }
+    public void setFinishedAt(String finishedAt) { this.finishedAt = finishedAt; }
 }
