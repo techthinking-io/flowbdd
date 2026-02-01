@@ -64,6 +64,6 @@ public abstract class AbstractReportWriter {
             fileRepository.create(path);
         }
         fileRepository.update(path, contents);
-        System.out.println(prefix + " file://" + path);
+        System.out.printf("%-15s file://%s%n", prefix, path);
     }
 }

@@ -190,7 +190,7 @@ public class TestContext implements
 
     public void writeIndex(Report report, VersionInfo versionInfo) {
         if (isReporting) {
-            // reportWriter.writeStart();
+            reportWriter.writeStart();
             reportWriter.write(report, versionInfo);
         }
     }

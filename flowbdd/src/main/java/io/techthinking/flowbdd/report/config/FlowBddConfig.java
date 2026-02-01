@@ -23,6 +23,14 @@ import java.nio.file.Paths;
 import java.util.Optional;
 
 public class FlowBddConfig {
+    private static final String DEFAULT_BANNER =
+        "  ______ _                 ____  _____  _____  \n" +
+        " |  ____| |               |  _ \\|  __ \\|  __ \\ \n" +
+        " | |__  | | _____      __ | |_) | |  | | |  | |\n" +
+        " |  __| | |/ _ \\ \\ /\\ / / |  _ <| |  | | |  | |\n" +
+        " | |    | | (_) \\ V  V /  | |_) | |__| | |__| |\n" +
+        " |_|    |_|\\___/ \\_/\\_/   |____/|_____/|_____/ \n";
+
     private static final String DEFAULT_BASE_NAME = "flowbdd";
     private static final String DEFAULT_DATA_DIR = "data";
     private static final String DEFAULT_REPORT_DIR = "report";
@@ -53,6 +61,10 @@ public class FlowBddConfig {
 
     public static Path getReportPath() {
         return getBasePath().resolve(System.getProperty("flowbdd.report.dir", DEFAULT_REPORT_DIR));
+    }
+
+    public static String getBanner() {
+        return System.getProperty("flowbdd.banner", DEFAULT_BANNER);
     }
 
     //TODO maybe setBasePathProperty?

@@ -18,6 +18,7 @@
 
 package io.techthinking.flowbdd.report.report.writers;
 
+import io.techthinking.flowbdd.report.config.FlowBddConfig;
 import io.techthinking.flowbdd.report.report.model.Report;
 import io.techthinking.flowbdd.report.report.model.TestSuite;
 import io.techthinking.flowbdd.report.report.model.VersionInfo;
@@ -30,8 +31,7 @@ public class ReportWriter {
     private final HtmlReportWriter htmlReportWriter = new HtmlReportWriter(new HtmlFileNameProvider());
 
     public void writeStart() {
-        String message = "**********************\n** Flow BDD Results **\n**********************";
-        System.out.println(message);
+        System.out.println(FlowBddConfig.getBanner());
     }
 
     public void write(Report report, VersionInfo versionInfo) {
