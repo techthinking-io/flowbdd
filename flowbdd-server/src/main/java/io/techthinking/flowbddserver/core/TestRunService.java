@@ -19,8 +19,9 @@
 package io.techthinking.flowbddserver.core;
 
 import io.techthinking.flowbddserver.api.RunRequest;
-import io.techthinking.flowbddserver.api.RunResult;
 import io.techthinking.flowbdd.report.config.FlowBddConfig;
+import io.techthinking.flowbdd.report.report.model.DataReportIndex;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.platform.engine.DiscoverySelector;
 import org.junit.platform.engine.discovery.DiscoverySelectors;
 import org.junit.platform.launcher.*;
@@ -34,7 +35,6 @@ import org.springframework.stereotype.Service;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.time.Duration;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
@@ -45,14 +45,11 @@ import java.util.stream.Collectors;
 @Service
 public class TestRunService {
 
-    private volatile RunResult lastRun;
-//    private final DataReportWriter dataReportWriter = new DataReportWriter(new DataFileNameProvider());
-//    private final HtmlReportWriter htmlReportWriter = new HtmlReportWriter(new HtmlFileNameProvider());
+    private volatile DataReportIndex lastRun;
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
-    public synchronized RunResult runTests(RunRequest request) {
-        Instant started = Instant.now();
+    public synchronized DataReportIndex runTests(RunRequest request) {
         SummaryGeneratingListener listener = new SummaryGeneratingListener();
-
         Launcher launcher = LauncherFactory.create();
 
         List<DiscoverySelector> selectors = new ArrayList<>();
@@ -109,32 +106,37 @@ public class TestRunService {
             }
         } while (remainingReruns-- > 0 && !summary.getFailures().isEmpty());
 
-        Instant finished = Instant.now();
-
-        RunResult result = new RunResult();
-        result.setStartedAt(started.toString());
-        result.setFinishedAt(finished.toString());
-        result.setTimeMillis(Duration.between(started, finished).toMillis());
-        result.setTests((int) summary.getTestsFoundCount());
-        result.setPassed((int) summary.getTestsSucceededCount());
-        result.setFailed((int) summary.getTestsFailedCount());
-        result.setSkipped((int) summary.getTestsSkippedCount());
-        result.setAborted((int) summary.getTestsAbortedCount());
-        result.setStatus(summary.getFailures().isEmpty() ? "SUCCESS" : "FAILED");
-
-        // Best-effort: point to default FlowBDD report directory (HTML + data)
-        List<String> links = new ArrayList<>();
-        try {
-            links.add(FlowBddConfig.getReportPath().toUri().toString());
-            links.add(FlowBddConfig.getDataPath().toUri().toString());
-        } catch (Exception ignored) { }
-        result.setReportLinks(links);
-
-        lastRun = result;
-        return result;
+        lastRun = loadIndexJson();
+        return lastRun;
     }
 
-    public RunResult getLastRun() {
+    private DataReportIndex loadIndexJson() {
+        try {
+            Path indexPath = FlowBddConfig.getDataPath().resolve("index.json");
+            if (Files.exists(indexPath)) {
+                return objectMapper.readValue(indexPath.toFile(), DataReportIndex.class);
+            }
+        } catch (Exception ignored) { }
+        return null;
+    }
+
+    public DataReportIndex getLastRun() {
+        // Check if index.json was updated in the last 30 seconds
+        try {
+            Path indexPath = FlowBddConfig.getDataPath().resolve("index.json");
+            if (Files.exists(indexPath)) {
+                long lastModified = Files.getLastModifiedTime(indexPath).toMillis();
+                long now = System.currentTimeMillis();
+                if (now - lastModified < 30000) {
+                    // It's fresh!
+                    if (lastRun == null || 
+                        Instant.parse(lastRun.getTimeStamp()).toEpochMilli() < lastModified) {
+                        lastRun = objectMapper.readValue(indexPath.toFile(), DataReportIndex.class);
+                    }
+                }
+            }
+        } catch (Exception ignored) { }
+        
         return lastRun;
     }
 

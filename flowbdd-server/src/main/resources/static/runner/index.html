@@ -39,7 +39,7 @@
 <header>
   <nav>
     <a href="/">Home</a>
-    <a href="/reports/index.html">Last Report</a>
+    <a href="/reports/index.html">Last Report (JSON)</a>
     <a href="/runner/index.html">Test Runner</a>
   </nav>
 </header>
@@ -130,17 +130,16 @@
     const json = await res.json();
     
     // Format the summary nicely
-    const summary = `
-      <h4>Run Result: ${json.status}</h4>
-      <p>Time: ${json.startedAt}</p>
-      <p>Tests: ${json.tests}, Passed: ${json.passed}, Failed: ${json.failed}, Skipped: ${json.skipped}, Aborted: ${json.aborted}</p>
-      <p>Duration: ${json.timeMillis}ms</p>
-    `;
+    let summary = '<h4>No run result available</h4>';
+    if (json && json.summary) {
+        summary = `
+          <h4>Run Result Summary</h4>
+          <p>Time: ${json.timeStamp}</p>
+          <p>Passed: ${json.summary.passed} / Total: ${json.summary.tests}</p>
+        `;
+    }
     out.innerHTML = summary + '<pre>' + JSON.stringify(json, null, 2) + '</pre>';
     
-    if (Array.isArray(json.reportLinks)) {
-      links.innerHTML = '<h4>Report Links:</h4>' + json.reportLinks.map(u => `<div><a href="${u}" target="_blank">${u}</a></div>`).join('');
-    }
     loadReport(); // Automatically load report after run
   });
   document.getElementById('statusBtn').addEventListener('click', async () => {
@@ -148,16 +147,15 @@
     const res = await fetch('/api/tests/status');
     const json = await res.json();
     
-    const summary = `
-      <h4>Last Run Status: ${json.status}</h4>
-      <p>Time: ${json.startedAt || 'N/A'}</p>
-      <p>Tests: ${json.tests}, Passed: ${json.passed}, Failed: ${json.failed}, Skipped: ${json.skipped}, Aborted: ${json.aborted}</p>
-    `;
-    out.innerHTML = summary + '<pre>' + JSON.stringify(json, null, 2) + '</pre>';
-    
-    if (Array.isArray(json.reportLinks)) {
-      links.innerHTML = '<h4>Report Links:</h4>' + json.reportLinks.map(u => `<div><a href="${u}" target="_blank">${u}</a></div>`).join('');
+    let summary = '<h4>No last run status available</h4>';
+    if (json && json.summary) {
+        summary = `
+          <h4>Last Run Status</h4>
+          <p>Time: ${json.timeStamp || 'N/A'}</p>
+          <p>Passed: ${json.summary.passed} / Total: ${json.summary.tests}</p>
+        `;
     }
+    out.innerHTML = summary + '<pre>' + JSON.stringify(json, null, 2) + '</pre>';
   });
 
   // Load report on page load

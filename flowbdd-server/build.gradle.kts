@@ -37,11 +37,13 @@ repositories {
 
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
     implementation("org.slf4j:slf4j-api:1.7.36")
 
     // JUnit Platform to run tests programmatically
     implementation("org.junit.platform:junit-platform-launcher:1.9.2")
     implementation("org.junit.platform:junit-platform-engine:1.9.2")
+    implementation("org.junit.jupiter:junit-jupiter-api:5.9.2")
 
     // Optional: bring FlowBDD on classpath when needed
     // If using locally published snapshot, it'll resolve from mavenLocal

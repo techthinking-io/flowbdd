@@ -18,6 +18,7 @@
 
 package io.techthinking.flowbddserver.api;
 
+import io.techthinking.flowbdd.report.report.model.DataReportIndex;
 import io.techthinking.flowbddserver.core.TestRunService;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -37,24 +38,12 @@ public class TestController {
     }
 
     @PostMapping(path = "/run", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public RunResult run(@RequestBody RunRequest request) {
+    public DataReportIndex run(@RequestBody RunRequest request) {
         return testRunService.runTests(request);
     }
 
     @GetMapping(path = "/status", produces = MediaType.APPLICATION_JSON_VALUE)
-    public RunResult status() {
-        RunResult last = testRunService.getLastRun();
-        if (last == null) {
-            RunResult empty = new RunResult();
-            empty.setStatus("IDLE");
-            empty.setTests(0);
-            empty.setPassed(0);
-            empty.setFailed(0);
-            empty.setSkipped(0);
-            empty.setAborted(0);
-            empty.setMessage("No runs executed yet");
-            return empty;
-        }
-        return last;
+    public DataReportIndex status() {
+        return testRunService.getLastRun();
     }
 }
