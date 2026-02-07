@@ -28,22 +28,24 @@
 <section class="section">
     <div class="container">
         <div th:replace="fragments :: header"></div>
-        <h1 class="title"> Summary of all Tests </h1>
-        <p th:text="'Summary: '
+        <main>
+            <h1 class="title"> Summary of all Tests </h1>
+            <p th:text="'Summary: '
     + 'passed: ' + ${summary.passed}
     + ', skipped: ' + ${summary.skipped}
     + ', failed: ' + ${summary.failed}
     + ', aborted: ' + ${summary.aborted}
     + ', tests: ' + ${summary.tests}"
-        />
+            />
 
-        <div>
-            <ul>
-                <li th:each="link : ${links}">
-                    <a th:href="${link.file}" th:text="${link.name}"></a>
-                </li>
-            </ul>
-        </div>
+            <div>
+                <ul>
+                    <li th:each="link : ${links}">
+                        <a th:href="${link.file}" th:text="${link.name}"></a>
+                    </li>
+                </ul>
+            </div>
+        </main>
     </div>
 </section>
 </body>

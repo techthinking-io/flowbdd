@@ -34,21 +34,23 @@
 </head>
 <body>
 
-<div th:replace="fragments :: header"></div>
-
-<main class="section">
+<section class="section">
   <div class="container">
-    <div class="hero">
-      <h1 class="title">Welcome to FlowBDD Server</h1>
-      <p class="subtitle">Efficiently run and analyze your Behavior-Driven Development tests.</p>
-    </div>
+    <div th:replace="fragments :: header"></div>
 
-    <h2 class="subtitle">Available Test Suites</h2>
-    <div id="suitesContainer" class="suite-grid">
-      <p>Loading suites...</p>
-    </div>
+    <main>
+      <div class="hero">
+        <h1 class="title">Welcome to FlowBDD Server</h1>
+        <p class="subtitle">Efficiently run and analyze your Behavior-Driven Development tests.</p>
+      </div>
+
+      <h2 class="subtitle">Available Test Suites</h2>
+      <div id="suitesContainer" class="suite-grid">
+        <p>Loading suites...</p>
+      </div>
+    </main>
   </div>
-</main>
+</section>
 
 <footer th:replace="fragments :: footer"></footer>
 

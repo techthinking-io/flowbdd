@@ -38,14 +38,14 @@
 <!-- see above notes -->
 <!--<script src="prism.js"></script>-->
 <section class="section">
-    <div th:replace="fragments :: header"></div>
-    <nav class="breadcrumb has-arrow-separator" aria-label="breadcrumbs">
-        <ul>
-            <li class="is-active"><a href="#" aria-current="page" th:text="${testSuite.name}"/></li>
-        </ul>
-    </nav>
-
     <div class="container">
+        <div th:replace="fragments :: header"></div>
+        <nav class="breadcrumb has-arrow-separator" aria-label="breadcrumbs">
+            <ul>
+                <li class="is-active"><a href="#" aria-current="page" th:text="${testSuite.name}"/></li>
+            </ul>
+        </nav>
+
         <div class="pb-6">
             <h1 class="title">
                 <span class="has-text-success">Feature: </span>

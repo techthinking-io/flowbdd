@@ -33,73 +33,75 @@
 </head>
 <body>
 
-<div th:replace="fragments :: header"></div>
-
-<main class="section">
+<section class="section">
   <div class="container">
-    <h1 class="title">Test Runner</h1>
-    <p>Run JUnit tests (including FlowBDD tests) on demand.</p>
-    <p>
-      <em>You can run tests manually and or experiment with giving tests different parameters.</em>
-    </p>
+    <div th:replace="fragments :: header"></div>
 
-    <form id="runForm">
-      <div class="field">
-        <label class="label">Class Name</label>
-        <div class="control">
-          <input class="input" type="text" id="className" placeholder="com.example.MyTest" />
-        </div>
-      </div>
-      <div class="field">
-        <label class="label">Method Name</label>
-        <div class="control">
-          <input class="input" type="text" id="methodName" placeholder="testMethod" />
-        </div>
-      </div>
-      <div class="field">
-        <label class="label">Tags (comma separated)</label>
-        <div class="control">
-          <input class="input" type="text" id="tags" placeholder="smoke,fast" />
-        </div>
-      </div>
-      <div class="field">
-        <label class="label">Rerun Count</label>
-        <div class="control">
-          <input class="input" type="number" id="rerunCount" min="0" value="0" />
-        </div>
-      </div>
-      
-      <div class="field is-grouped">
-        <div class="control">
-          <button type="submit" class="button is-link">Run</button>
-        </div>
-        <div class="control">
-          <button type="button" id="statusBtn" class="button is-light">Status</button>
-        </div>
-        <div class="control">
-          <button type="button" id="loadReportBtn" class="button is-info">Load Latest Report</button>
-        </div>
-      </div>
-
-      <a href="/api/tests/status" target="_blank">Open status JSON</a>
-      <div>
-        <small>Default FlowBDD output dirs: <code>/tmp/flowbdd/report</code>, <code>/tmp/flowbdd/data</code></small>
-      </div>
+    <main>
+      <h1 class="title">Test Runner</h1>
+      <p>Run JUnit tests (including FlowBDD tests) on demand.</p>
       <p>
-        <small>Note: Static page uses fetch() POST to call the API.</small>
+        <em>You can run tests manually and or experiment with giving tests different parameters.</em>
       </p>
-      <hr/>
-      <div id="reportSummary" style="display:none; background: #eef; padding: 1rem; margin-bottom: 1rem; border-radius: 4px;">
-        <h3 class="subtitle">Latest Manually run test - Report Summary</h3>
-        <div id="summaryContent"></div>
-        <div id="suiteLinks"></div>
-      </div>
-      <h3 class="subtitle">Result</h3>
-      <pre id="output">(no result yet)</pre>
-      <div id="links"></div>
-    </form>
+
+      <form id="runForm">
+        <div class="field">
+          <label class="label">Class Name</label>
+          <div class="control">
+            <input class="input" type="text" id="className" placeholder="com.example.MyTest" />
+          </div>
+        </div>
+        <div class="field">
+          <label class="label">Method Name</label>
+          <div class="control">
+            <input class="input" type="text" id="methodName" placeholder="testMethod" />
+          </div>
+        </div>
+        <div class="field">
+          <label class="label">Tags (comma separated)</label>
+          <div class="control">
+            <input class="input" type="text" id="tags" placeholder="smoke,fast" />
+          </div>
+        </div>
+        <div class="field">
+          <label class="label">Rerun Count</label>
+          <div class="control">
+            <input class="input" type="number" id="rerunCount" min="0" value="0" />
+          </div>
+        </div>
+        
+        <div class="field is-grouped">
+          <div class="control">
+            <button type="submit" class="button is-link">Run</button>
+          </div>
+          <div class="control">
+            <button type="button" id="statusBtn" class="button is-light">Status</button>
+          </div>
+          <div class="control">
+            <button type="button" id="loadReportBtn" class="button is-info">Load Latest Report</button>
+          </div>
+        </div>
+
+        <a href="/api/tests/status" target="_blank">Open status JSON</a>
+        <div>
+          <small>Default FlowBDD output dirs: <code>/tmp/flowbdd/report</code>, <code>/tmp/flowbdd/data</code></small>
+        </div>
+        <p>
+          <small>Note: Static page uses fetch() POST to call the API.</small>
+        </p>
+        <hr/>
+        <div id="reportSummary" style="display:none; background: #eef; padding: 1rem; margin-bottom: 1rem; border-radius: 4px;">
+          <h3 class="subtitle">Latest Manually run test - Report Summary</h3>
+          <div id="summaryContent"></div>
+          <div id="suiteLinks"></div>
+        </div>
+        <h3 class="subtitle">Result</h3>
+        <pre id="output">(no result yet)</pre>
+        <div id="links"></div>
+      </form>
+    </main>
   </div>
-</main>
+</section>
 
 <footer th:replace="fragments :: footer"></footer>
 

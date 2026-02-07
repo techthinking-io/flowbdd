@@ -34,16 +34,18 @@
 </head>
 <body>
 
-<div th:replace="fragments :: header"></div>
-
-<main class="section">
+<section class="section">
   <div class="container">
-    <h1 class="title">Latest Manually run test - Report Summary</h1>
-    <div id="reportContainer">
-      <p>Loading latest report...</p>
-    </div>
+    <div th:replace="fragments :: header"></div>
+
+    <main>
+      <h1 class="title">Latest Manually run test - Report Summary</h1>
+      <div id="reportContainer">
+        <p>Loading latest report...</p>
+      </div>
+    </main>
   </div>
-</main>
+</section>
 
 <footer th:replace="fragments :: footer"></footer>
 
