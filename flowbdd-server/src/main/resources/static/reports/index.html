@@ -71,6 +71,7 @@
                 <li class="suite-item">
                   <strong><a href="/TEST-${s.name}">${classOnly}</a></strong> 
                   <span style="font-size: 0.8rem; color: #666;">(${s.name})</span> - 
+                  <button class="button is-small is-success is-outlined" onclick="runSuite('${s.name}')">Run</button> -
                   <a href="/api/report/suite/${s.file}" target="_blank">JSON</a>
                 </li>
               `;
@@ -97,6 +98,25 @@
     } catch (err) {
       console.error(err);
       container.innerHTML = '<p>Error loading report.</p>';
+    }
+  }
+
+  async function runSuite(className) {
+    try {
+      const res = await fetch('/api/tests/run', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ className })
+      });
+      if (res.ok) {
+        alert('Suite ' + className + ' started!');
+        loadReport(); // Refresh summary
+      } else {
+        alert('Failed to start suite ' + className);
+      }
+    } catch (err) {
+      console.error(err);
+      alert('Error starting suite');
     }
   }
 

@@ -15,45 +15,39 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-
-package io.techthinking.flowbddserver.api;
+package io.techthinking.flowbdd.examples.devteamdemo.controller;
 
 import io.techthinking.flowbdd.report.report.model.DataReportIndex;
+import io.techthinking.flowbddserver.api.RunRequest;
 import io.techthinking.flowbddserver.core.TestRunService;
-import java.time.LocalDateTime;
-import java.util.Map;
-import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import java.util.List;
 
 @RestController
-@RequestMapping("/api/tests")
-public class TestController {
+@RequestMapping("/api/demo")
+public class DemoTestTriggerController {
 
     private final TestRunService testRunService;
 
-    public TestController(TestRunService testRunService) {
+    public DemoTestTriggerController(TestRunService testRunService) {
         this.testRunService = testRunService;
     }
 
-    @PostMapping(path = "/run", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public DataReportIndex run(@RequestBody RunRequest request) {
+    @PostMapping("/run-devteam-tests")
+    public DataReportIndex runDevTeamTests() {
+        RunRequest request = new RunRequest();
+        // Assuming we want to run all tests in this package
+        request.setTags(List.of("devteam")); 
+        // Or run a specific class if tags are not used
+        // request.setClassName("DevTeamSimulatorTest");
         return testRunService.runTests(request);
     }
-
-    @GetMapping(path = "/status", produces = MediaType.APPLICATION_JSON_VALUE)
-    public DataReportIndex status() {
-        return testRunService.getLastRun();
-    }
-
-    @GetMapping(path = "/ping", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Map<String, Object> ping() {
-        return Map.of(
-            "message", "pong",
-            "timestamp", LocalDateTime.now().toString()
-        );
+    
+    @PostMapping("/run-custom")
+    public DataReportIndex runCustom(@RequestBody RunRequest request) {
+        return testRunService.runTests(request);
     }
 }

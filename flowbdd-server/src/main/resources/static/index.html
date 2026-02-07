@@ -71,6 +71,10 @@
             <div class="suite-card">
               <h3><a href="/TEST-${s.name}">${classOnly}</a></h3>
               <p style="font-size: 0.8rem; color: #666;">${s.name}</p>
+              <div class="field is-grouped">
+                <p class="control"><a class="button is-small is-link is-outlined" href="/TEST-${s.name}">View Report</a></p>
+                <p class="control"><button class="button is-small is-success is-outlined" onclick="runSuite('${s.name}')">Run Suite</button></p>
+              </div>
               <p><a href="/api/report/suite/${s.file}" target="_blank">View JSON Data</a></p>
             </div>
           `;
@@ -81,6 +85,24 @@
     } catch (err) {
       console.error(err);
       container.innerHTML = '<p>Error loading suites.</p>';
+    }
+  }
+
+  async function runSuite(className) {
+    try {
+      const res = await fetch('/api/tests/run', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ className })
+      });
+      if (res.ok) {
+        alert('Suite ' + className + ' started!');
+      } else {
+        alert('Failed to start suite ' + className);
+      }
+    } catch (err) {
+      console.error(err);
+      alert('Error starting suite');
     }
   }
 

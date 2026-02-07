@@ -82,6 +82,14 @@ public class ReportController {
                 .collect(java.util.stream.Collectors.toList());
     }
 
+    @GetMapping("/filenames")
+    public java.util.List<String> getFileNames() {
+        DataReportIndex index = getIndex();
+        return index.getLinks().getTestSuites().stream()
+                .map(io.techthinking.flowbdd.report.report.model.TestSuiteNameToFile::getFile)
+                .collect(java.util.stream.Collectors.toList());
+    }
+
     @GetMapping("/suite/class/{className}")
     public TestSuite getTestSuiteByClass(@PathVariable String className) {
         DataReportIndex index = getIndex();

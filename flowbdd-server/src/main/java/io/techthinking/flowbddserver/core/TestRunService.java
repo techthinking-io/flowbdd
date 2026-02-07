@@ -32,12 +32,15 @@ import org.junit.platform.launcher.listeners.TestExecutionSummary;
 import org.junit.platform.launcher.TagFilter;
 import org.springframework.stereotype.Service;
 
+import java.net.URL;
+import java.net.URLClassLoader;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Stream;
 import java.util.stream.Collectors;
@@ -50,23 +53,28 @@ public class TestRunService {
 
     public synchronized DataReportIndex runTests(RunRequest request) {
         SummaryGeneratingListener listener = new SummaryGeneratingListener();
+        Set<Path> roots = computeClasspathRoots();
+        ClassLoader testClassLoader = createClassLoader(roots);
         Launcher launcher = LauncherFactory.create();
 
         List<DiscoverySelector> selectors = new ArrayList<>();
         if (request.getClassName() != null && !request.getClassName().isEmpty()) {
+            String className = resolveClassName(request.getClassName());
             if (request.getMethodName() != null && !request.getMethodName().isEmpty()) {
-                selectors.add(DiscoverySelectors.selectMethod(request.getClassName(), request.getMethodName()));
+                selectors.add(DiscoverySelectors.selectMethod(className, request.getMethodName()));
             } else {
-                selectors.add(DiscoverySelectors.selectClass(request.getClassName()));
+                selectors.add(DiscoverySelectors.selectClass(className));
             }
         }
 
         LauncherDiscoveryRequestBuilder ldr = LauncherDiscoveryRequestBuilder.request();
+        // Ensure we use our custom class loader for discovery
+        ldr.configurationParameter("junit.platform.launcher.interceptors.enabled", "false");
+
         if (!selectors.isEmpty()) {
             ldr.selectors(selectors);
         } else {
-            // No explicit selectors provided -> attempt to run everything on classpath
-            Set<Path> roots = computeClasspathRoots();
+            // No explicit selectors provided -> attempt to run everything on classpath roots
             if (!roots.isEmpty()) {
                 ldr.selectors(DiscoverySelectors.selectClasspathRoots(roots));
             }
@@ -77,37 +85,79 @@ public class TestRunService {
         }
 
         LauncherDiscoveryRequest discoveryRequest = ldr.build();
-        launcher.registerTestExecutionListeners(listener);
+        
+        // Use a custom thread context classloader during execution to ensure tests can load their classes
+        ClassLoader originalClassLoader = Thread.currentThread().getContextClassLoader();
+        try {
+            Thread.currentThread().setContextClassLoader(testClassLoader);
+            launcher.registerTestExecutionListeners(listener);
 
-        int remainingReruns = Math.max(0, request.getRerunCount());
-        TestExecutionSummary summary;
+            int remainingReruns = Math.max(0, request.getRerunCount());
+            TestExecutionSummary summary;
 
-        do {
-            launcher.execute(discoveryRequest);
-            summary = listener.getSummary();
-            // If there were failures and reruns remain, rebuild request for failed tests only
-            if (remainingReruns > 0 && summary.getFailures() != null && !summary.getFailures().isEmpty()) {
-                List<DiscoverySelector> failedSelectors = summary.getFailures().stream()
-                        .map(TestExecutionSummary.Failure::getTestIdentifier)
-                        .map(TestIdentifier::getUniqueId)
-                        .map(DiscoverySelectors::selectUniqueId)
-                        .collect(Collectors.toList());
-                if (!failedSelectors.isEmpty()) {
-                    ldr = LauncherDiscoveryRequestBuilder.request();
-                    ldr.selectors(failedSelectors);
-                    discoveryRequest = ldr.build();
-                    // reset listener for next run cycle
-                    listener = new SummaryGeneratingListener();
-                    launcher = LauncherFactory.create();
-                    launcher.registerTestExecutionListeners(listener);
-                } else {
-                    break;
+            do {
+                launcher.execute(discoveryRequest);
+                summary = listener.getSummary();
+                // If there were failures and reruns remain, rebuild request for failed tests only
+                if (remainingReruns > 0 && summary.getFailures() != null && !summary.getFailures().isEmpty()) {
+                    List<DiscoverySelector> failedSelectors = summary.getFailures().stream()
+                            .map(TestExecutionSummary.Failure::getTestIdentifier)
+                            .map(TestIdentifier::getUniqueId)
+                            .map(DiscoverySelectors::selectUniqueId)
+                            .collect(Collectors.toList());
+                    if (!failedSelectors.isEmpty()) {
+                        ldr = LauncherDiscoveryRequestBuilder.request();
+                        ldr.selectors(failedSelectors);
+                        discoveryRequest = ldr.build();
+                        // reset listener for next run cycle
+                        listener = new SummaryGeneratingListener();
+                        launcher = LauncherFactory.create();
+                        launcher.registerTestExecutionListeners(listener);
+                    } else {
+                        break;
+                    }
                 }
-            }
-        } while (remainingReruns-- > 0 && !summary.getFailures().isEmpty());
+            } while (remainingReruns-- > 0 && !summary.getFailures().isEmpty());
+        } finally {
+            Thread.currentThread().setContextClassLoader(originalClassLoader);
+        }
 
         lastRun = loadIndexJson();
         return lastRun;
+    }
+
+    protected String resolveClassName(String className) {
+        Set<Path> roots = computeClasspathRoots();
+        ClassLoader testClassLoader = createClassLoader(roots);
+
+        if (className.contains(".")) {
+            // Check if class is actually loadable
+            try {
+                Class.forName(className, false, testClassLoader);
+                return className;
+            } catch (ClassNotFoundException e) {
+                // Not on classpath, but maybe it's in one of our roots
+            }
+        }
+        
+        // Try to find the class in the computed roots
+        for (Path root : roots) {
+            try (Stream<Path> walk = Files.walk(root)) {
+                String targetFileName = className.replace(".", "/") + ".class";
+                Optional<String> found = walk
+                        .filter(Files::isRegularFile)
+                        .map(p -> root.relativize(p).toString())
+                        .filter(s -> s.endsWith(targetFileName) || s.endsWith(className + ".class"))
+                        .map(s -> s.replace(".class", "").replace("/", ".").replace("\\", "."))
+                        // If it ends with className but has a package, we prefer it
+                        .findFirst();
+                if (found.isPresent()) {
+                    return found.get();
+                }
+            } catch (Exception ignored) {
+            }
+        }
+        return className;
     }
 
     private DataReportIndex loadIndexJson() {
@@ -140,16 +190,49 @@ public class TestRunService {
         return lastRun;
     }
 
-    private Set<Path> computeClasspathRoots() {
-        String cp = System.getProperty("java.class.path", "");
-        if (cp.isEmpty()) return Set.of();
-        String[] parts = cp.split(System.getProperty("path.separator"));
-        try (Stream<Path> stream = java.util.Arrays.stream(parts)
-                .map(Paths::get)
-                .filter(p -> {
-                    try { return Files.exists(p); } catch (Exception e) { return false; }
-                })) {
-            return stream.collect(Collectors.toSet());
+    private ClassLoader createClassLoader(Set<Path> roots) {
+        try {
+            List<URL> urls = new ArrayList<>();
+            for (Path root : roots) {
+                urls.add(root.toUri().toURL());
+            }
+            return new URLClassLoader(urls.toArray(new URL[0]), getClass().getClassLoader());
+        } catch (Exception e) {
+            return getClass().getClassLoader();
         }
+    }
+
+    private Set<Path> computeClasspathRoots() {
+        Set<Path> roots = new java.util.HashSet<>();
+        
+        // 1. Standard classpath
+        String cp = System.getProperty("java.class.path", "");
+        if (!cp.isEmpty()) {
+            String[] parts = cp.split(System.getProperty("path.separator"));
+            java.util.Arrays.stream(parts)
+                    .map(Paths::get)
+                    .filter(p -> {
+                        try { return Files.exists(p); } catch (Exception e) { return false; }
+                    })
+                    .forEach(roots::add);
+        }
+
+        // 2. Common Gradle/Maven test output directories (if they exist relative to current dir)
+        String[] commonTestDirs = {
+            "build/classes/java/test",
+            "build/classes/kotlin/test",
+            "target/test-classes",
+            "examples/devteam/build/classes/java/test", // Specific to the issue reported
+            "examples/devteam/out/test/classes"         // IntelliJ output dir
+        };
+
+        for (String dir : commonTestDirs) {
+            Path p = Paths.get(dir);
+            if (Files.exists(p) && Files.isDirectory(p)) {
+                roots.add(p);
+            }
+        }
+        
+        return roots;
     }
 }

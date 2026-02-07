@@ -3,7 +3,7 @@ Dev Team Simulator - The world's most advanced team simulator... that only maste
 How to run
 
 - From project root: `./gradlew :examples:devteam:bootRun`
-- Then visit: `http://localhost:8080/actuator/health` or `http://localhost:8080/dev/boost?name=Alice&cups=2`
+- Then visit: `http://localhost:8085/actuator/health` or `http://localhost:8080/dev/boost?name=Alice&cups=2`
 
 Sample
 
@@ -18,24 +18,19 @@ Sample
 }
 ```
 
-### How to run the FlowBDD Server (experimental)
+### FlowBDD Server
 
-Since `flowbdd-server` is included as a dependency, you can also run it to trigger tests via HTTP.
+The `flowbdd-server` integration is provided by the `devteam-demo` module. This project runs the `flowbdd-server` alongside the `devteam` application, allowing you to trigger tests and view results via a web interface.
 
-From project root:
+To run the Dev Team application with the FlowBDD server enabled:
+
 ```bash
-./gradlew :examples:devteam:bootRun -PmainClass=io.techthinking.flowbddserver.FlowBddServerApplication
+./gradlew :examples:devteam-demo:bootRun
 ```
-(Note: You might need to adjust the port if 8085 is taken)
-Open http://localhost:8085
 
-Then you can run a test via curl:
-```bash
-curl -sS -X POST http://localhost:8085/api/tests/run \
-  -H 'Content-Type: application/json' \
-  -d '{
-        "className": "io.techthinking.flowbdd.examples.devteam.bdd.DevTeamSimulatorTest",
-        "methodName": "developerDrinksCoffee_getsPerformanceBoost",
-        "rerunCount": 1
-      }' | jq .
-```
+Once running, you can access:
+- **Dev Team API**: [http://localhost:8085/dev-names](http://localhost:8085/dev-names)
+- **Flow BDD Home**: [http://localhost:8085/](http://localhost:8085/)
+- **Flow BDD Test Runner**: [http://localhost:8085/runner/index.html](http://localhost:8085/runner/index.html)
+
+See [examples/devteam-demo/README.md](../devteam-demo/README.md) for more details.

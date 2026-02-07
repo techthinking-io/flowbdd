@@ -21,6 +21,7 @@ package io.techthinking.flowbddserver.controller;
 import io.techthinking.flowbdd.report.config.FlowBddConfig;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -86,6 +87,32 @@ public class ViewControllerTest {
         mockMvc.perform(get("/TEST-io.techthinking.flowbdd.examples.devteam.bdd.DevTeamSimulatorVerboseTest"))
                 .andDo(print())
                 .andExpect(status().isNotFound());
+    }
+
+    @Test
+    void testSuiteByClass_reproducesSpelError() throws Exception {
+        String indexJson = "{\"timeStamp\":\"2026-02-01T10:00:00Z\",\"summary\":{\"tests\":1,\"passed\":1,\"failed\":0,\"aborted\":0,\"skipped\":0},\"links\":{\"testSuites\":[{\"name\":\"io.techthinking.flowbdd.examples.devteam.bdd.DevTeamSimulatorVerboseTest\",\"file\":\"TEST-io.techthinking.flowbdd.examples.devteam.bdd.DevTeamSimulatorVerboseTest.json\"}]}}";
+        Files.writeString(FlowBddConfig.getDataPath().resolve("index.json"), indexJson);
+
+        String suiteJson = "{" +
+                "\"title\":\"MyTitle\"," +
+                "\"name\":\"MyTestSuite\"," +
+                "\"className\":\"io.techthinking.flowbdd.examples.devteam.bdd.DevTeamSimulatorVerboseTest\"," +
+                "\"packageName\":\"com.example\"," +
+                "\"testResults\":[{" +
+                "  \"wordify\":\"some test\"," +
+                "  \"status\":\"PASSED\"," +
+                "  \"class\": {\"fullyQualifiedName\":\"com.example.MyTest\", \"className\":\"MyTest\", \"packageName\":\"com.example\"}," +
+                "  \"method\": {\"name\":\"testMethod\", \"wordify\":\"test method\", \"arguments\":[]}" +
+                "}]," +
+                "\"summary\":{\"tests\":1,\"passed\":1,\"failed\":0,\"aborted\":0,\"skipped\":0}," +
+                "\"notes\":null" +
+                "}";
+        Files.writeString(FlowBddConfig.getDataPath().resolve("TEST-io.techthinking.flowbdd.examples.devteam.bdd.DevTeamSimulatorVerboseTest.json"), suiteJson);
+
+        mockMvc.perform(get("/TEST-io.techthinking.flowbdd.examples.devteam.bdd.DevTeamSimulatorVerboseTest"))
+                .andDo(print())
+                .andExpect(status().isOk());
     }
 
     @Test

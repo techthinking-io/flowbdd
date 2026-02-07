@@ -15,42 +15,29 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-
 plugins {
     `java-library`
     id("org.springframework.boot") version "2.7.6"
     id("io.spring.dependency-management") version "1.0.15.RELEASE"
 }
 
-group = "io.techthinking"
-version = "0.1.1-SNAPSHOT"
-
-java {
-    sourceCompatibility = JavaVersion.VERSION_11
-    targetCompatibility = JavaVersion.VERSION_11
-}
+group = "io.techthinking.flowbdd.examples"
+version = "0.1.0-SNAPSHOT"
+description = "Dev Team Simulator Demo Runner"
 
 repositories {
     mavenCentral()
-    mavenLocal()
 }
 
 dependencies {
+    implementation(project(":examples:devteam"))
+    implementation(project(":flowbdd-server"))
+
     implementation("org.springframework.boot:spring-boot-starter-web")
-    implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
-    implementation("org.slf4j:slf4j-api:1.7.36")
-
-    // JUnit Platform to run tests programmatically
-    implementation("org.junit.platform:junit-platform-launcher:1.9.2")
-    implementation("org.junit.platform:junit-platform-engine:1.9.2")
-    implementation("org.junit.jupiter:junit-jupiter-api:5.9.2")
-
-    // Optional: bring FlowBDD on classpath when needed
-    // If using locally published snapshot, it'll resolve from mavenLocal
-    api(project(":flowbdd"))
+    
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
 
-tasks.withType<Test> {
-    useJUnitPlatform()
+tasks.withType<org.springframework.boot.gradle.tasks.run.BootRun> {
+    systemProperties(System.getProperties().filterKeys { it is String && (it).startsWith("flowbdd.") } as Map<String, *>)
 }

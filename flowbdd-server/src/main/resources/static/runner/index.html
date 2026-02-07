@@ -48,8 +48,9 @@
         <div class="field">
           <label class="label">Class Name</label>
           <div class="control">
-            <input class="input" type="text" id="className" placeholder="com.example.MyTest" />
+            <input class="input" type="text" id="className" placeholder="MyTest (or com.example.MyTest)" />
           </div>
+          <p class="help">You can enter just the class name (e.g. <code>DevTeamSimulatorTest</code>) or the full package.</p>
         </div>
         <div class="field">
           <label class="label">Method Name</label>
@@ -76,6 +77,9 @@
           </div>
           <div class="control">
             <button type="button" id="statusBtn" class="button is-light">Status</button>
+          </div>
+          <div class="control">
+            <button type="button" id="pingBtn" class="button is-warning">Ping Server</button>
           </div>
           <div class="control">
             <button type="button" id="loadReportBtn" class="button is-info">Load Latest Report</button>
@@ -153,6 +157,15 @@
       rerunCount: parseInt(document.getElementById('rerunCount').value || '0', 10)
     };
     const res = await fetch('/api/tests/run', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+    if (!res.ok) {
+        const errorText = await res.text();
+        out.innerHTML = `<div class="notification is-danger is-light">
+            <p><strong>Error ${res.status}: ${res.statusText}</strong></p>
+            <p>If you get a 404, make sure you are running with <code>-Dflowbdd.server.enabled=true</code> or <code>-PmainClass=io.techthinking.flowbddserver.FlowBddServerApplication</code></p>
+            <pre>${errorText}</pre>
+        </div>`;
+        return;
+    }
     const json = await res.json();
     
     // Format the summary nicely
@@ -168,6 +181,22 @@
     
     loadReport(); // Automatically load report after run
   });
+
+  document.getElementById('pingBtn').addEventListener('click', async () => {
+    links.innerHTML = '';
+    try {
+      const res = await fetch('/api/tests/ping');
+      if (res.ok) {
+        const json = await res.json();
+        out.innerHTML = `<h4>Server Ping Result</h4><div class="notification is-success">Server is UP! Response: ${json.message} at ${json.timestamp}</div>`;
+      } else {
+        out.innerHTML = `<h4>Server Ping Result</h4><div class="notification is-danger is-light">Server responded with error: ${res.status}</div>`;
+      }
+    } catch (err) {
+      out.innerHTML = `<h4>Server Ping Result</h4><div class="notification is-danger is-light">Failed to connect to server: ${err.message}</div>`;
+    }
+  });
+
   document.getElementById('statusBtn').addEventListener('click', async () => {
     links.innerHTML = '';
     const res = await fetch('/api/tests/status');

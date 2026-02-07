@@ -15,19 +15,20 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
+package io.techthinking.flowbdd.examples.devteamdemo;
 
-rootProject.name = "flowbdd"
-include(
-    "flowbdd-wordify",
-    "flowbdd",
-    "ft",
-    "flowbdd-test-utils",
-    "flowbdd-diagrams",
-    "flowbdd-validate",
-    "examples:bookstore",
-    "examples:devteam",
-    "examples:devteam-demo",
-    "examples:cucumbers",
-    "flowbdd-server",
-    "learning"
-)
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
+
+@SpringBootApplication
+@ComponentScan(basePackages = {
+    "io.techthinking.flowbdd.examples.devteam",
+    "io.techthinking.flowbdd.examples.devteamdemo",
+    "io.techthinking.flowbddserver"
+})
+public class DemoApplication {
+    public static void main(String[] args) {
+        SpringApplication.run(DemoApplication.class, args);
+    }
+}

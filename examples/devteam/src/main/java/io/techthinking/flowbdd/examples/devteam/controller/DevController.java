@@ -22,6 +22,7 @@ import io.techthinking.flowbdd.examples.devteam.model.ProductivityBoost;
 import io.techthinking.flowbdd.examples.devteam.model.TechDept;
 import io.techthinking.flowbdd.examples.devteam.service.DevTeamService;
 import org.springframework.web.bind.annotation.*;
+import java.util.List;
 
 @RestController
 public class DevController {
@@ -30,6 +31,11 @@ public class DevController {
 
     public DevController(DevTeamService devTeamService) {
         this.devTeamService = devTeamService;
+    }
+
+    @GetMapping("/dev-names")
+    public List<String> devNames() {
+        return List.of("Alice", "Bob");
     }
 
     @PostMapping("/dev/{name}/drinks-coffee")

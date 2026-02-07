@@ -28,6 +28,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -38,6 +39,14 @@ public class TestControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
+
+    @Test
+    void ping_returnsPong() throws Exception {
+        mockMvc.perform(get("/api/tests/ping"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.message").value("pong"))
+                .andExpect(jsonPath("$.timestamp").isNotEmpty());
+    }
 
     @Disabled("Need to share the jimfs/in memory file system")
     // @Test

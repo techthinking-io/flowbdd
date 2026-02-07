@@ -40,6 +40,9 @@
 <section class="section">
     <div class="container">
         <div th:replace="fragments :: header"></div>
+        
+        <div id="notificationArea" class="mt-4"></div>
+
         <nav class="breadcrumb has-arrow-separator" aria-label="breadcrumbs">
             <ul>
                 <li class="is-active"><a href="#" aria-current="page" th:text="${testSuite.name}"/></li>
@@ -50,6 +53,11 @@
             <h1 class="title">
                 <span class="has-text-success">Feature: </span>
                 <span class="white-space: pre-wrap" th:text="${testSuite.title}"/>
+                <button th:if="${isServer}" class="button is-small is-success is-light is-pulled-right"
+                        th:attr="onclick=|runTest('${testSuite.className}', null)|">
+                    <span class="icon"><i class="fas fa-play"></i></span>
+                    <span>Run All</span>
+                </button>
             </h1>
             <h2 class="subtitle" th:if="${testSuite.notes != null}">
                 <span th:each="note : ${testSuite.notes.textNotes}">
@@ -62,8 +70,9 @@
         <div class="content pb-4" th:each="testCase : ${testCases}">
             <h4 class="title">
                 <span class="icon-text">
-                  <span class="icon has-text-success">
-                    <i class="far fa-play-circle"></i>
+                  <span class="icon has-text-success" th:style="${isServer ? 'cursor: pointer;' : ''}"
+                        th:attr="onclick=${isServer and testCase.method != null} ? |runTest('${testCase.clazz.fullyQualifiedName}', '${testCase.method.name}')| : ''">
+                    <i class="far fa-play-circle" th:title="${isServer ? 'Re-run this test' : ''}"></i>
                   </span>
                 </span>
                 <span class="has-text-success">Scenario: </span>
@@ -87,6 +96,46 @@
         </div>
     </div><!-- end container -->
 </section>
+
+<script th:if="${isServer}">
+    async function runTest(className, methodName) {
+        const notify = document.getElementById('notificationArea');
+        notify.innerHTML = `
+            <div class="notification is-info is-light">
+                <button class="delete" onclick="this.parentElement.remove()"></button>
+                Running test ${methodName ? methodName : className}...
+            </div>
+        `;
+
+        try {
+            const res = await fetch('/api/tests/run', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ className, methodName })
+            });
+            if (!res.ok) throw new Error('Failed to run test');
+            const result = await res.json();
+            
+            notify.innerHTML = `
+                <div class="notification is-success is-light">
+                    <button class="delete" onclick="this.parentElement.remove()"></button>
+                    <strong>Test Run Complete!</strong><br/>
+                    Passed: ${result.summary.passed} / Total: ${result.summary.tests}<br/>
+                    <a href="javascript:location.reload()">Reload page to see updated results</a>
+                </div>
+            `;
+        } catch (err) {
+            console.error(err);
+            notify.innerHTML = `
+                <div class="notification is-danger is-light">
+                    <button class="delete" onclick="this.parentElement.remove()"></button>
+                    <strong>Error:</strong> Failed to execute test.
+                </div>
+            `;
+        }
+    }
+</script>
+
 </body>
 
 <footer th:replace="fragments :: footer"></footer>

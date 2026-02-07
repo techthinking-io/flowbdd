@@ -45,6 +45,7 @@ dependencies {
     implementation("org.apache.httpcomponents.client5:httpclient5:5.1")
     implementation("org.apache.httpcomponents.client5:httpclient5-fluent:5.1")
     implementation("commons-validator:commons-validator:1.7")
+    implementation(project(":flowbdd-server"))
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 
