@@ -75,12 +75,16 @@
       }
       const index = await res.json();
       if (index.links && index.links.testSuites && index.links.testSuites.length > 0) {
-        container.innerHTML = index.links.testSuites.map(s => `
-          <div class="suite-card">
-            <h3>${s.name}</h3>
-            <p><a href="/api/report/suite/${s.file}" target="_blank">View JSON Data</a></p>
-          </div>
-        `).join('');
+        container.innerHTML = index.links.testSuites.map(s => {
+          const classOnly = s.name.split('.').pop();
+          return `
+            <div class="suite-card">
+              <h3><a href="/TEST-${s.name}">${classOnly}</a></h3>
+              <p style="font-size: 0.8rem; color: #666;">${s.name}</p>
+              <p><a href="/api/report/suite/${s.file}" target="_blank">View JSON Data</a></p>
+            </div>
+          `;
+        }).join('');
       } else {
         container.innerHTML = '<p>No suites found in the latest report.</p>';
       }

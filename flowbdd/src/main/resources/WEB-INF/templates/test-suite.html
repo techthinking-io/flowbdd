@@ -68,7 +68,7 @@
                 <span class="has-text-success">Feature: </span>
                 <span class="white-space: pre-wrap" th:text="${testSuite.title}"/>
             </h1>
-            <h2 class="subtitle" th:if="${testSuite.notes}">
+            <h2 class="subtitle" th:if="${testSuite.notes != null}">
                 <span th:each="note : ${testSuite.notes.textNotes}">
                     <p>
                         <span style="white-space: pre-wrap" th:text="${note}"></span>
@@ -84,11 +84,11 @@
                   </span>
                 </span>
                 <span class="has-text-success">Scenario: </span>
-                <span th:text="${testCase.method.wordify} + ' (' + ${testCase.status} + ')'"/>
+                <span th:text="${testCase.method != null ? testCase.method.wordify : 'Unknown Method'} + ' (' + ${testCase.status} + ')'"/>
             </h4>
             <p style="white-space: pre-wrap" th:text="${testCase.wordify}"></p>
 
-            <span th:if="${testCase.notes and testCase.notes.textNotes}">
+            <span th:if="${testCase.notes != null and testCase.notes.textNotes != null}">
                 <span th:each="note : ${testCase.notes.textNotes}">
                     <p>
                         <span>Note: </span>
@@ -96,7 +96,7 @@
                     </p>
                 </span>
             </span>
-            <span th:if="${testCase.notes}">
+            <span th:if="${testCase.notes != null}">
                 <span th:each="diagram : ${testCase.notes.diagrams}">
                     <span class="mermaid" style="white-space: pre-wrap" th:text="${diagram}" ></span>
                 </span>

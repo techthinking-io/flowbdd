@@ -76,12 +76,16 @@
         suitesHtml = `
           <h3>Test Suites:</h3>
           <ul class="suite-list">
-            ${index.links.testSuites.map(s => `
-              <li class="suite-item">
-                <strong>${s.name}</strong> - 
-                <a href="/api/report/suite/${s.file}" target="_blank">JSON</a>
-              </li>
-            `).join('')}
+            ${index.links.testSuites.map(s => {
+              const classOnly = s.name.split('.').pop();
+              return `
+                <li class="suite-item">
+                  <strong><a href="/TEST-${s.name}">${classOnly}</a></strong> 
+                  <span style="font-size: 0.8rem; color: #666;">(${s.name})</span> - 
+                  <a href="/api/report/suite/${s.file}" target="_blank">JSON</a>
+                </li>
+              `;
+            }).join('')}
           </ul>
         `;
       }

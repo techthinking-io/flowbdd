@@ -67,4 +67,30 @@ public class ReportController {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to read test suite", e);
         }
     }
+
+    @GetMapping("/suites")
+    public java.util.List<io.techthinking.flowbdd.report.report.model.TestSuiteNameToFile> getSuites() {
+        DataReportIndex index = getIndex();
+        return index.getLinks().getTestSuites();
+    }
+
+    @GetMapping("/classes")
+    public java.util.List<String> getClasses() {
+        DataReportIndex index = getIndex();
+        return index.getLinks().getTestSuites().stream()
+                .map(io.techthinking.flowbdd.report.report.model.TestSuiteNameToFile::getName)
+                .collect(java.util.stream.Collectors.toList());
+    }
+
+    @GetMapping("/suite/class/{className}")
+    public TestSuite getTestSuiteByClass(@PathVariable String className) {
+        DataReportIndex index = getIndex();
+        String fileName = index.getLinks().getTestSuites().stream()
+            .filter(link -> link.getName().equals(className))
+            .map(io.techthinking.flowbdd.report.report.model.TestSuiteNameToFile::getFile)
+            .findFirst()
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Test suite not found for class " + className));
+
+        return getTestSuite(fileName);
+    }
 }

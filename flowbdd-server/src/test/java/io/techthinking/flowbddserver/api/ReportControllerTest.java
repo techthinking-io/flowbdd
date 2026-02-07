@@ -32,7 +32,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -82,5 +81,40 @@ public class ReportControllerTest {
     void getIndex_returns404IfNotFound() throws Exception {
         mockMvc.perform(get("/api/report/index"))
                 .andExpect(status().isNotFound());
+    }
+
+    @Test
+    void getSuites_returnsSuitesList() throws Exception {
+        String indexJson = "{\"timeStamp\":\"2026-02-01T10:00:00Z\",\"summary\":{\"count\":1,\"passed\":1,\"failed\":0,\"aborted\":0,\"skipped\":0},\"links\":{\"testSuites\":[{\"name\":\"com.example.MyTest\",\"file\":\"MyTestSuite.json\"}]}}";
+        Files.writeString(FlowBddConfig.getDataPath().resolve("index.json"), indexJson);
+
+        mockMvc.perform(get("/api/report/suites"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].name").value("com.example.MyTest"))
+                .andExpect(jsonPath("$[0].file").value("MyTestSuite.json"));
+    }
+
+    @Test
+    void getClasses_returnsClassesList() throws Exception {
+        String indexJson = "{\"timeStamp\":\"2026-02-01T10:00:00Z\",\"summary\":{\"count\":1,\"passed\":1,\"failed\":0,\"aborted\":0,\"skipped\":0},\"links\":{\"testSuites\":[{\"name\":\"com.example.MyTest\",\"file\":\"MyTestSuite.json\"}]}}";
+        Files.writeString(FlowBddConfig.getDataPath().resolve("index.json"), indexJson);
+
+        mockMvc.perform(get("/api/report/classes"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0]").value("com.example.MyTest"));
+    }
+
+    @Test
+    void getTestSuiteByClass_returnsTestSuite() throws Exception {
+        String indexJson = "{\"timeStamp\":\"2026-02-01T10:00:00Z\",\"summary\":{\"count\":1,\"passed\":1,\"failed\":0,\"aborted\":0,\"skipped\":0},\"links\":{\"testSuites\":[{\"name\":\"com.example.MyTest\",\"file\":\"MyTestSuite.json\"}]}}";
+        Files.writeString(FlowBddConfig.getDataPath().resolve("index.json"), indexJson);
+
+        String suiteJson = "{\"title\":\"MyTitle\",\"name\":\"MyTestSuite\",\"className\":\"com.example.MyTest\",\"packageName\":\"com.example\",\"testResults\":[],\"summary\":{\"count\":0,\"passed\":0,\"failed\":0,\"aborted\":0,\"skipped\":0},\"notes\":null}";
+        Files.writeString(FlowBddConfig.getDataPath().resolve("MyTestSuite.json"), suiteJson);
+
+        mockMvc.perform(get("/api/report/suite/class/com.example.MyTest"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.name").value("MyTestSuite"))
+                .andExpect(jsonPath("$.className").value("com.example.MyTest"));
     }
 }

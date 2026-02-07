@@ -105,9 +105,16 @@
         <p>Failed: ${index.summary.failed}, Aborted: ${index.summary.aborted}</p>
       `;
       if (index.links && index.links.testSuites) {
-        suiteLinks.innerHTML = '<h4>Test Suites JSON:</h4>' + index.links.testSuites.map(s =>
-          `<div><a href="/api/report/suite/${s.file}" target="_blank">${s.name}</a></div>`
-        ).join('');
+        suiteLinks.innerHTML = '<h4>Test Suites:</h4>' + index.links.testSuites.map(s => {
+          const classOnly = s.name.split('.').pop();
+          return `
+            <div style="margin-bottom: 0.5rem;">
+              <strong><a href="/TEST-${s.name}">${classOnly}</a></strong>
+              <span style="font-size: 0.8rem; color: #666;">(${s.name})</span> -
+              <a href="/api/report/suite/${s.file}" target="_blank">JSON</a>
+            </div>
+          `;
+        }).join('');
       }
     } catch (err) {
       console.error(err);

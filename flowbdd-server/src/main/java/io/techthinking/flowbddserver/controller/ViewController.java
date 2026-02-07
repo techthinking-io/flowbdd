@@ -74,4 +74,16 @@ public class ViewController {
         model.addAttribute("isServer", true);
         return "test-suite";
     }
+
+    @GetMapping("/TEST-{className}")
+    public String testSuiteByClass(@PathVariable String className, Model model) {
+        TestSuite testSuite = reportController.getTestSuiteByClass(className);
+        VersionInfo versionInfo = TestVersionInfoFactory.create(Clock.systemDefaultZone());
+
+        model.addAttribute("testSuite", testSuite);
+        model.addAttribute("testCases", testSuite.getTestCases());
+        model.addAttribute("versionInfo", versionInfo);
+        model.addAttribute("isServer", true);
+        return "test-suite";
+    }
 }
