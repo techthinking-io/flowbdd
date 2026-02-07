@@ -56,6 +56,7 @@ public class ViewController {
             model.addAttribute("summary", index.getSummary());
             model.addAttribute("links", links);
             model.addAttribute("versionInfo", versionInfo);
+            model.addAttribute("isServer", true);
             return "index";
         } catch (Exception e) {
             return "redirect:/runner/index.html";
@@ -70,6 +71,7 @@ public class ViewController {
         model.addAttribute("testSuite", testSuite);
         model.addAttribute("testCases", testSuite.getTestCases());
         model.addAttribute("versionInfo", versionInfo);
+        model.addAttribute("isServer", true);
         return "test-suite";
     }
 }

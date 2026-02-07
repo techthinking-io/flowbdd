@@ -68,6 +68,7 @@ public class HtmlReportWriter extends AbstractReportWriter {
         context.setVariable("summary", dataReportIndex.getSummary());
         context.setVariable("links", links);
         context.setVariable("versionInfo", versionInfo);
+        context.setVariable("isServer", false);
         return context;
     }
 
@@ -76,6 +77,7 @@ public class HtmlReportWriter extends AbstractReportWriter {
         context.setVariable("testSuite", testSuite);
         context.setVariable("testCases", testSuite.getTestCases());
         context.setVariable("versionInfo", versionInfo);
+        context.setVariable("isServer", false);
         return context;
     }
 }
