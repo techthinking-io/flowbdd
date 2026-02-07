@@ -17,48 +17,35 @@
   -->
 
 <!doctype html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>FlowBDD Server - Reports</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
   <style>
     body { font-family: -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif; margin: 0; display: flex; flex-direction: column; min-height: 100vh; }
-    header, footer { background: #333; color: white; padding: 1rem 2rem; }
-    header nav a, footer a { color: #eee; margin-right: 1rem; text-decoration: none; }
-    header nav a:hover, footer a:hover { text-decoration: underline; }
     main { flex: 1; padding: 2rem; }
     .report-card { background: #f9f9f9; border: 1px solid #ddd; padding: 1.5rem; border-radius: 8px; margin-bottom: 2rem; }
     .suite-list { list-style: none; padding: 0; }
     .suite-item { padding: 0.5rem 0; border-bottom: 1px solid #eee; }
     .suite-item:last-child { border-bottom: none; }
-    .footer-links { margin-top: 0.5rem; }
   </style>
 </head>
 <body>
 
-<header>
-  <nav>
-    <a href="/">Home</a>
-    <a href="/reports/index.html">Last Report (JSON)</a>
-    <a href="/runner/index.html">Test Runner</a>
-  </nav>
-</header>
+<div th:replace="fragments :: header"></div>
 
-<main>
-  <h1>Latest Manually run test - Report Summary</h1>
-  <div id="reportContainer">
-    <p>Loading latest report...</p>
+<main class="section">
+  <div class="container">
+    <h1 class="title">Latest Manually run test - Report Summary</h1>
+    <div id="reportContainer">
+      <p>Loading latest report...</p>
+    </div>
   </div>
 </main>
 
-<footer>
-  <div>&copy; 2021-2025 James Bayliss. Flow BDD - The most productive way to test.</div>
-  <div class="footer-links">
-    <a href="https://techthinking.io" target="_blank">techthinking.io</a>
-    <a href="https://github.com/tech-thinking-io/flowbdd" target="_blank">GitHub Repo</a>
-  </div>
-</footer>
+<footer th:replace="fragments :: footer"></footer>
 
 <script>
   async function loadReport() {
