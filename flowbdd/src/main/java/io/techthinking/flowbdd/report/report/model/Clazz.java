@@ -46,10 +46,6 @@ public class Clazz {
         return className;
     }
 
-    public String getName() {
-        return className;
-    }
-
     public String getPackageName() {
         return packageName;
     }

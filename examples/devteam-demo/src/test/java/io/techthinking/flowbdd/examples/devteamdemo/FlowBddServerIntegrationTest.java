@@ -16,12 +16,11 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package io.techthinking.flowbdd.examples.devteam.bdd;
+package io.techthinking.flowbdd.examples.devteamdemo;
 
 import io.techthinking.flowbdd.report.report.model.DataReportIndex;
 import io.techthinking.flowbddserver.FlowBddServerApplication;
 import io.techthinking.flowbddserver.api.RunRequest;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -36,8 +35,8 @@ public class FlowBddServerIntegrationTest {
     @Autowired
     private TestRestTemplate restTemplate;
 
-    @Disabled("Need to share the jimfs/in memory file system")
-    // @Test
+    // @Disabled("Need to share the jimfs/in memory file system")
+    @Test
     void canRunDevTeamTestViaApi() {
         RunRequest request = new RunRequest();
         request.setClassName("io.techthinking.flowbdd.examples.devteam.bdd.DevTeamSimulatorTest");
@@ -53,8 +52,8 @@ public class FlowBddServerIntegrationTest {
         assertThat(result.getSummary().getPassed()).isEqualTo(1);
     }
 
-    @Disabled("Need to share the jimfs/in memory file system")
-    // @Test
+    // @Disabled("Need to share the jimfs/in memory file system")
+    @Test
     void statusIsIdleInitially() {
         ResponseEntity<DataReportIndex> response = restTemplate.getForEntity("/api/tests/status", DataReportIndex.class);
 

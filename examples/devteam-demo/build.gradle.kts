@@ -30,12 +30,17 @@ repositories {
 }
 
 dependencies {
+    implementation(project(":examples:devteam", "testArtifacts"))
     implementation(project(":examples:devteam"))
     implementation(project(":flowbdd-server"))
 
     implementation("org.springframework.boot:spring-boot-starter-web")
     
     testImplementation("org.springframework.boot:spring-boot-starter-test")
+}
+
+tasks.test {
+    useJUnitPlatform()
 }
 
 tasks.withType<org.springframework.boot.gradle.tasks.run.BootRun> {

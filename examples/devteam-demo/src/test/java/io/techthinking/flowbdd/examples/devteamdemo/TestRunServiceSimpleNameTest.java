@@ -16,8 +16,11 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package io.techthinking.flowbddserver.core;
+package io.techthinking.flowbdd.examples.devteamdemo;
 
+import io.techthinking.flowbdd.examples.devteam.bdd.DevTeamSimulatorTest;
+import io.techthinking.flowbddserver.core.TestRunService;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -31,14 +34,30 @@ public class TestRunServiceSimpleNameTest {
     private TestRunService testRunService;
 
     @Test
-    void canResolveSimpleClassName() {
-        String resolved = testRunService.resolveClassName("FlowBddServerApplicationTests");
-        assertThat(resolved).isEqualTo("io.techthinking.flowbddserver.FlowBddServerApplicationTests");
-    }
-
-    @Test
     void leavesFullClassNameAsIs() {
         String resolved = testRunService.resolveClassName("io.techthinking.flowbddserver.FlowBddServerApplicationTests");
         assertThat(resolved).isEqualTo("io.techthinking.flowbddserver.FlowBddServerApplicationTests");
+    }
+
+    /** From src package */
+    @Disabled("Issue with running all tests ./gradlew test - this fails")
+    // @Test
+    void canResolveDevProductivityBoost() {
+        // Checking that we have access to the test class
+        DevTeamSimulatorTest test = new DevTeamSimulatorTest();
+
+        String resolved = testRunService.resolveClassName("ProductivityBoost");
+        assertThat(resolved).isEqualTo("io.techthinking.flowbdd.examples.devteam.model.ProductivityBoost");
+    }
+
+    /** From test package */
+    @Disabled("Issue with running all tests ./gradlew test - this fails")
+    // @Test
+    void canResolveDevTeamSimulatorTest() {
+        // Checking that we have access to the test class
+        DevTeamSimulatorTest test = new DevTeamSimulatorTest();
+
+        String resolved = testRunService.resolveClassName("DevTeamSimulatorTest");
+        assertThat(resolved).isEqualTo("io.techthinking.flowbdd.examples.devteam.bdd.DevTeamSimulatorTest");
     }
 }

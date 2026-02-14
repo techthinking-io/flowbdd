@@ -126,7 +126,7 @@ public class TestRunService {
         return lastRun;
     }
 
-    protected String resolveClassName(String className) {
+    public String resolveClassName(String className) {
         Set<Path> roots = computeClasspathRoots();
         ClassLoader testClassLoader = createClassLoader(roots);
 
@@ -141,15 +141,15 @@ public class TestRunService {
         }
         
         // Try to find the class in the computed roots
+        String targetFileName = className.replace(".", "/") + ".class";
         for (Path root : roots) {
             try (Stream<Path> walk = Files.walk(root)) {
-                String targetFileName = className.replace(".", "/") + ".class";
                 Optional<String> found = walk
                         .filter(Files::isRegularFile)
-                        .map(p -> root.relativize(p).toString())
+                        .map(p -> root.relativize(p).toString().replace("\\", "/"))
                         .filter(s -> s.endsWith(targetFileName) || s.endsWith(className + ".class"))
-                        .map(s -> s.replace(".class", "").replace("/", ".").replace("\\", "."))
-                        // If it ends with className but has a package, we prefer it
+                        .map(s -> s.replace(".class", "").replace("/", "."))
+                        .map(s -> s.startsWith(".") ? s.substring(1) : s)
                         .findFirst();
                 if (found.isPresent()) {
                     return found.get();
@@ -217,13 +217,47 @@ public class TestRunService {
                     .forEach(roots::add);
         }
 
-        // 2. Common Gradle/Maven test output directories (if they exist relative to current dir)
+        // 2. Multi-module Gradle support: Search for build/classes/java/test in subdirectories
+        try {
+            Path currentDir = Paths.get("").toAbsolutePath();
+            // Search for Gradle test output directories in the project
+            // We use a broader approach because roots might be outside the current working directory in some environments
+            // But for now, searching from the current directory (project root usually) should suffice.
+            Files.walk(currentDir)
+                .filter(Files::isDirectory)
+                .filter(p -> {
+                    String s = p.toString().replace("\\", "/");
+                    return s.endsWith("/build/classes/java/test") || 
+                           s.endsWith("/build/classes/kotlin/test") ||
+                           s.endsWith("/target/test-classes") ||
+                           s.endsWith("/out/test/classes") ||
+                           s.endsWith("/build/classes/java/main") ||
+                           s.endsWith("/build/classes/kotlin/main");
+                })
+                .forEach(roots::add);
+                
+            // Also explicitly add standard patterns relative to current dir in case walk fails or is limited
+            String[] commonTestDirs = {
+                "build/classes/java/test",
+                "build/classes/kotlin/test",
+                "target/test-classes",
+                "out/test/classes"
+            };
+            for (String dir : commonTestDirs) {
+                Path p = currentDir.resolve(dir);
+                if (Files.exists(p) && Files.isDirectory(p)) {
+                    roots.add(p);
+                }
+            }
+        } catch (Exception ignored) {
+        }
+
+        // 3. Fallback to common relative paths if the search missed anything
         String[] commonTestDirs = {
             "build/classes/java/test",
             "build/classes/kotlin/test",
             "target/test-classes",
-            "examples/devteam/build/classes/java/test", // Specific to the issue reported
-            "examples/devteam/out/test/classes"         // IntelliJ output dir
+            "out/test/classes"
         };
 
         for (String dir : commonTestDirs) {

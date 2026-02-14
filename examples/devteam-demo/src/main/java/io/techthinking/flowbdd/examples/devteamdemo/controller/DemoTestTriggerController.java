@@ -17,6 +17,8 @@
  */
 package io.techthinking.flowbdd.examples.devteamdemo.controller;
 
+import io.techthinking.flowbdd.examples.devteam.bdd.DevTeamSimulatorTest;
+import io.techthinking.flowbdd.examples.devteam.model.ProductivityBoost;
 import io.techthinking.flowbdd.report.report.model.DataReportIndex;
 import io.techthinking.flowbddserver.api.RunRequest;
 import io.techthinking.flowbddserver.core.TestRunService;
@@ -36,11 +38,19 @@ public class DemoTestTriggerController {
         this.testRunService = testRunService;
     }
 
+    @PostMapping("/ping")
+    public String ping() {
+        DevTeamSimulatorTest test = new DevTeamSimulatorTest();
+        ProductivityBoost boost = new ProductivityBoost("developer", 10, "message");
+        System.out.println("ping this shows that we have access to src and test. Class instances test: " + test + " boost: " + boost);
+        return "pong";
+    }
+
     @PostMapping("/run-devteam-tests")
     public DataReportIndex runDevTeamTests() {
         RunRequest request = new RunRequest();
         // Assuming we want to run all tests in this package
-        request.setTags(List.of("devteam")); 
+        request.setTags(List.of("devteam"));
         // Or run a specific class if tags are not used
         // request.setClassName("DevTeamSimulatorTest");
         return testRunService.runTests(request);

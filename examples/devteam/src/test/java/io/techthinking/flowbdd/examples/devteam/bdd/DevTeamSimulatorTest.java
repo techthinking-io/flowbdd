@@ -65,6 +65,7 @@ public class DevTeamSimulatorTest extends BaseTest {
 
     @BeforeEach
     void setupDoc() {
+        System.out.println("[DEBUG_LOG] DevTeamSimulatorTest setup - checking access");
         sequenceDiagram()
             .addActor(USER)
             .addParticipant(DEV_TEAM_SIMULATOR);

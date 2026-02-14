@@ -39,6 +39,21 @@ dependencies {
     testImplementation(project(":flowbdd-test-utils"))
 }
 
+val testJar by tasks.registering(Jar::class) {
+    archiveClassifier.set("tests")
+    from(sourceSets.test.get().output)
+}
+
+configurations {
+    create("testArtifacts") {
+        extendsFrom(configurations.testRuntimeClasspath.get())
+    }
+}
+
+artifacts {
+    add("testArtifacts", testJar)
+}
+
 tasks.test {
     useJUnitPlatform()
 }
