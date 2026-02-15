@@ -21,8 +21,12 @@ package io.techthinking.flowbdd.examples.devteam.controller;
 import io.techthinking.flowbdd.examples.devteam.model.ProductivityBoost;
 import io.techthinking.flowbdd.examples.devteam.model.TechDept;
 import io.techthinking.flowbdd.examples.devteam.service.DevTeamService;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class DevController {
@@ -31,6 +35,14 @@ public class DevController {
 
     public DevController(DevTeamService devTeamService) {
         this.devTeamService = devTeamService;
+    }
+
+    @GetMapping(path = "/ping", produces = MediaType.APPLICATION_JSON_VALUE)
+    public Map<String, Object> ping() {
+        return Map.of(
+            "message", "pong from Dev Team Demo Server",
+            "timestamp", LocalDateTime.now().toString()
+        );
     }
 
     @GetMapping("/dev-names")

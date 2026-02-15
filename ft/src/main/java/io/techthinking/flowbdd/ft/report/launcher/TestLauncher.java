@@ -46,7 +46,6 @@ public class TestLauncher {
 
         Launcher launcher = LauncherFactory.create();
         launcher.registerTestExecutionListeners(executionListener, executionListener);
-
         launcher.execute(request);
     }
 }
