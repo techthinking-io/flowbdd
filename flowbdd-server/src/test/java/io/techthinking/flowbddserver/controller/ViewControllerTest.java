@@ -129,4 +129,11 @@ public class ViewControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(view().name("test-suite"));
     }
+    @Test
+    void testRunner_returnsView() throws Exception {
+        mockMvc.perform(get("/runner/index"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(view().name("runner/index"));
+    }
 }

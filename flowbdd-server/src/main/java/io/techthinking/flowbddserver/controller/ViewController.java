@@ -59,8 +59,16 @@ public class ViewController {
             model.addAttribute("isServer", true);
             return "index";
         } catch (Exception e) {
-            return "redirect:/runner/index.html";
+            return "redirect:/runner/index";
         }
+    }
+
+    @GetMapping("/runner/index")
+    public String runner(Model model) {
+        VersionInfo versionInfo = TestVersionInfoFactory.create(Clock.systemDefaultZone());
+        model.addAttribute("versionInfo", versionInfo);
+        model.addAttribute("isServer", true);
+        return "runner/index";
     }
 
     @GetMapping("/suite/{fileName}")
