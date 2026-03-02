@@ -41,7 +41,8 @@ public class FlowBddConfig {
 
     /**
      * Resolves the base directory.
-     * Priority: System Property -> Environment Variable -> Temp Dir
+     * Priority: System Property {@literal ->} Environment Variable {@literal ->} Temp Dir
+     * @return The base path.
      */
     public static Path getBasePath() {
         if (overriddenBasePath != null) return overriddenBasePath;
@@ -55,14 +56,26 @@ public class FlowBddConfig {
         return Paths.get(System.getProperty("java.io.tmpdir"), DEFAULT_BASE_NAME);
     }
 
+    /**
+     * Gets the data path.
+     * @return The data path.
+     */
     public static Path getDataPath() {
         return getBasePath().resolve(System.getProperty("flowbdd.data.dir", DEFAULT_DATA_DIR));
     }
 
+    /**
+     * Gets the report path.
+     * @return The report path.
+     */
     public static Path getReportPath() {
         return getBasePath().resolve(System.getProperty("flowbdd.report.dir", DEFAULT_REPORT_DIR));
     }
 
+    /**
+     * Gets the banner.
+     * @return The banner string.
+     */
     public static String getBanner() {
         return System.getProperty("flowbdd.banner", DEFAULT_BANNER);
     }
@@ -76,10 +89,18 @@ public class FlowBddConfig {
 //        System.setProperty("flowbdd.base.dir", path.toString());
 //    }
 
+    /**
+     * Overrides the base path.
+     * @param path The path to override with.
+     */
     public static void overrideBasePath(Path path) {
         overriddenBasePath = path;
     }
 
+    /**
+     * Gets the overridden base path.
+     * @return An Optional containing the overridden base path if present.
+     */
     public static Optional<Path> getOverriddenBasePath() {
         return Optional.ofNullable(overriddenBasePath);
     }
