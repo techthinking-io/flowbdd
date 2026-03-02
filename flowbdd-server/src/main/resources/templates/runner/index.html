@@ -1,0 +1,224 @@
+<!--
+  ~ Flow BDD - The most productive way to test.
+  ~ Copyright (C) 2021-2025 James Bayliss.
+  ~
+  ~ This program is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ This program is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with this program.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FlowBDD Server - Test Runner</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+  <style>
+    body { font-family: -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif; margin: 0; display: flex; flex-direction: column; min-height: 100vh; }
+    main { flex: 1; padding: 2rem 0; }
+    label { display:block; margin-top: 0.5rem; }
+    input, button { padding: 0.5rem; font-size: 1rem; }
+    pre { background:#f7f7f7; padding:1rem; overflow:auto; border: 1px solid #ddd; }
+  </style>
+</head>
+<body>
+
+<section class="section">
+  <div class="container">
+    <div th:replace="fragments :: header"></div>
+
+    <main>
+      <div class="box">
+        <h1 class="title">Test Runner – Experimental and work in progress!</h1>
+        <p>Run JUnit tests (including FlowBDD tests) on demand.</p>
+        <p>
+          <em>You can run tests manually and or experiment with giving tests different parameters.</em>
+        </p>
+      </div>
+
+      <form id="runForm">
+        <div class="field">
+          <label class="label">Class Name</label>
+          <div class="control">
+            <input class="input" type="text" id="className" placeholder="MyTest (or com.example.MyTest)" />
+          </div>
+          <p class="help">You can enter just the class name (e.g. <code>DevTeamSimulatorTest</code>) or the full package.</p>
+        </div>
+        <div class="field">
+          <label class="label">Method Name</label>
+          <div class="control">
+            <input class="input" type="text" id="methodName" placeholder="testMethod" />
+          </div>
+        </div>
+        <div class="field">
+          <label class="label">Tags (comma separated)</label>
+          <div class="control">
+            <input class="input" type="text" id="tags" placeholder="smoke,fast" />
+          </div>
+        </div>
+        <div class="field">
+          <label class="label">Rerun Count</label>
+          <div class="control">
+            <input class="input" type="number" id="rerunCount" min="0" value="0" />
+          </div>
+        </div>
+        
+        <div class="field is-grouped">
+          <div class="control">
+            <button type="submit" class="button is-link">Run</button>
+          </div>
+          <div class="control">
+            <button type="button" id="statusBtn" class="button is-light">Status</button>
+          </div>
+          <div class="control">
+            <button type="button" id="pingBtn" class="button is-warning">Ping Server</button>
+          </div>
+          <div class="control">
+            <button type="button" id="loadReportBtn" class="button is-info">Load Latest Report</button>
+          </div>
+        </div>
+
+        <div class="buttons">
+          <a href="/api/tests/status" class="button is-small is-text" target="_blank">Open status JSON</a>
+        </div>
+        
+        <div class="content">
+          <p><small>Default FlowBDD output dirs: <code>/tmp/flowbdd/report</code>, <code>/tmp/flowbdd/data</code></small></p>
+          <p><small>Note: Static page uses fetch() POST to call the API.</small></p>
+        </div>
+        <hr/>
+        <div id="reportSummary" style="display:none; background: #eef; padding: 1rem; margin-bottom: 1rem; border-radius: 4px;">
+          <h3 class="subtitle">Latest Manually run test - Report Summary</h3>
+          <div id="summaryContent"></div>
+          <div id="suiteLinks"></div>
+        </div>
+        <h3 class="subtitle">Result</h3>
+        <pre id="output">(no result yet)</pre>
+        <div id="links"></div>
+      </form>
+    </main>
+  </div>
+</section>
+
+<footer th:replace="fragments :: footer"></footer>
+
+<script>
+  const out = document.getElementById('output');
+  const links = document.getElementById('links');
+  const reportSummary = document.getElementById('reportSummary');
+  const summaryContent = document.getElementById('summaryContent');
+  const suiteLinks = document.getElementById('suiteLinks');
+
+  async function loadReport() {
+    try {
+      const res = await fetch('/api/report/index');
+      if (!res.ok) throw new Error('Report not found');
+      const index = await res.json();
+      reportSummary.style.display = 'block';
+      summaryContent.innerHTML = `
+        <p>Time: ${index.timeStamp}</p>
+        <p>Passed: ${index.summary.passed} / Total: ${index.summary.tests}</p>
+        <p>Failed: ${index.summary.failed}, Aborted: ${index.summary.aborted}</p>
+      `;
+      if (index.links && index.links.testSuites) {
+        suiteLinks.innerHTML = '<h4>Test Suites:</h4>' + index.links.testSuites.map(s => {
+          const classOnly = s.name.split('.').pop();
+          return `
+            <div style="margin-bottom: 0.5rem;">
+              <strong><a href="/TEST-${s.name}">${classOnly}</a></strong>
+              <span style="font-size: 0.8rem; color: #666;">(${s.name})</span> -
+              <a href="/api/report/suite/${s.file}" target="_blank">JSON</a>
+            </div>
+          `;
+        }).join('');
+      }
+    } catch (err) {
+      console.error(err);
+      reportSummary.style.display = 'none';
+    }
+  }
+
+  document.getElementById('loadReportBtn').addEventListener('click', loadReport);
+
+  document.getElementById('runForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    links.innerHTML = '';
+    const payload = {
+      className: document.getElementById('className').value || null,
+      methodName: document.getElementById('methodName').value || null,
+      tags: (document.getElementById('tags').value || '').split(',').map(s => s.trim()).filter(Boolean),
+      rerunCount: parseInt(document.getElementById('rerunCount').value || '0', 10)
+    };
+    const res = await fetch('/api/tests/run', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+    if (!res.ok) {
+        const errorText = await res.text();
+        out.innerHTML = `<div class="notification is-danger is-light">
+            <p><strong>Error ${res.status}: ${res.statusText}</strong></p>
+            <p>If you get a 404, make sure you are running with <code>-Dflowbdd.server.enabled=true</code> or <code>-PmainClass=io.techthinking.flowbddserver.FlowBddServerApplication</code></p>
+            <pre>${errorText}</pre>
+        </div>`;
+        return;
+    }
+    const json = await res.json();
+    
+    // Format the summary nicely
+    let summary = '<h4>No run result available</h4>';
+    if (json && json.summary) {
+        summary = `
+          <h4>Run Result Summary</h4>
+          <p>Time: ${json.timeStamp}</p>
+          <p>Passed: ${json.summary.passed} / Total: ${json.summary.tests}</p>
+        `;
+    }
+    out.innerHTML = summary + '<pre>' + JSON.stringify(json, null, 2) + '</pre>';
+    
+    loadReport(); // Automatically load report after run
+  });
+
+  document.getElementById('pingBtn').addEventListener('click', async () => {
+    links.innerHTML = '';
+    try {
+      const res = await fetch('/api/tests/ping');
+      if (res.ok) {
+        const json = await res.json();
+        out.innerHTML = `<h4>Server Ping Result</h4><div class="notification is-success">Server is UP! Response: ${json.message} at ${json.timestamp}</div>`;
+      } else {
+        out.innerHTML = `<h4>Server Ping Result</h4><div class="notification is-danger is-light">Server responded with error: ${res.status}</div>`;
+      }
+    } catch (err) {
+      out.innerHTML = `<h4>Server Ping Result</h4><div class="notification is-danger is-light">Failed to connect to server: ${err.message}</div>`;
+    }
+  });
+
+  document.getElementById('statusBtn').addEventListener('click', async () => {
+    links.innerHTML = '';
+    const res = await fetch('/api/tests/status');
+    const json = await res.json();
+    
+    let summary = '<h4>No last run status available</h4>';
+    if (json && json.summary) {
+        summary = `
+          <h4>Last Run Status</h4>
+          <p>Time: ${json.timeStamp || 'N/A'}</p>
+          <p>Passed: ${json.summary.passed} / Total: ${json.summary.tests}</p>
+        `;
+    }
+    out.innerHTML = summary + '<pre>' + JSON.stringify(json, null, 2) + '</pre>';
+  });
+
+  // Load report on page load
+  loadReport();
+</script>
+
+</body>
+</html>

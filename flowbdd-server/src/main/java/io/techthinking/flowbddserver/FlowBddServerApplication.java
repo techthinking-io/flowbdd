@@ -20,8 +20,13 @@ package io.techthinking.flowbddserver;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
+@ComponentScan(basePackages = {
+    "io.techthinking.flowbddserver",
+    "io.techthinking.flowbdd",
+})
 public class FlowBddServerApplication {
     public static void main(String[] args) {
         SpringApplication.run(FlowBddServerApplication.class, args);

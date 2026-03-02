@@ -1,0 +1,113 @@
+<!--
+  ~ Flow BDD - The most productive way to test.
+  ~ Copyright (C) 2021-2025 James Bayliss.
+  ~
+  ~ This program is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ This program is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with this program.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FlowBDD Server - Home</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+  <style>
+    body { font-family: -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif; margin: 0; display: flex; flex-direction: column; min-height: 100vh; }
+    /* Bulma reset/adjustments if needed */
+    main { flex: 1; padding: 2rem; }
+    .hero { background: #eee; padding: 2rem; border-radius: 8px; margin-bottom: 2rem; }
+    .suite-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1rem; }
+    .suite-card { border: 1px solid #ddd; padding: 1rem; border-radius: 8px; }
+  </style>
+</head>
+<body>
+
+<section class="section">
+  <div class="container">
+    <div th:replace="fragments :: header"></div>
+
+    <main>
+      <div class="hero">
+        <h1 class="title">Welcome to FlowBDD Server</h1>
+        <p class="subtitle">Efficiently run and analyze your Behavior-Driven Development tests.</p>
+      </div>
+
+      <h2 class="subtitle">Available Test Suites</h2>
+      <div id="suitesContainer" class="suite-grid">
+        <p>Loading suites...</p>
+      </div>
+    </main>
+  </div>
+</section>
+
+<footer th:replace="fragments :: footer"></footer>
+
+<script>
+  async function loadSuites() {
+    const container = document.getElementById('suitesContainer');
+    try {
+      const res = await fetch('/api/report/index');
+      if (!res.ok) {
+        container.innerHTML = '<p>No report found. Use the <a href="/runner/index">Test Runner</a> to run some tests manually.</p>';
+        return;
+      }
+      const index = await res.json();
+      if (index.links && index.links.testSuites && index.links.testSuites.length > 0) {
+        container.innerHTML = index.links.testSuites.map(s => {
+          const classOnly = s.name.split('.').pop();
+          return `
+            <div class="suite-card">
+              <h3><a href="/TEST-${s.name}">${classOnly}</a></h3>
+              <p style="font-size: 0.8rem; color: #666;">${s.name}</p>
+              <div class="field is-grouped">
+                <p class="control"><a class="button is-small is-link is-outlined" href="/TEST-${s.name}">View Report</a></p>
+                <p class="control"><button class="button is-small is-success is-outlined" onclick="runSuite('${s.name}')">Run Suite</button></p>
+              </div>
+              <p><a href="/api/report/suite/${s.file}" target="_blank">View JSON Data</a></p>
+            </div>
+          `;
+        }).join('');
+      } else {
+        container.innerHTML = '<p>No suites found in the latest report.</p>';
+      }
+    } catch (err) {
+      console.error(err);
+      container.innerHTML = '<p>Error loading suites.</p>';
+    }
+  }
+
+  async function runSuite(className) {
+    try {
+      const res = await fetch('/api/tests/run', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ className })
+      });
+      if (res.ok) {
+        alert('Suite ' + className + ' started!');
+      } else {
+        alert('Failed to start suite ' + className);
+      }
+    } catch (err) {
+      console.error(err);
+      alert('Error starting suite');
+    }
+  }
+
+  loadSuites();
+</script>
+
+</body>
+</html>

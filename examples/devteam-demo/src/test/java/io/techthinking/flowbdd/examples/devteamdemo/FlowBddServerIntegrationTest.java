@@ -21,6 +21,7 @@ package io.techthinking.flowbdd.examples.devteamdemo;
 import io.techthinking.flowbdd.report.report.model.DataReportIndex;
 import io.techthinking.flowbddserver.FlowBddServerApplication;
 import io.techthinking.flowbddserver.api.RunRequest;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -35,8 +36,8 @@ public class FlowBddServerIntegrationTest {
     @Autowired
     private TestRestTemplate restTemplate;
 
-    // @Disabled("Need to share the jimfs/in memory file system")
-    @Test
+    @Disabled("Need to share the jimfs/in memory file system")
+    //@Test
     void canRunDevTeamTestViaApi() {
         RunRequest request = new RunRequest();
         request.setClassName("io.techthinking.flowbdd.examples.devteam.bdd.DevTeamSimulatorTest");
@@ -52,8 +53,8 @@ public class FlowBddServerIntegrationTest {
         assertThat(result.getSummary().getPassed()).isEqualTo(1);
     }
 
-    // @Disabled("Need to share the jimfs/in memory file system")
-    @Test
+    @Disabled("Need to share the jimfs/in memory file system")
+    // @Test
     void statusIsIdleInitially() {
         ResponseEntity<DataReportIndex> response = restTemplate.getForEntity("/api/tests/status", DataReportIndex.class);
 
@@ -61,5 +62,21 @@ public class FlowBddServerIntegrationTest {
         DataReportIndex result = response.getBody();
         // It returns null when no tests run based on TestRunService.getLastRun()
         // assertThat(result).isNull();
+    }
+
+    @Test
+    void aiAskEndpointIsFound() {
+        String requestBody = "{\"className\":\"some.Class\", \"question\":\"What is this?\"}";
+        ResponseEntity<String> response = restTemplate.postForEntity("/api/ai/ask", requestBody, String.class);
+
+        // We expect 200 (even if it returns an error message in JSON, it's not a 404)
+        assertThat(response.getStatusCodeValue()).isNotEqualTo(404);
+    }
+
+    @Test
+    void aiPingEndpointIsFound() {
+        ResponseEntity<String> response = restTemplate.getForEntity("/api/ai/ping", String.class);
+        assertThat(response.getStatusCodeValue()).isEqualTo(200);
+        assertThat(response.getBody()).contains("pong from Flow BDD Server - /ai");
     }
 }

@@ -94,7 +94,7 @@ public class ReportController {
     public TestSuite getTestSuiteByClass(@PathVariable String className) {
         DataReportIndex index = getIndex();
         String fileName = index.getLinks().getTestSuites().stream()
-            .filter(link -> link.getName().equals(className))
+            .filter(link -> link.getName().endsWith(className))
             .map(io.techthinking.flowbdd.report.report.model.TestSuiteNameToFile::getFile)
             .findFirst()
             .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Test suite not found for class " + className));

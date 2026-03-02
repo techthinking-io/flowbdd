@@ -26,14 +26,31 @@ Before running tests via the server, ensure that the tests have been compiled:
 
 ### Demo Trigger API
 
-Flow BDD server
+TODO /api -> /flow or /flowbdd
+
+#### Flow BDD server
+http://localhost:8085/
 http://localhost:8085/api/tests/ping
 
-Dev Team
+Tests
+http://localhost:8085/api/tests/run
+
+AI
+http://localhost:8085/api/ai/ask
+
+Report
+http://localhost:8085/api/report/index
+http://localhost:8085/api/report/suite/{fileName}
+http://localhost:8085/api/report/suites
+http://localhost:8085/api/report/classes
+http://localhost:8085/api/report/filenames
+http://localhost:8085/api/report/suite/class/{className}
+
+#### Dev Team
 http://localhost:8085/ping
 http://localhost:8085/dev-names
 
-Dev Team - Demo
+#### Dev Team - Demo
 http://localhost:8085/api/demo/ping
 
 You can trigger tests specifically for the devteam using the custom demo controller:

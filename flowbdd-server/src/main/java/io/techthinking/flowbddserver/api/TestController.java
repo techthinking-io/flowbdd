@@ -52,7 +52,7 @@ public class TestController {
     @GetMapping(path = "/ping", produces = MediaType.APPLICATION_JSON_VALUE)
     public Map<String, Object> ping() {
         return Map.of(
-            "message", "pong from Flow BDD Server",
+            "message", "pong from Flow BDD Server - /tests",
             "timestamp", LocalDateTime.now().toString()
         );
     }

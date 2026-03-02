@@ -44,7 +44,7 @@ public class TestControllerTest {
     void ping_returnsPong() throws Exception {
         mockMvc.perform(get("/api/tests/ping"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.message").value("pong"))
+                .andExpect(jsonPath("$.message").value("pong from Flow BDD Server - /tests"))
                 .andExpect(jsonPath("$.timestamp").isNotEmpty());
     }
 

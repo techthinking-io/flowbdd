@@ -23,9 +23,8 @@ import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
 @ComponentScan(basePackages = {
-    "io.techthinking.flowbdd.examples.devteam",
-    "io.techthinking.flowbdd.examples.devteamdemo",
-    "io.techthinking.flowbddserver"
+    "io.techthinking.flowbddserver",
+    "io.techthinking.flowbdd",
 })
 public class DemoApplication {
     public static void main(String[] args) {

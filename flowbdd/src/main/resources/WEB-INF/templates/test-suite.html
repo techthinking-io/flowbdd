@@ -59,6 +59,32 @@
                     <span>Run All</span>
                 </button>
             </h1>
+
+            <div th:if="${isServer}" class="box mt-4">
+                <div id="aiToggleHeader" style="cursor: pointer; display: flex; justify-content: space-between; align-items: center;" onclick="toggleAiAssistant()">
+                    <label class="label mb-0" style="cursor: pointer;">Ask AI about this JSON</label>
+                    <span id="aiToggleIcon" class="icon"><i class="fas fa-chevron-down"></i></span>
+                </div>
+                <div id="aiAssistantBody" style="display: none; margin-top: 1rem;">
+                    <div class="field">
+                        <div class="control">
+                            <textarea id="aiQuestion" class="textarea" placeholder="e.g. Why did this test fail? Or, summarise the scenarios."></textarea>
+                        </div>
+                    </div>
+                    <div class="field is-grouped">
+                        <div class="control">
+                            <button class="button is-info" th:attr="onclick=|askAi('${testSuite.className}')|">Ask ChatGPT</button>
+                        </div>
+                    </div>
+                    <div id="aiResponseArea" class="mt-4" style="display: none;">
+                        <div class="notification is-light">
+                            <button class="delete" onclick="this.parentElement.parentElement.style.display='none'"></button>
+                            <div id="aiResponseContent" class="content"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <h2 class="subtitle" th:if="${testSuite.notes != null}">
                 <span th:each="note : ${testSuite.notes.textNotes}">
                     <p>
@@ -98,6 +124,20 @@
 </section>
 
 <script th:if="${isServer}">
+    function toggleAiAssistant() {
+        const body = document.getElementById('aiAssistantBody');
+        const icon = document.getElementById('aiToggleIcon').querySelector('i');
+        if (body.style.display === 'none') {
+            body.style.display = 'block';
+            icon.classList.remove('fa-chevron-down');
+            icon.classList.add('fa-chevron-up');
+        } else {
+            body.style.display = 'none';
+            icon.classList.remove('fa-chevron-up');
+            icon.classList.add('fa-chevron-down');
+        }
+    }
+
     async function runTest(className, methodName) {
         const notify = document.getElementById('notificationArea');
         notify.innerHTML = `
@@ -132,6 +172,40 @@
                     <strong>Error:</strong> Failed to execute test.
                 </div>
             `;
+        }
+    }
+
+    async function askAi(className) {
+        const question = document.getElementById('aiQuestion').value;
+        const responseArea = document.getElementById('aiResponseArea');
+        const responseContent = document.getElementById('aiResponseContent');
+
+        if (!question) {
+            alert('Please enter a question.');
+            return;
+        }
+
+        responseArea.style.display = 'block';
+        responseContent.innerHTML = '<p><i class="fas fa-spinner fa-spin"></i> Thinking...</p>';
+
+        try {
+            const res = await fetch('/api/ai/ask', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ className, question })
+            });
+            const result = await res.json();
+            
+            if (result.error) {
+                responseContent.innerHTML = `<div class="notification is-danger is-light">${result.error}</div>`;
+            } else {
+                // simple markdown-ish formatting for newlines
+                const formattedAnswer = result.answer.replace(/\n/g, '<br/>');
+                responseContent.innerHTML = `<p>${formattedAnswer}</p>`;
+            }
+        } catch (err) {
+            console.error(err);
+            responseContent.innerHTML = `<div class="notification is-danger is-light">Error calling AI service.</div>`;
         }
     }
 </script>
