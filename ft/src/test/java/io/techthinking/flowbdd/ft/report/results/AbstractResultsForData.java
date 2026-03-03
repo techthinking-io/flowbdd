@@ -25,6 +25,7 @@ import io.techthinking.flowbdd.ft.report.launcher.TestLauncher;
 import io.techthinking.flowbdd.report.config.FlowBddConfig;
 import io.techthinking.flowbdd.report.junit5.results.extension.FlowBdd;
 import io.techthinking.flowbdd.report.report.model.DataReportIndex;
+import io.techthinking.flowbdd.report.report.writers.DataFileNameProvider;
 import io.techthinking.flowbdd.report.report.model.TestCase;
 import io.techthinking.flowbdd.report.report.model.TestSuite;
 import io.techthinking.flowbdd.report.report.model.builders.TestSuiteNameToFileBuilder;
@@ -62,7 +63,7 @@ public abstract class AbstractResultsForData extends AbstractReportTest {
         if (TestConfig.inMemoryDirectory) {
             FlowBddConfig.overrideBasePath(TestConfig.getBasePath());
             log.info("basePath: " + TestConfig.getBasePath());
-            log.info("resolved path: " + FlowBddConfig.getDataPath());
+            log.info("resolved path: " + new DataFileNameProvider().path());
         }
     }
 

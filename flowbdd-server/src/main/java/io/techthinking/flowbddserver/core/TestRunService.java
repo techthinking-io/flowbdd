@@ -21,6 +21,7 @@ package io.techthinking.flowbddserver.core;
 import io.techthinking.flowbddserver.api.RunRequest;
 import io.techthinking.flowbdd.report.config.FlowBddConfig;
 import io.techthinking.flowbdd.report.report.model.DataReportIndex;
+import io.techthinking.flowbdd.report.report.writers.DataFileNameProvider;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.platform.engine.DiscoverySelector;
 import org.junit.platform.engine.discovery.DiscoverySelectors;
@@ -50,6 +51,7 @@ public class TestRunService {
 
     private volatile DataReportIndex lastRun;
     private final ObjectMapper objectMapper = new ObjectMapper();
+    private final DataFileNameProvider dataFileNameProvider = new DataFileNameProvider();
 
     public synchronized DataReportIndex runTests(RunRequest request) {
         SummaryGeneratingListener listener = new SummaryGeneratingListener();
@@ -162,7 +164,7 @@ public class TestRunService {
 
     private DataReportIndex loadIndexJson() {
         try {
-            Path indexPath = FlowBddConfig.getDataPath().resolve("index.json");
+            Path indexPath = dataFileNameProvider.indexFile();
             if (Files.exists(indexPath)) {
                 return objectMapper.readValue(indexPath.toFile(), DataReportIndex.class);
             }
@@ -173,7 +175,7 @@ public class TestRunService {
     public DataReportIndex getLastRun() {
         // Check if index.json was updated in the last 30 seconds
         try {
-            Path indexPath = FlowBddConfig.getDataPath().resolve("index.json");
+            Path indexPath = dataFileNameProvider.indexFile();
             if (Files.exists(indexPath)) {
                 long lastModified = Files.getLastModifiedTime(indexPath).toMillis();
                 long now = System.currentTimeMillis();

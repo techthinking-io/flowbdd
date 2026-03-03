@@ -37,6 +37,14 @@ public class HtmlFileNameProvider implements FileNameProvider {
     }
 
     @Override
+    public Path file(String fileName) {
+        if (!fileName.endsWith(".html")) {
+            fileName += ".html";
+        }
+        return path().resolve(fileName);
+    }
+
+    @Override
     public Path file(TestSuite testSuite) {
         return outputFile(fullyQualifiedName(testSuite));
     }

@@ -24,6 +24,7 @@ import io.techthinking.flowbdd.ft.report.launcher.TestExecutionListener;
 import io.techthinking.flowbdd.ft.report.launcher.TestLauncher;
 import io.techthinking.flowbdd.report.config.FlowBddConfig;
 import io.techthinking.flowbdd.report.junit5.results.extension.FlowBdd;
+import io.techthinking.flowbdd.report.report.writers.HtmlFileNameProvider;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.slf4j.Logger;
@@ -50,7 +51,7 @@ public abstract class AbstractResultsForHtml extends AbstractReportTest {
         if (TestConfig.inMemoryDirectory) {
             FlowBddConfig.overrideBasePath(TestConfig.getBasePath());
             log.info("basePath: " + TestConfig.getBasePath());
-            log.info("resolved path: " + FlowBddConfig.getDataPath());
+            log.info("resolved path: " + new HtmlFileNameProvider().path());
         }
     }
 

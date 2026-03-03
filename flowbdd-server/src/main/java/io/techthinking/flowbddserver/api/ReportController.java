@@ -19,9 +19,9 @@
 package io.techthinking.flowbddserver.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.techthinking.flowbdd.report.config.FlowBddConfig;
 import io.techthinking.flowbdd.report.report.model.DataReportIndex;
 import io.techthinking.flowbdd.report.report.model.TestSuite;
+import io.techthinking.flowbdd.report.report.writers.DataFileNameProvider;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -36,12 +36,20 @@ import java.nio.file.Path;
 @RestController
 @RequestMapping("/api/report")
 public class ReportController {
-
+    private final DataFileNameProvider dataFileNameProvider;
     private final ObjectMapper objectMapper = new ObjectMapper();
+
+    public ReportController() {
+        this.dataFileNameProvider = new DataFileNameProvider();
+    }
+
+    public ReportController(DataFileNameProvider dataFileNameProvider) {
+        this.dataFileNameProvider = dataFileNameProvider;
+    }
 
     @GetMapping("/index")
     public DataReportIndex getIndex() {
-        Path indexPath = FlowBddConfig.getDataPath().resolve("index.json");
+        Path indexPath = dataFileNameProvider.indexFile();
         if (!Files.exists(indexPath)) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Report index not found at " + indexPath);
         }
@@ -54,10 +62,7 @@ public class ReportController {
 
     @GetMapping("/suite/{fileName}")
     public TestSuite getTestSuite(@PathVariable String fileName) {
-        if (!fileName.endsWith(".json")) {
-            fileName += ".json";
-        }
-        Path suitePath = FlowBddConfig.getDataPath().resolve(fileName);
+        Path suitePath = dataFileNameProvider.file(fileName);
         if (!Files.exists(suitePath)) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Test suite not found at " + suitePath);
         }

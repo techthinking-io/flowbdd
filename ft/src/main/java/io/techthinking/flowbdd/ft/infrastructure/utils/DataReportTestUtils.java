@@ -21,12 +21,14 @@ package io.techthinking.flowbdd.ft.infrastructure.utils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.techthinking.flowbdd.report.report.model.DataReportIndex;
 import io.techthinking.flowbdd.report.report.model.TestSuite;
+import io.techthinking.flowbdd.report.report.writers.DataFileNameProvider;
 
 import java.io.IOException;
 import java.nio.file.Path;
 
 public class DataReportTestUtils {
     private static final ObjectMapper MAPPER = new ObjectMapper();
+    private static final DataFileNameProvider DATA_FILE_NAME_PROVIDER = new DataFileNameProvider();
 
     public static TestSuite loadTestSuite(Class<?> clazz) throws IOException {
         String contents = new FileLoader().read(testSuiteFile(clazz));
@@ -39,14 +41,14 @@ public class DataReportTestUtils {
     }
 
     public static Path homePageFile() {
-        return outputDirectory().resolve("index.json");
+        return DATA_FILE_NAME_PROVIDER.indexFile();
     }
 
     public static Path testSuiteFile(Class<?> clazz) {
-        return outputDirectory().resolve("TEST-" + clazz.getCanonicalName() + ".json");
+        return DATA_FILE_NAME_PROVIDER.file("TEST-" + clazz.getCanonicalName());
     }
 
     public static Path outputDirectory() {
-        return TestConfig.getBasePath().resolve("data/");
+        return DATA_FILE_NAME_PROVIDER.path();
     }
 }

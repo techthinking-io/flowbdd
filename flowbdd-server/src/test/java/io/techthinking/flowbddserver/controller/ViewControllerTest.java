@@ -19,6 +19,7 @@
 package io.techthinking.flowbddserver.controller;
 
 import io.techthinking.flowbdd.report.config.FlowBddConfig;
+import io.techthinking.flowbdd.report.report.writers.DataFileNameProvider;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
@@ -44,13 +45,15 @@ public class ViewControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
+    private final DataFileNameProvider dataFileNameProvider = new DataFileNameProvider();
+
     private Path tempDir;
 
     @BeforeEach
     void setUp() throws IOException {
         tempDir = Files.createTempDirectory("flowbdd-view-test-server");
         FlowBddConfig.overrideBasePath(tempDir);
-        Files.createDirectories(FlowBddConfig.getDataPath());
+        Files.createDirectories(dataFileNameProvider.path());
     }
 
     @AfterEach
@@ -61,10 +64,10 @@ public class ViewControllerTest {
     @Test
     void testSuiteByClass_returnsView() throws Exception {
         String indexJson = "{\"timeStamp\":\"2026-02-01T10:00:00Z\",\"summary\":{\"tests\":1,\"passed\":1,\"failed\":0,\"aborted\":0,\"skipped\":0},\"links\":{\"testSuites\":[{\"name\":\"io.techthinking.flowbdd.examples.devteam.bdd.DevTeamSimulatorVerboseTest\",\"file\":\"TEST-io.techthinking.flowbdd.examples.devteam.bdd.DevTeamSimulatorVerboseTest.json\"}]}}";
-        Files.writeString(FlowBddConfig.getDataPath().resolve("index.json"), indexJson);
+        Files.writeString(dataFileNameProvider.indexFile(), indexJson);
 
         String suiteJson = "{\"title\":\"MyTitle\",\"name\":\"MyTestSuite\",\"className\":\"io.techthinking.flowbdd.examples.devteam.bdd.DevTeamSimulatorVerboseTest\",\"packageName\":\"com.example\",\"testResults\":[],\"summary\":{\"tests\":0,\"passed\":0,\"failed\":0,\"aborted\":0,\"skipped\":0},\"notes\":null}";
-        Files.writeString(FlowBddConfig.getDataPath().resolve("TEST-io.techthinking.flowbdd.examples.devteam.bdd.DevTeamSimulatorVerboseTest.json"), suiteJson);
+        Files.writeString(dataFileNameProvider.file("TEST-io.techthinking.flowbdd.examples.devteam.bdd.DevTeamSimulatorVerboseTest.json"), suiteJson);
 
         mockMvc.perform(get("/TEST-io.techthinking.flowbdd.examples.devteam.bdd.DevTeamSimulatorVerboseTest"))
                 .andDo(print())
@@ -82,7 +85,7 @@ public class ViewControllerTest {
     @Test
     void testSuiteByClass_failsWhenSuiteFileMissing() throws Exception {
         String indexJson = "{\"timeStamp\":\"2026-02-01T10:00:00Z\",\"summary\":{\"tests\":1,\"passed\":1,\"failed\":0,\"aborted\":0,\"skipped\":0},\"links\":{\"testSuites\":[{\"name\":\"io.techthinking.flowbdd.examples.devteam.bdd.DevTeamSimulatorVerboseTest\",\"file\":\"TEST-io.techthinking.flowbdd.examples.devteam.bdd.DevTeamSimulatorVerboseTest.json\"}]}}";
-        Files.writeString(FlowBddConfig.getDataPath().resolve("index.json"), indexJson);
+        Files.writeString(dataFileNameProvider.indexFile(), indexJson);
 
         mockMvc.perform(get("/TEST-io.techthinking.flowbdd.examples.devteam.bdd.DevTeamSimulatorVerboseTest"))
                 .andDo(print())
@@ -92,7 +95,7 @@ public class ViewControllerTest {
     @Test
     void testSuiteByClass_reproducesSpelError() throws Exception {
         String indexJson = "{\"timeStamp\":\"2026-02-01T10:00:00Z\",\"summary\":{\"tests\":1,\"passed\":1,\"failed\":0,\"aborted\":0,\"skipped\":0},\"links\":{\"testSuites\":[{\"name\":\"io.techthinking.flowbdd.examples.devteam.bdd.DevTeamSimulatorVerboseTest\",\"file\":\"TEST-io.techthinking.flowbdd.examples.devteam.bdd.DevTeamSimulatorVerboseTest.json\"}]}}";
-        Files.writeString(FlowBddConfig.getDataPath().resolve("index.json"), indexJson);
+        Files.writeString(dataFileNameProvider.indexFile(), indexJson);
 
         String suiteJson = "{" +
                 "\"title\":\"MyTitle\"," +
@@ -108,7 +111,7 @@ public class ViewControllerTest {
                 "\"summary\":{\"tests\":1,\"passed\":1,\"failed\":0,\"aborted\":0,\"skipped\":0}," +
                 "\"notes\":null" +
                 "}";
-        Files.writeString(FlowBddConfig.getDataPath().resolve("TEST-io.techthinking.flowbdd.examples.devteam.bdd.DevTeamSimulatorVerboseTest.json"), suiteJson);
+        Files.writeString(dataFileNameProvider.file("TEST-io.techthinking.flowbdd.examples.devteam.bdd.DevTeamSimulatorVerboseTest.json"), suiteJson);
 
         mockMvc.perform(get("/TEST-io.techthinking.flowbdd.examples.devteam.bdd.DevTeamSimulatorVerboseTest"))
                 .andDo(print())
@@ -118,11 +121,11 @@ public class ViewControllerTest {
     @Test
     void testSuiteByClass_handlesNullMethodInTestSuite() throws Exception {
         String indexJson = "{\"timeStamp\":\"2026-02-01T10:00:00Z\",\"summary\":{\"tests\":1,\"passed\":1,\"failed\":0,\"aborted\":0,\"skipped\":0},\"links\":{\"testSuites\":[{\"name\":\"io.techthinking.flowbdd.examples.devteam.bdd.DevTeamSimulatorVerboseTest\",\"file\":\"TEST-io.techthinking.flowbdd.examples.devteam.bdd.DevTeamSimulatorVerboseTest.json\"}]}}";
-        Files.writeString(FlowBddConfig.getDataPath().resolve("index.json"), indexJson);
+        Files.writeString(dataFileNameProvider.indexFile(), indexJson);
 
         // testResults[0].method is null
         String suiteJson = "{\"title\":\"MyTitle\",\"name\":\"MyTestSuite\",\"className\":\"io.techthinking.flowbdd.examples.devteam.bdd.DevTeamSimulatorVerboseTest\",\"packageName\":\"com.example\",\"testResults\":[{\"wordify\":\"some test\",\"status\":\"PASSED\",\"method\":null}],\"summary\":{\"tests\":1,\"passed\":1,\"failed\":0,\"aborted\":0,\"skipped\":0},\"notes\":null}";
-        Files.writeString(FlowBddConfig.getDataPath().resolve("TEST-io.techthinking.flowbdd.examples.devteam.bdd.DevTeamSimulatorVerboseTest.json"), suiteJson);
+        Files.writeString(dataFileNameProvider.file("TEST-io.techthinking.flowbdd.examples.devteam.bdd.DevTeamSimulatorVerboseTest.json"), suiteJson);
 
         mockMvc.perform(get("/TEST-io.techthinking.flowbdd.examples.devteam.bdd.DevTeamSimulatorVerboseTest"))
                 .andDo(print())

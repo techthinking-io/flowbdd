@@ -28,5 +28,7 @@ public interface FileNameProvider {
 
     Path indexFile();
 
+    Path file(String fileName);
+
     Path file(TestSuite testSuite);
 }

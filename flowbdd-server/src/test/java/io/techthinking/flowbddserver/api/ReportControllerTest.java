@@ -19,6 +19,7 @@
 package io.techthinking.flowbddserver.api;
 
 import io.techthinking.flowbdd.report.config.FlowBddConfig;
+import io.techthinking.flowbdd.report.report.writers.DataFileNameProvider;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -42,13 +43,15 @@ public class ReportControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
+    private final DataFileNameProvider dataFileNameProvider = new DataFileNameProvider();
+
     private Path tempDir;
 
     @BeforeEach
     void setUp() throws IOException {
         tempDir = Files.createTempDirectory("flowbdd-test-server");
         FlowBddConfig.overrideBasePath(tempDir);
-        Files.createDirectories(FlowBddConfig.getDataPath());
+        Files.createDirectories(dataFileNameProvider.path());
     }
 
     @AfterEach
@@ -59,7 +62,7 @@ public class ReportControllerTest {
     @Test
     void getIndex_returnsReportIndex() throws Exception {
         String json = "{\"timeStamp\":\"2026-02-01T10:00:00Z\",\"summary\":{\"count\":1,\"passed\":1,\"failed\":0,\"aborted\":0,\"skipped\":0},\"links\":{\"testSuites\":[]}}";
-        Files.writeString(FlowBddConfig.getDataPath().resolve("index.json"), json);
+        Files.writeString(dataFileNameProvider.indexFile(), json);
 
         mockMvc.perform(get("/api/report/index"))
                 .andExpect(status().isOk())
@@ -70,7 +73,7 @@ public class ReportControllerTest {
     @Test
     void getTestSuite_returnsTestSuite() throws Exception {
         String json = "{\"title\":\"MyTitle\",\"name\":\"MyTestSuite\",\"className\":\"com.example.MyTest\",\"packageName\":\"com.example\",\"testResults\":[],\"summary\":{\"count\":0,\"passed\":0,\"failed\":0,\"aborted\":0,\"skipped\":0},\"notes\":null}";
-        Files.writeString(FlowBddConfig.getDataPath().resolve("MyTestSuite.json"), json);
+        Files.writeString(dataFileNameProvider.file("MyTestSuite.json"), json);
 
         mockMvc.perform(get("/api/report/suite/MyTestSuite"))
                 .andExpect(status().isOk())
@@ -86,7 +89,7 @@ public class ReportControllerTest {
     @Test
     void getSuites_returnsSuitesList() throws Exception {
         String indexJson = "{\"timeStamp\":\"2026-02-01T10:00:00Z\",\"summary\":{\"count\":1,\"passed\":1,\"failed\":0,\"aborted\":0,\"skipped\":0},\"links\":{\"testSuites\":[{\"name\":\"com.example.MyTest\",\"file\":\"MyTestSuite.json\"}]}}";
-        Files.writeString(FlowBddConfig.getDataPath().resolve("index.json"), indexJson);
+        Files.writeString(dataFileNameProvider.indexFile(), indexJson);
 
         mockMvc.perform(get("/api/report/suites"))
                 .andExpect(status().isOk())
@@ -97,7 +100,7 @@ public class ReportControllerTest {
     @Test
     void getClasses_returnsClassesList() throws Exception {
         String indexJson = "{\"timeStamp\":\"2026-02-01T10:00:00Z\",\"summary\":{\"count\":1,\"passed\":1,\"failed\":0,\"aborted\":0,\"skipped\":0},\"links\":{\"testSuites\":[{\"name\":\"com.example.MyTest\",\"file\":\"MyTestSuite.json\"}]}}";
-        Files.writeString(FlowBddConfig.getDataPath().resolve("index.json"), indexJson);
+        Files.writeString(dataFileNameProvider.indexFile(), indexJson);
 
         mockMvc.perform(get("/api/report/classes"))
                 .andExpect(status().isOk())
@@ -107,7 +110,7 @@ public class ReportControllerTest {
     @Test
     void getFileNames_returnsFileNamesList() throws Exception {
         String indexJson = "{\"timeStamp\":\"2026-02-01T10:00:00Z\",\"summary\":{\"count\":1,\"passed\":1,\"failed\":0,\"aborted\":0,\"skipped\":0},\"links\":{\"testSuites\":[{\"name\":\"com.example.MyTest\",\"file\":\"MyTestSuite.json\"}]}}";
-        Files.writeString(FlowBddConfig.getDataPath().resolve("index.json"), indexJson);
+        Files.writeString(dataFileNameProvider.indexFile(), indexJson);
 
         mockMvc.perform(get("/api/report/filenames"))
                 .andExpect(status().isOk())
@@ -117,10 +120,10 @@ public class ReportControllerTest {
     @Test
     void getTestSuiteByClass_returnsTestSuite() throws Exception {
         String indexJson = "{\"timeStamp\":\"2026-02-01T10:00:00Z\",\"summary\":{\"count\":1,\"passed\":1,\"failed\":0,\"aborted\":0,\"skipped\":0},\"links\":{\"testSuites\":[{\"name\":\"com.example.MyTest\",\"file\":\"MyTestSuite.json\"}]}}";
-        Files.writeString(FlowBddConfig.getDataPath().resolve("index.json"), indexJson);
+        Files.writeString(dataFileNameProvider.indexFile(), indexJson);
 
         String suiteJson = "{\"title\":\"MyTitle\",\"name\":\"MyTestSuite\",\"className\":\"com.example.MyTest\",\"packageName\":\"com.example\",\"testResults\":[],\"summary\":{\"count\":0,\"passed\":0,\"failed\":0,\"aborted\":0,\"skipped\":0},\"notes\":null}";
-        Files.writeString(FlowBddConfig.getDataPath().resolve("MyTestSuite.json"), suiteJson);
+        Files.writeString(dataFileNameProvider.file("MyTestSuite.json"), suiteJson);
 
         mockMvc.perform(get("/api/report/suite/class/com.example.MyTest"))
                 .andExpect(status().isOk())

@@ -37,6 +37,14 @@ public class DataFileNameProvider implements FileNameProvider {
     }
 
     @Override
+    public Path file(String fileName) {
+        if (!fileName.endsWith(".json")) {
+            fileName += ".json";
+        }
+        return path().resolve(fileName);
+    }
+
+    @Override
     public Path file(TestSuite testSuite) {
         return outputFile(fullyQualifiedName(testSuite));
     }

@@ -18,10 +18,14 @@
 
 package io.techthinking.flowbdd.ft.infrastructure.utils;
 
+import io.techthinking.flowbdd.report.report.writers.HtmlFileNameProvider;
+
 import java.io.IOException;
 import java.nio.file.Path;
 
 public class HtmlReportTestUtils {
+    private static final HtmlFileNameProvider HTML_FILE_NAME_PROVIDER = new HtmlFileNameProvider();
+
     public static String loadTestSuite(Class<?> clazz) throws IOException {
         return new FileLoader().read(testSuiteFile(clazz));
     }
@@ -31,14 +35,14 @@ public class HtmlReportTestUtils {
     }
 
     public static Path homePageFile() {
-        return outputDirectory().resolve("index.html");
+        return HTML_FILE_NAME_PROVIDER.indexFile();
     }
 
     public static Path testSuiteFile(Class<?> clazz) {
-        return outputDirectory().resolve("TEST-" + clazz.getCanonicalName() + ".html");
+        return HTML_FILE_NAME_PROVIDER.file("TEST-" + clazz.getCanonicalName());
     }
 
     public static Path outputDirectory() {
-        return TestConfig.getBasePath().resolve("report/");
+        return HTML_FILE_NAME_PROVIDER.path();
     }
 }
