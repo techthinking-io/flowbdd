@@ -34,6 +34,31 @@ public class FlowBddConfig {
     private static final String DEFAULT_BASE_NAME = "flowbdd";
     private static final String DEFAULT_DATA_DIR = "data";
     private static final String DEFAULT_REPORT_DIR = "report";
+    private static final String DEFAULT_EXTRA_DIRS = "extra";
+    private static final String DEFAULT_AI_PROMPT =
+        "You are Flow BDD AI, an expert assistant for the Flow BDD testing framework.\n" +
+        "Your goal is to help developers understand their BDD test results based on the provided data.\n\n" +
+        "Context:\n" +
+        "- Flow BDD translates code-based tests into human-readable BDD scenarios (Gherkin style).\n" +
+        "- A 'TestSuite' contains multiple 'TestCase' objects.\n" +
+        "- Each 'TestCase' has a 'wordify' field representing the human-readable scenario, a 'status' (SUCCESS, FAILURE, IGNORED), and details about the underlying 'method'.\n" +
+        "- If a test fails, the 'cause' field contains the error details.\n\n" +
+        "User Question: %s\n\n" +
+        "Test Suite Data:\n" +
+        "%s\n\n" +
+        "Please provide a clear, concise, and helpful answer. If the question is about a failure, explain what went wrong and point to the specific scenario.";
+
+    private static final java.util.Properties properties = new java.util.Properties();
+
+    static {
+        try (java.io.InputStream is = FlowBddConfig.class.getClassLoader().getResourceAsStream("flowbdd.properties")) {
+            if (is != null) {
+                properties.load(is);
+            }
+        } catch (java.io.IOException e) {
+            // Log or handle error: failed to load properties file
+        }
+    }
     /**
      * Set basepath, for testing on another file system you set this
      */
@@ -41,7 +66,7 @@ public class FlowBddConfig {
 
     /**
      * Resolves the base directory.
-     * Priority: System Property {@literal ->} Environment Variable {@literal ->} Temp Dir
+     * Priority: System Property {@literal ->} Environment Variable {@literal ->} Properties File {@literal ->} Temp Dir
      * @return The base path.
      */
     public static Path getBasePath() {
@@ -53,7 +78,16 @@ public class FlowBddConfig {
         String env = System.getenv("FLOWBDD_BASE_DIR");
         if (env != null) return Paths.get(env);
 
+        String fileProp = properties.getProperty("flowbdd.base.dir");
+        if (fileProp != null) return Paths.get(fileProp);
+
         return Paths.get(System.getProperty("java.io.tmpdir"), DEFAULT_BASE_NAME);
+    }
+
+    private static String getProperty(String key, String defaultValue) {
+        String systemProp = System.getProperty(key);
+        if (systemProp != null) return systemProp;
+        return properties.getProperty(key, defaultValue);
     }
 
     /**
@@ -61,7 +95,7 @@ public class FlowBddConfig {
      * @return The data path.
      */
     public static Path getDataPath() {
-        return getBasePath().resolve(System.getProperty("flowbdd.data.dir", DEFAULT_DATA_DIR));
+        return getBasePath().resolve(getProperty("flowbdd.data.dir", DEFAULT_DATA_DIR));
     }
 
     /**
@@ -69,7 +103,15 @@ public class FlowBddConfig {
      * @return The report path.
      */
     public static Path getReportPath() {
-        return getBasePath().resolve(System.getProperty("flowbdd.report.dir", DEFAULT_REPORT_DIR));
+        return getBasePath().resolve(getProperty("flowbdd.report.dir", DEFAULT_REPORT_DIR));
+    }
+
+    /**
+     * Gets the extra information directories.
+     * @return The extra information directories path.
+     */
+    public static Path getExtraDirsPath() {
+        return getBasePath().resolve(getProperty("flowbdd.extra.dir", DEFAULT_EXTRA_DIRS));
     }
 
     /**
@@ -77,7 +119,7 @@ public class FlowBddConfig {
      * @return The banner string.
      */
     public static String getBanner() {
-        return System.getProperty("flowbdd.banner", DEFAULT_BANNER);
+        return getProperty("flowbdd.banner", DEFAULT_BANNER);
     }
 
     //TODO maybe setBasePathProperty?
@@ -110,7 +152,7 @@ public class FlowBddConfig {
      * @return True if AI optimized, false otherwise.
      */
     public static boolean isAiOptimized() {
-        return Boolean.parseBoolean(System.getProperty("flowbdd.ai.optimized", "false"));
+        return Boolean.parseBoolean(getProperty("flowbdd.ai.optimized", "false"));
     }
 
     /**
@@ -118,6 +160,14 @@ public class FlowBddConfig {
      * @return The AI detail level.
      */
     public static String getAiDetailLevel() {
-        return System.getProperty("flowbdd.ai.detail.level", "FULL");
+        return getProperty("flowbdd.ai.detail.level", "FULL");
+    }
+
+    /**
+     * Gets the AI prompt template.
+     * @return The AI prompt template.
+     */
+    public static String getAiPrompt() {
+        return getProperty("flowbdd.ai.prompt", DEFAULT_AI_PROMPT);
     }
 }

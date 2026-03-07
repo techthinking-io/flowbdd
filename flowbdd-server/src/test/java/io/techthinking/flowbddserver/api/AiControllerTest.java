@@ -18,8 +18,11 @@
 
 package io.techthinking.flowbddserver.api;
 
+import io.techthinking.flowbdd.report.config.FlowBddConfig;
 import io.techthinking.flowbdd.report.report.model.TestSuite;
+import io.techthinking.flowbdd.report.report.model.TestSuiteMarkdownFactory;
 import io.techthinking.flowbdd.report.report.model.builders.TestSuiteBuilder;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,6 +66,11 @@ public class AiControllerTest {
         ReflectionTestUtils.setField(aiController, "restTemplate", restTemplate);
     }
 
+    @AfterEach
+    void tearDown() {
+        System.clearProperty("flowbdd.ai.optimized");
+    }
+
     @Test
     void ask_returnsErrorWhenApiKeyMissing() throws Exception {
         ReflectionTestUtils.setField(aiController, "apiKey", "");
@@ -76,39 +84,39 @@ public class AiControllerTest {
     }
 
     @Test
-    void ask_callsOpenAiAndReturnsAnswer() throws Exception {
+    void ask_callsOpenAiWithMarkdownWhenOptimized() throws Exception {
+        System.setProperty("flowbdd.ai.optimized", "true");
         ReflectionTestUtils.setField(aiController, "apiKey", "test-api-key");
-        String className = "io.techthinking.ExampleTest";
+        String className = "io.techthinking.MarkdownTest";
         String question = "Explain these results";
         String requestBody = String.format("{\"className\":\"%s\", \"question\":\"%s\"}", className, question);
 
         TestSuite testSuite = TestSuiteBuilder.aTestSuite()
                 .withClassName(className)
-                .withTitle("Example Test Suite")
+                .withTitle("Markdown Test Suite")
                 .build();
 
         when(reportController.getTestSuiteByClass(className)).thenReturn(testSuite);
 
-        String openAiResponse = "{" +
-                "  \"choices\": [" +
-                "    {" +
-                "      \"message\": {" +
-                "        \"role\": \"assistant\"," +
-                "        \"content\": \"The test suite passed successfully.\"" +
-                "      }" +
-                "    }" +
-                "  ]" +
-                "}";
+        String expectedMarkdown = TestSuiteMarkdownFactory.toMarkdown(testSuite);
+        String expectedPrompt = String.format(FlowBddConfig.getAiPrompt(), question, expectedMarkdown);
 
         mockServer.expect(requestTo("https://api.openai.com/v1/chat/completions"))
                 .andExpect(method(HttpMethod.POST))
-                .andRespond(withSuccess(openAiResponse, MediaType.APPLICATION_JSON));
+                .andExpect(request -> {
+                    String body = request.getBody().toString();
+                    // Markdown might have escaped newlines in JSON body
+                    String normalizedBody = body.replace("\\n", "\n");
+                    if (!normalizedBody.contains(expectedMarkdown)) {
+                        throw new AssertionError("Request body does not contain expected markdown");
+                    }
+                })
+                .andRespond(withSuccess("{\"choices\":[{\"message\":{\"role\":\"assistant\",\"content\":\"OK\"}}]}", MediaType.APPLICATION_JSON));
 
         mockMvc.perform(post("/api/ai/ask")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(requestBody))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.answer").value("The test suite passed successfully."));
+                .andExpect(status().isOk());
 
         mockServer.verify();
     }

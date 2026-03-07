@@ -18,7 +18,9 @@
 
 package io.techthinking.flowbddserver.api;
 
+import io.techthinking.flowbdd.report.config.FlowBddConfig;
 import io.techthinking.flowbdd.report.report.model.TestSuite;
+import io.techthinking.flowbdd.report.report.model.TestSuiteMarkdownFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
@@ -71,10 +73,14 @@ public class AiController {
             return Map.of("error", "OpenAI API key not configured. Please set openai.api.key in application.properties or as an environment variable.");
         }
         TestSuite testSuite = reportController.getTestSuiteByClass(request.getClassName());
+        String data = FlowBddConfig.isAiOptimized() 
+            ? TestSuiteMarkdownFactory.toMarkdown(testSuite) 
+            : serializeTestSuite(testSuite);
+
         String prompt = String.format(
-            "I have the following JSON representation of a BDD test suite. User question: %s\n\nJSON:\n%s",
+            FlowBddConfig.getAiPrompt(),
             request.getQuestion(),
-            serializeTestSuite(testSuite)
+            data
         );
 
         return callOpenAi(prompt);

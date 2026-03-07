@@ -27,14 +27,24 @@ class FlowBddConfigTest {
 
     @AfterEach
     void tearDown() {
+        System.clearProperty("flowbdd.base.dir");
         System.clearProperty("flowbdd.banner");
         System.clearProperty("flowbdd.ai.optimized");
         System.clearProperty("flowbdd.ai.detail.level");
+        System.clearProperty("flowbdd.ai.prompt");
+        System.clearProperty("flowbdd.extra.dir");
     }
 
     @Test
-    void isAiOptimized_returnsDefaultFalse() {
-        assertThat(FlowBddConfig.isAiOptimized()).isFalse();
+    void getBasePath_returnsConfiguredValueFromSystemProperty() {
+        String customPath = "/tmp/custom-base";
+        System.setProperty("flowbdd.base.dir", customPath);
+        assertThat(FlowBddConfig.getBasePath().toString()).isEqualTo(customPath);
+    }
+
+    @Test
+    void isAiOptimized_returnsDefaultTrue() {
+        assertThat(FlowBddConfig.isAiOptimized()).isTrue();
     }
 
     @Test
@@ -52,6 +62,29 @@ class FlowBddConfigTest {
     void getAiDetailLevel_returnsConfiguredValue() {
         System.setProperty("flowbdd.ai.detail.level", "SUMMARY");
         assertThat(FlowBddConfig.getAiDetailLevel()).isEqualTo("SUMMARY");
+    }
+
+    @Test
+    void getAiPrompt_returnsDefaultPrompt() {
+        assertThat(FlowBddConfig.getAiPrompt()).contains("User Question: %s");
+    }
+
+    @Test
+    void getAiPrompt_returnsConfiguredValue() {
+        String customPrompt = "Custom prompt %s %s";
+        System.setProperty("flowbdd.ai.prompt", customPrompt);
+        assertThat(FlowBddConfig.getAiPrompt()).isEqualTo(customPrompt);
+    }
+
+    @Test
+    void getExtraDirsPath_returnsDefaultPath() {
+        assertThat(FlowBddConfig.getExtraDirsPath().toString()).contains("extra");
+    }
+
+    @Test
+    void getExtraDirsPath_returnsConfiguredValue() {
+        System.setProperty("flowbdd.extra.dir", "custom-extra");
+        assertThat(FlowBddConfig.getExtraDirsPath().toString()).contains("custom-extra");
     }
 
     @Test
