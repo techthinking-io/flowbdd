@@ -1,0 +1,66 @@
+{
+  "title" : "Dev team simulator test",
+  "name" : "io.techthinking.flowbdd.examples.devteam.bdd.DevTeamSimulatorTest",
+  "className" : "DevTeamSimulatorTest",
+  "packageName" : "io.techthinking.flowbdd.examples.devteam.bdd",
+  "summary" : {
+    "passed" : 2,
+    "skipped" : 0,
+    "failed" : 0,
+    "aborted" : 0,
+    "count" : 2
+  },
+  "notes" : {
+    "textNotes" : [ "Dev Team Simulator: Verify developer actions endpoints – the world's most advanced team simulator... that only masters drinking coffee and accumulating tech debt, with predetermined biased outputs ☕🚫" ],
+    "diagrams" : [ ]
+  },
+  "testResults" : [ {
+    "wordify" : "Given developer is \"Alice\"\nWhen developer drinks coffee\nThen developer gets performance boost",
+    "status" : "PASSED",
+    "cause" : null,
+    "method" : {
+      "name" : "developerDrinksCoffee_getsPerformanceBoost",
+      "wordify" : "Developer drinks coffee gets performance boost",
+      "arguments" : [ ]
+    },
+    "notes" : {
+      "textNotes" : [ ],
+      "diagrams" : [ "sequenceDiagram\n\tactor User\n\tparticipant Dev Team Simulator\n\tUser->>Dev Team Simulator: /dev/Alice/drinks-coffee\n\tDev Team Simulator->>User: {\"developer\":\"Alice\",\"boost\":40,\"message\":\"1.21 Gigawatts of caffeine! Alice is seeing some serious productivity.\"} [200]" ]
+    },
+    "timings" : {
+      "beforeEach" : 0,
+      "afterEach" : 0,
+      "underTest" : 0,
+      "total" : 0
+    },
+    "class" : {
+      "fullyQualifiedName" : "io.techthinking.flowbdd.examples.devteam.bdd.DevTeamSimulatorTest",
+      "className" : "DevTeamSimulatorTest",
+      "packageName" : "io.techthinking.flowbdd.examples.devteam.bdd"
+    }
+  }, {
+    "wordify" : "Given developer is \"Bob\"\nWhen developer does no testing\nThen developer gets tech dept",
+    "status" : "PASSED",
+    "cause" : null,
+    "method" : {
+      "name" : "developerDoesNoTesting_getsTechDept",
+      "wordify" : "Developer does no testing gets tech dept",
+      "arguments" : [ ]
+    },
+    "notes" : {
+      "textNotes" : [ ],
+      "diagrams" : [ "sequenceDiagram\n\tactor User\n\tparticipant Dev Team Simulator\n\tUser->>Dev Team Simulator: /dev/Bob/does-no-testing\n\tDev Team Simulator->>User: {\"developer\":\"Bob\",\"debt\":10,\"message\":\"Bob tonight, we dine in Technical Debt! For tomorrow, we push to production\"} [200]" ]
+    },
+    "timings" : {
+      "beforeEach" : 0,
+      "afterEach" : 0,
+      "underTest" : 0,
+      "total" : 0
+    },
+    "class" : {
+      "fullyQualifiedName" : "io.techthinking.flowbdd.examples.devteam.bdd.DevTeamSimulatorTest",
+      "className" : "DevTeamSimulatorTest",
+      "packageName" : "io.techthinking.flowbdd.examples.devteam.bdd"
+    }
+  } ]
+}

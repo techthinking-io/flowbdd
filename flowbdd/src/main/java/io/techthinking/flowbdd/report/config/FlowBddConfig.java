@@ -104,4 +104,20 @@ public class FlowBddConfig {
     public static Optional<Path> getOverriddenBasePath() {
         return Optional.ofNullable(overriddenBasePath);
     }
+
+    /**
+     * Whether to optimize JSON output for AI agents (strips timings, metadata).
+     * @return True if AI optimized, false otherwise.
+     */
+    public static boolean isAiOptimized() {
+        return Boolean.parseBoolean(System.getProperty("flowbdd.ai.optimized", "false"));
+    }
+
+    /**
+     * Define what level of detail AI should receive: "SUMMARY", "FULL", "STEPS_ONLY"
+     * @return The AI detail level.
+     */
+    public static String getAiDetailLevel() {
+        return System.getProperty("flowbdd.ai.detail.level", "FULL");
+    }
 }

@@ -28,6 +28,30 @@ class FlowBddConfigTest {
     @AfterEach
     void tearDown() {
         System.clearProperty("flowbdd.banner");
+        System.clearProperty("flowbdd.ai.optimized");
+        System.clearProperty("flowbdd.ai.detail.level");
+    }
+
+    @Test
+    void isAiOptimized_returnsDefaultFalse() {
+        assertThat(FlowBddConfig.isAiOptimized()).isFalse();
+    }
+
+    @Test
+    void isAiOptimized_returnsConfiguredValue() {
+        System.setProperty("flowbdd.ai.optimized", "true");
+        assertThat(FlowBddConfig.isAiOptimized()).isTrue();
+    }
+
+    @Test
+    void getAiDetailLevel_returnsDefaultFull() {
+        assertThat(FlowBddConfig.getAiDetailLevel()).isEqualTo("FULL");
+    }
+
+    @Test
+    void getAiDetailLevel_returnsConfiguredValue() {
+        System.setProperty("flowbdd.ai.detail.level", "SUMMARY");
+        assertThat(FlowBddConfig.getAiDetailLevel()).isEqualTo("SUMMARY");
     }
 
     @Test
