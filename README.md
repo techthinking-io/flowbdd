@@ -85,19 +85,20 @@ By removing the "Gherkin tax" and focusing on code-first documentation, Flow BDD
 ## Core Capabilities
 *   **Living Documentation:** Automatically generate HTML feature files directly from your Java or Kotlin or hopefully any JVM test code.
 *   **Visual Flow Analysis:** Integrated **Mermaid.js** support to capture downstream interactions and render them as UML Sequence Diagrams.
-*   **Deep Data Inspection:** Capture and display full HTTP request/response payloads (headers and bodies) within the documentation.
+*   **Data Flow Capture:** Capture and display full HTTP request/response payloads (headers and bodies) within the documentation.
 *   **Fluent Test Design:** Encourages the use of Type-Safe Builders, leading to more consistent state setup and more readable assertions.
 *   **Zero Glue Layer:** Eliminate the complexity of traditional BDD frameworks. No regex, no separate feature files, no "Gherkin tax."
 
-## The Roadmap: Toward Peak Productivity
+## Roadmap and stretch goals
 Flow BDD is evolving. Here is what’s on the horizon:
-*   **AI Context Engine:** LLMs are the "missing glue." We are integrating AI to answer questions like *"How does the checkout flow actually work?"* or *"Should the Developer receive a 401 when the coffee machine is empty?"* by using your living documentation as the source of truth.
-*   **AI Boundary Guard:** If you choose to use AI to generate more code, testing at a **boundary** becomes non-negotiable. Flow BDD will provide the safety net to ensure AI-generated logic follows the expected behavior.
-*   **Interactive Test Runner:** A built-in UI to re-run specific tests and modify parameters (like coffee intake!) on the fly.
-*   **Asynchronous Actions:** Wrapping steps in async actions to significantly improve test execution performance.
-*   **Intelligent Mutation Testing:** Automatically validate the correctness of your scenarios by mutating steps and asserting state changes.
-*   **Declarative JSON Builders:** Generate Type-Safe builders directly from JSON schema definitions.
-*   **Persistent Analytics:** Store test results over time to query trends, irregular failures, and performance regressions.
+- [x] Living Documentation
+- [x] Visual Flow Analysis (Sequence Diagrams)
+- [x] Execution Timings for Scenarios
+- [ ] Interactive Test Runner – A built-in UI to re-run specific tests and modify parameters on the fly.
+- [ ] Asynchronous Actions – Wrapping steps in async actions to significantly improve test execution performance.
+- [ ] Intelligent Mutation Testing – Automatically validate the correctness of your scenarios by mutating steps and asserting state changes.
+- [ ] Declarative JSON Builders - Generate Type-Safe builders directly from JSON schema definitions.
+- [ ] Persistent Analytics – Store test results over time to query trends, irregular failures, and performance regressions
 
 ## AI Philosophy
 * **A Tool, Not a Replacement:** I use AI every day, but it’s a co-pilot, not the captain. AI can write implementation faster than us, but it doesn't always understand the *intent* and or optimise for code *quality*

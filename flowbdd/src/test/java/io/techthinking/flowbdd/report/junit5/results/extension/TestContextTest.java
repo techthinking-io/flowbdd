@@ -26,6 +26,7 @@ import io.techthinking.flowbdd.wordify.WordifyExtensionContext;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtensionContext;
 
+import java.time.Clock;
 import java.util.Arrays;
 import java.util.Collection;
 
@@ -38,12 +39,14 @@ class TestContextTest {
     private final WordifyExtensionContext wordifyExtensionContext = mock(WordifyExtensionContext.class);
     private final TestCaseNameFactory testCaseNameFactory = mock(TestCaseNameFactory.class);
     private final ReportWriter reportWriter = mock(ReportWriter.class);
+    private final Clock clock = mock(Clock.class);
 
     private final TestContext testContext = new TestContext(
         testResults,
         wordifyExtensionContext,
         testCaseNameFactory,
-        reportWriter
+        reportWriter,
+        clock
     );
 
     @Test

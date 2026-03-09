@@ -73,7 +73,7 @@
                     </div>
                     <div class="field is-grouped">
                         <div class="control">
-                            <button class="button is-info" th:attr="onclick=|askAi('${testSuite.className}')|">Ask ChatGPT</button>
+                            <button class="button is-info" th:attr="onclick=|askAi('${testSuite.className}')|">Ask AI</button>
                         </div>
                     </div>
                     <div id="aiResponseArea" class="mt-4" style="display: none;">
@@ -103,6 +103,8 @@
                 </span>
                 <span class="has-text-success">Scenario: </span>
                 <span th:text="${testCase.method != null ? testCase.method.wordify : 'Unknown Method'} + ' (' + ${testCase.status} + ')'"/>
+                <span class="is-pulled-right has-text-grey-light is-size-7" th:if="${testCase.timings != null and testCase.timings.total > 0}"
+                      th:text="${testCase.timings.total} + 'ms'"></span>
             </h4>
             <p style="white-space: pre-wrap" th:text="${testCase.wordify}"></p>
 

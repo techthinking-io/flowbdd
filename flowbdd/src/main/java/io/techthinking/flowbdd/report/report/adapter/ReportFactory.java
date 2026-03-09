@@ -104,7 +104,7 @@ public class ReportFactory {
             method(testCaseResult),
             clazz(testCaseResult.getTestSuiteClass()),
             notes(testCaseResult.getNotes()),
-            new TestCaseTimings(0L, 0L, 0L, 0L));
+            new TestCaseTimings(0L, 0L, 0L, testCaseResult.getDuration()));
     }
 
     private static Method method(TestCaseResult testCaseResult) {

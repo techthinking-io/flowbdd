@@ -34,6 +34,7 @@ import org.junit.jupiter.api.extension.ParameterResolver;
 import org.junit.jupiter.api.extension.ReflectiveInvocationContext;
 import org.junit.jupiter.api.extension.TestWatcher;
 
+import java.time.Clock;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.util.Optional;
@@ -54,7 +55,8 @@ public class FlowBdd implements
         new TestResults(),
         new WordifyExtensionContext(),
         new TestCaseNameFactory(),
-        new ReportWriter()
+        new ReportWriter(),
+        Clock.systemDefaultZone()
     );
 
     public static TestContext getTestContext() {
@@ -78,6 +80,7 @@ public class FlowBdd implements
 
     @Override
     public void afterEach(ExtensionContext context) throws Exception {
+        testContext.afterEach(context);
     }
 
     @Override

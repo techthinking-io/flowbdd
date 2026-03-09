@@ -33,6 +33,7 @@ import org.junit.platform.launcher.listeners.TestExecutionSummary;
 import org.junit.platform.launcher.TagFilter;
 import org.springframework.stereotype.Service;
 
+import java.time.Clock;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.nio.file.Files;
@@ -52,6 +53,11 @@ public class TestRunService {
     private volatile DataReportIndex lastRun;
     private final ObjectMapper objectMapper = new ObjectMapper();
     private final DataFileNameProvider dataFileNameProvider = new DataFileNameProvider();
+    private final Clock clock;
+
+    public TestRunService(Clock clock) {
+        this.clock = clock;
+    }
 
     public synchronized DataReportIndex runTests(RunRequest request) {
         SummaryGeneratingListener listener = new SummaryGeneratingListener();
@@ -178,7 +184,7 @@ public class TestRunService {
             Path indexPath = dataFileNameProvider.indexFile();
             if (Files.exists(indexPath)) {
                 long lastModified = Files.getLastModifiedTime(indexPath).toMillis();
-                long now = System.currentTimeMillis();
+                long now = clock.millis();
                 if (now - lastModified < 30000) {
                     // It's fresh!
                     if (lastRun == null || 

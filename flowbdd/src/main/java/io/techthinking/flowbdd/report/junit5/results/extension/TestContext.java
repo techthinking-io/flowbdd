@@ -26,7 +26,6 @@ import io.techthinking.flowbdd.report.report.model.VersionInfo;
 import io.techthinking.flowbdd.report.junit5.results.model.TestSuiteResult;
 import io.techthinking.flowbdd.report.report.writers.ReportWriter;
 import io.techthinking.flowbdd.wordify.WordifyExtensionContext;
-import io.techthinking.flowbdd.report.junit5.results.model.TestCaseResultStatus;
 import org.junit.jupiter.api.extension.AfterAllCallback;
 import org.junit.jupiter.api.extension.AfterEachCallback;
 import org.junit.jupiter.api.extension.BeforeAllCallback;
@@ -37,6 +36,7 @@ import org.junit.jupiter.api.extension.ReflectiveInvocationContext;
 import org.junit.jupiter.api.extension.TestWatcher;
 import org.junit.jupiter.params.ParameterizedTest;
 
+import java.time.Clock;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.util.Optional;
@@ -56,22 +56,29 @@ import static io.techthinking.flowbdd.wordify.tokenize.WordifyStringUtil.wordify
  */
 public class TestContext implements
     BeforeAllCallback, BeforeEachCallback, AfterAllCallback, AfterEachCallback, TestWatcher, InvocationInterceptor {
+    private static final String BEFORE_EACH_START_TIME = "beforeEachStartTime";
+    private static final String UNDER_TEST_START_TIME = "underTestStartTime";
+    private static final String AFTER_EACH_START_TIME = "afterEachStartTime";
+
     private final TestResults testResults;
     private final WordifyExtensionContext wordifyExtensionContext;
     private final TestCaseNameFactory testCaseNameFactory;
     private final ReportWriter reportWriter;
+    private final Clock clock;
     private boolean isReporting = false;
 
     public TestContext(
         TestResults testResults,
         WordifyExtensionContext wordifyExtensionContext,
         TestCaseNameFactory testCaseNameFactory,
-        ReportWriter reportWriter)
+        ReportWriter reportWriter,
+        Clock clock)
     {
         this.testResults = testResults;
         this.wordifyExtensionContext = wordifyExtensionContext;
         this.testCaseNameFactory = testCaseNameFactory;
         this.reportWriter = reportWriter;
+        this.clock = clock;
     }
 
     /** Start test suite */
@@ -84,7 +91,7 @@ public class TestContext implements
     /** Start test case */
     @Override
     public void beforeEach(ExtensionContext context) throws Exception {
-        getTestSuiteResult(context).startTestCase(context);
+        getTestSuiteResult(context).startTestCase(context).setStartTime(clock.millis());
     }
 
     /** Complete test suite */
@@ -110,21 +117,31 @@ public class TestContext implements
 
     @Override
     public void interceptBeforeEachMethod(Invocation<Void> invocation, ReflectiveInvocationContext<Method> invocationContext, ExtensionContext extensionContext) throws Throwable {
+        getStore(extensionContext).put(BEFORE_EACH_START_TIME, clock.millis());
         invocation.proceed();
+        long startTime = getStore(extensionContext).remove(BEFORE_EACH_START_TIME, long.class);
+        getTestCaseResult(extensionContext).getTimings().setBeforeEach(clock.millis() - startTime);
     }
 
     /** Update test case - normal test without params */
     @Override
     public void interceptTestMethod(Invocation<Void> invocation, ReflectiveInvocationContext<Method> invocationContext, ExtensionContext extensionContext) throws Throwable {
         updateTestCaseResult(invocationContext, extensionContext);
+        getStore(extensionContext).put(UNDER_TEST_START_TIME, clock.millis());
         invocation.proceed();
+        long startTime = getStore(extensionContext).remove(UNDER_TEST_START_TIME, long.class);
+        getTestCaseResult(extensionContext).getTimings().setUnderTest(clock.millis() - startTime);
     }
 
     /** Update test case - Using (at)TestFactory??? Not tested. */
     @Override
     public <T> T interceptTestFactoryMethod(Invocation<T> invocation, ReflectiveInvocationContext<Method> invocationContext, ExtensionContext extensionContext) throws Throwable {
         updateTestCaseResult(invocationContext, extensionContext);
-        return invocation.proceed();
+        getStore(extensionContext).put(UNDER_TEST_START_TIME, clock.millis());
+        T result = invocation.proceed();
+        long startTime = getStore(extensionContext).remove(UNDER_TEST_START_TIME, long.class);
+        getTestCaseResult(extensionContext).getTimings().setUnderTest(clock.millis() - startTime);
+        return result;
     }
 
     /**
@@ -140,7 +157,10 @@ public class TestContext implements
     @Override
     public void interceptTestTemplateMethod(Invocation<Void> invocation, ReflectiveInvocationContext<Method> invocationContext, ExtensionContext extensionContext) throws Throwable {
         updateTestCaseResult(invocationContext, extensionContext);
+        getStore(extensionContext).put(UNDER_TEST_START_TIME, clock.millis());
         invocation.proceed();
+        long startTime = getStore(extensionContext).remove(UNDER_TEST_START_TIME, long.class);
+        getTestCaseResult(extensionContext).getTimings().setUnderTest(clock.millis() - startTime);
     }
 
     /** Update test case - Using (at)TestFactory??? Not tested. */
@@ -153,7 +173,10 @@ public class TestContext implements
 
     @Override
     public void interceptAfterEachMethod(Invocation<Void> invocation, ReflectiveInvocationContext<Method> invocationContext, ExtensionContext extensionContext) throws Throwable {
+        getStore(extensionContext).put(AFTER_EACH_START_TIME, clock.millis());
         invocation.proceed();
+        long startTime = getStore(extensionContext).remove(AFTER_EACH_START_TIME, long.class);
+        getTestCaseResult(extensionContext).getTimings().setAfterEach(clock.millis() - startTime);
     }
 
     @Override
@@ -163,7 +186,7 @@ public class TestContext implements
 
     @Override
     public void testSuccessful(ExtensionContext context) {
-        getTestCaseResult(context).setStatus(PASSED);
+        getTestCaseResult(context).setStatus(PASSED).setEndTime(clock.millis());
     }
 
     @Override
@@ -173,12 +196,12 @@ public class TestContext implements
 
     @Override
     public void testAborted(ExtensionContext context, Throwable cause) {
-        getTestCaseResult(context).setStatus(ABORTED).setCause(cause);
+        getTestCaseResult(context).setStatus(ABORTED).setCause(cause).setEndTime(clock.millis());
     }
 
     @Override
     public void testFailed(ExtensionContext context, Throwable cause) {
-        getTestCaseResult(context).setStatus(FAILED).setCause(cause);
+        getTestCaseResult(context).setStatus(FAILED).setCause(cause).setEndTime(clock.millis());
     }
 
     private void startReporting() {
@@ -250,5 +273,9 @@ public class TestContext implements
 
     public void reset() {
         testResults.reset();
+    }
+
+    private ExtensionContext.Store getStore(ExtensionContext context) {
+        return context.getStore(ExtensionContext.Namespace.create(getClass(), context.getRequiredTestMethod()));
     }
 }

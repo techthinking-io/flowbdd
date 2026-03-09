@@ -25,6 +25,7 @@ import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.api.extension.ExtensionContext.Namespace;
 import org.junit.jupiter.api.extension.ExtensionContext.Store;
 
+import java.time.Clock;
 import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Method;
 import java.util.Optional;
@@ -33,20 +34,29 @@ import java.util.logging.Logger;
 public class LearningExtension implements BeforeTestExecutionCallback, AfterTestExecutionCallback {
     private static final Logger logger = Logger.getLogger(LearningExtension.class.getName());
     private static final String START_TIME = "start time";
+    private final Clock clock;
+
+    public LearningExtension() {
+        this(Clock.systemDefaultZone());
+    }
+
+    public LearningExtension(Clock clock) {
+        this.clock = clock;
+    }
 
     @Override
     public void beforeTestExecution(ExtensionContext context) throws Exception {
         Method testMethod = context.getRequiredTestMethod();
         logger.info(() ->
             String.format("Method [%s] has tags %s", testMethod.getName(), context.getTags()));
-        getStore(context).put(START_TIME, System.currentTimeMillis());
+        getStore(context).put(START_TIME, clock.millis());
     }
 
     @Override
     public void afterTestExecution(ExtensionContext context) throws Exception {
         Method testMethod = context.getRequiredTestMethod();
         long startTime = getStore(context).remove(START_TIME, long.class);
-        long duration = System.currentTimeMillis() - startTime;
+        long duration = clock.millis() - startTime;
 
         logger.info(() ->
             String.format("Method [%s] took %s ms.", testMethod.getName(), duration));

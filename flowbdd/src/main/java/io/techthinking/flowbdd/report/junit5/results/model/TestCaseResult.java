@@ -58,6 +58,10 @@ public class TestCaseResult {
     private final TestSuiteClass testSuiteClass; // TODO surely this should be class??!?!?
     private final Notes notes;
 
+    private final Timings timings = new Timings();
+    private long startTime;
+    private long endTime;
+
     public TestCaseResult(TestSuiteClass testSuiteClass, Notes notes) {
         this.testSuiteClass = testSuiteClass;
         this.notes = notes;
@@ -95,6 +99,24 @@ public class TestCaseResult {
         return notes;
     }
 
+    public Timings getTimings() {
+        return timings;
+    }
+
+    public long getDuration() {
+        return endTime - startTime;
+    }
+
+    public TestCaseResult setStartTime(long startTime) {
+        this.startTime = startTime;
+        return this;
+    }
+
+    public TestCaseResult setEndTime(long endTime) {
+        this.endTime = endTime;
+        return this;
+    }
+
     public TestCaseResult setWordify(String wordify) {
         this.wordify = wordify;
         return this;
@@ -129,12 +151,12 @@ public class TestCaseResult {
         if (this == o) return true;
         if (!(o instanceof TestCaseResult)) return false;
         TestCaseResult that = (TestCaseResult) o;
-        return Objects.equals(wordify, that.wordify) && Objects.equals(name, that.name) && Objects.equals(displayName, that.displayName) && status == that.status && Objects.equals(cause, that.cause) && Objects.equals(args, that.args) && Objects.equals(testSuiteClass, that.testSuiteClass) && Objects.equals(notes, that.notes);
+        return Objects.equals(wordify, that.wordify) && Objects.equals(name, that.name) && Objects.equals(displayName, that.displayName) && status == that.status && Objects.equals(cause, that.cause) && Objects.equals(args, that.args) && Objects.equals(testSuiteClass, that.testSuiteClass) && Objects.equals(notes, that.notes) && Objects.equals(timings, that.timings);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(wordify, name, displayName, status, cause, args, testSuiteClass, notes);
+        return Objects.hash(wordify, name, displayName, status, cause, args, testSuiteClass, notes, timings);
     }
 
     @Override
@@ -148,6 +170,7 @@ public class TestCaseResult {
             ", args=" + args +
             ", testSuiteClass=" + testSuiteClass +
             ", notes=" + notes +
+            ", timings=" + timings +
             '}';
     }
 }

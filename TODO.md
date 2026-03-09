@@ -9,8 +9,7 @@
 - [x] Move learning tests to own project
 - [x] General code tidy
 - [x] Copy write every class
-    - https://choosealicense.com/licenses/mit/ - short and cucumber has this
-    - https://choosealicense.com/licenses/gpl-3.0/ - means don't profit from my code
+- [x] License (GPL-3.0)
 - [ ] Investigate if META-INF/Services FlowBddTestExecutionListener gets exported
 
 ## Post MVP:
@@ -18,9 +17,10 @@
 - [x] Name change maybe; FlowBDD, CaffeineFlow or something else
 - [x] New project for mermaid wrapper 
 - [x] Update copyright
+- [x] Add execution timings to scenarios
 - [ ] Try scala files
-- [ ] Add timestamp, hostname, time (maybe setup, execute and after times)
-- [ ] Add error 
+- [ ] Add timestamp, hostname to report
+- [ ] Add error reporting improvements
 - [ ] More examples!!!
 - [x] Migrate to github
 - [x] Update documentation and housekeeping
@@ -58,6 +58,7 @@
 - [x] Project structure - need modules/projects
 - [x] Sequence diagrams - mermaid
 - [x] Test titles to be wordified
+- [x] Execution timings for scenarios
 
 # Notes
 
