@@ -37,9 +37,6 @@ Flow BDD then automatically generates:
 ### This is an example of the documentation generated from the following test below:
 ![alt text](docs/images/dev-team-simulator.png "Dev Team Simulator")
 
-### This is an example with the runtime server and AI assistant:
-![alt text](docs/images/dev-team-simulator-with-ai-2.png "Dev Team Simulator with AI") 
-
 ```java
 @ExtendWith(FlowBdd.class)
 public class DevTeamSimulatorTest extends BaseTest {
@@ -64,6 +61,9 @@ public class DevTeamSimulatorTest extends BaseTest {
     }
 }
 ```
+
+### This is an example with the runtime server and AI assistant:
+![alt text](docs/images/dev-team-simulator-with-ai-2.png "Dev Team Simulator with AI")
 
 ## How does it work?
 Flow BDD uses a process called **Wordify** to turn your clean Java code into human-readable documentation.
