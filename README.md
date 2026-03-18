@@ -37,6 +37,9 @@ Flow BDD then automatically generates:
 ### This is an example of the documentation generated from the following test below:
 ![alt text](docs/images/dev-team-simulator.png "Dev Team Simulator")
 
+### This is an example with the runtime server and AI assistant:
+![alt text](docs/images/dev-team-simulator-with-ai-2.png "Dev Team Simulator with AI") 
+
 ```java
 @ExtendWith(FlowBdd.class)
 public class DevTeamSimulatorTest extends BaseTest {
@@ -91,9 +94,6 @@ By removing the "Gherkin tax" and focusing on code-first documentation, Flow BDD
 
 ## Roadmap and stretch goals
 Flow BDD is evolving. Here is what’s on the horizon:
-- [x] Living Documentation
-- [x] Visual Flow Analysis (Sequence Diagrams)
-- [x] Execution Timings for Scenarios
 - [ ] Interactive Test Runner – A built-in UI to re-run specific tests and modify parameters on the fly.
 - [ ] Asynchronous Actions – Wrapping steps in async actions to significantly improve test execution performance.
 - [ ] Intelligent Mutation Testing – Automatically validate the correctness of your scenarios by mutating steps and asserting state changes.
@@ -110,9 +110,10 @@ Flow BDD is evolving. Here is what’s on the horizon:
 
 Flow BDD focuses on **Behavioral Assurance**:
 1. **Unit Tests:** (The "How") Logic verification.
-2. **TDD Test Driven Development:** Drives architecture. Tests are a by product.
+2. **TDD Test Driven Development:** Drives architecture. If you write tests, you may as well write tests first! If you want better quality code, then do this. But it comes at a cost, it takes time and effort.
 3. **Integration Tests:** (The "Connection") Validates the integration between components and external systems.
 4. **Flow BDD:** (The "What & Why") **Behavioral verification.**
+5. **E2E Tests:** (The "How") End-to-End verification, the same as a user journey. But at a cost, if there are services A, B, C; each has 10 different flows, then you have 1,000 (10x10x10) different flows to test. These are traditionally brittle and expensive to maintain; any breakage in service A would mean the rest can't be tested.
 
 ## Philosophy & Culture
 I developed **VIEW MAP Communication & Culture** - The core principles that serve as the fundamental building blocks of productivity and competitiveness. Traditional BDD often introduces **Waste** (the "Gherkin tax," fragile glue code, and documentation drift) and therefore impacts **Iterating with Fast Validated Feedback** and **Value**. **Value** is added by using Flow BDD that ensures we build exactly what was intended.
